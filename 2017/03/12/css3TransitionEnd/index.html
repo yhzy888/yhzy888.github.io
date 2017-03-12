@@ -3,14 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>yuhong</title>
+  <title>css3��transitionEnd�¼� | yuhong</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="yuhong">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="֮ǰ��Ŀ������һ�����⡣���ǲ���css3��transition��������ҳ�潹������ʾ��transitionEnd�¼�����css�������ɹ��ɺ󴥷������Ǽ����¼�transitionEnd�¼�����һ�����⣬����ʹ�ö���������Ԫ�أ��ı��˼������ԣ���Ӧ�ͻ����ü��μ����¼���˵һ�£�����">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css3��transitionEnd�¼�">
+<meta property="og:url" content="http://yoursite.com/2017/03/12/css3TransitionEnd/index.html">
 <meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="֮ǰ��Ŀ������һ�����⡣���ǲ���css3��transition��������ҳ�潹������ʾ��transitionEnd�¼�����css�������ɹ��ɺ󴥷������Ǽ����¼�transitionEnd�¼�����һ�����⣬����ʹ�ö���������Ԫ�أ��ı��˼������ԣ���Ӧ�ͻ����ü��μ����¼���˵һ�£�����">
+<meta property="og:updated_time" content="2017-03-12T13:38:24.584Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yuhong">
+<meta name="twitter:title" content="css3��transitionEnd�¼�">
+<meta name="twitter:description" content="֮ǰ��Ŀ������һ�����⡣���ǲ���css3��transition��������ҳ�潹������ʾ��transitionEnd�¼�����css�������ɹ��ɺ󴥷������Ǽ����¼�transitionEnd�¼�����һ�����⣬����ʹ�ö���������Ԫ�أ��ı��˼������ԣ���Ӧ�ͻ����ü��μ����¼���˵һ�£�����">
   
     <link rel="alternate" href="/atom.xml" title="yuhong" type="application/atom+xml">
   
@@ -59,9 +63,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-css3TransitionEnd" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-css3TransitionEnd" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/12/css3TransitionEnd/" class="article-date">
   <time datetime="2017-03-12T13:05:35.146Z" itemprop="datePublished">2017-03-12</time>
@@ -74,8 +76,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/12/css3TransitionEnd/">css3��transitionEnd�¼�</a>
+    <h1 class="article-title" itemprop="name">
+      css3��transitionEnd�¼�
     </h1>
   
 
@@ -96,95 +98,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-wode" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/09/12/wode/" class="article-date">
-  <time datetime="2016-09-12T14:33:00.572Z" itemprop="datePublished">2016-09-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/12/wode/">getBoundingClientRect()方法的使用</a>
-    </h1>
+    <a href="/2016/09/12/wode/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">getBoundingClientRect()方法的使用</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。<br>getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的左侧的距离，top和bottom都是元素相对于可视区域顶部的距离。</p>
-<p>###下面上代码<br>html中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"box"</span> style=<span class="string">"width:100px;height:100px;margin:0 auto;background:red;"</span>&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>js中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var box = document.getElementById(<span class="string">"box"</span>);//获取元素</div><div class="line">    box.getBoundingClientRect().top;//获取元素顶部与页面可视区域的顶部的距离</div><div class="line">    box.getBoundingClientRect().bottom;//获取元素底部与页面可视区域的顶部的距离</div><div class="line">    box.getBoundingClientRect().right;//获取元素右侧与页面可视区域的左侧的距离</div><div class="line">    box.getBoundingClientRect().left;//获取元素左侧与页面可视区域的左侧的距离</div></pre></td></tr></table></figure></p>
-<p>同时也要注意：在IE，Firefox3+，Opera9.5，Chrome，safari支持。在IE中，默认坐标从(2,2)开始计算，导致最终比其他浏览器多出两个像素。<br>兼容的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> getClientRect(obj)</div><div class="line">&#123;</div><div class="line">   var rect = obj.getBoundingClientRect();</div><div class="line">   var c_left = document.documentElement.clientLeft;//非IE中，获取值为0，否则为2;</div><div class="line">   var c_top = document.documentElement.clientTop;//非IE中，获取值为0，否则为2;</div><div class="line">   var left = rect.left - c_left,</div><div class="line">       right = rect.right - c_left,</div><div class="line">       top = rect.top - c_top,</div><div class="line">       bottom = rect.bottom - c_top;</div><div class="line">   <span class="built_in">return</span> &#123;left,right,top,bottom&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj06q7dus0001i8o0mk4ar9cp" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/09/12/hello-world/" class="article-date">
-  <time datetime="2016-09-12T14:16:47.273Z" itemprop="datePublished">2016-09-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/12/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj06q7dv70002i8o09f4u2gyf" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 </section>
         
