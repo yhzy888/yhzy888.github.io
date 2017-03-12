@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,44 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-setTimeout" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/setTimeout/" class="article-date">
+  <time datetime="2017-03-12T14:03:18.430Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/12/setTimeout/">setTimeout代替setInterval的方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。<br>setTimeout和setInterval的方法要注意的问题：<br>    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给人立即执行的假象。<br>之所以要用setTimeout的方法来替代setInterval，是因为setInterval会产生回调堆积，特别是在时间很短的时候，就会有清除不掉setInterval方法的现象。<br>此处用setTimeout的延时递归来代替setInterval。</p>
+<h4 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var timeout = <span class="literal">false</span>;//启动及关闭按钮</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(timeout)<span class="built_in">return</span>;</div><div class="line">    method();//要执行的方法</div><div class="line">    <span class="built_in">set</span>Timeout(timer, 2000);</div><div class="line">    //timer指本身，延时递归调用自己，2000是隔多久调用自己一次，单位ms</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj06sn28z000160o08u52u82c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-css3TransitionEnd " class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -90,7 +128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj06qmm0w0000h8o0xo8gphkc" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj06sn28z000060o03rxwkpbp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -130,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj06qmm0w0001h8o0a86az3em" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj06sn28z000260o0pvoq87f1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -175,7 +213,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj06qmm1c0002h8o0qn8i77am" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj06sn28z000360o0ib5slnt6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -200,7 +238,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
     </div>
@@ -210,9 +248,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/03/12/setTimeout/">setTimeout代替setInterval的方法</a>
+          </li>
         
           <li>
             <a href="/2017/03/12/css3TransitionEnd /">css3的transitionEnd事件</a>

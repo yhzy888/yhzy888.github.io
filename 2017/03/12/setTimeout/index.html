@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>setTimeout代替setInterval的方法 | yuhong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给">
+<meta property="og:type" content="article">
+<meta property="og:title" content="setTimeout代替setInterval的方法">
+<meta property="og:url" content="http://yoursite.com/2017/03/12/setTimeout/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给">
+<meta property="og:updated_time" content="2017-03-12T14:46:33.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="setTimeout代替setInterval的方法">
+<meta name="twitter:description" content="javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给">
+  
+    <link rel="alternate" href="/atom.xml" title="yuhong" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">yuhong</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-setTimeout" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/12/setTimeout/" class="article-date">
+  <time datetime="2017-03-12T14:03:18.430Z" itemprop="datePublished">2017-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      setTimeout代替setInterval的方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。<br>setTimeout和setInterval的方法要注意的问题：<br>    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给人立即执行的假象。<br>之所以要用setTimeout的方法来替代setInterval，是因为setInterval会产生回调堆积，特别是在时间很短的时候，就会有清除不掉setInterval方法的现象。<br>此处用setTimeout的延时递归来代替setInterval。</p>
+<h4 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var timeout = <span class="literal">false</span>;//启动及关闭按钮</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(timeout)<span class="built_in">return</span>;</div><div class="line">    method();//要执行的方法</div><div class="line">    <span class="built_in">set</span>Timeout(timer, 2000);</div><div class="line">    //timer指本身，延时递归调用自己，2000是隔多久调用自己一次，单位ms</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj06sn28z000160o08u52u82c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/12/css3TransitionEnd /" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">css3的transitionEnd事件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/12/setTimeout/">setTimeout代替setInterval的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/12/css3TransitionEnd /">css3的transitionEnd事件</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/12/wode/">getBoundingClientRect()方法的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/09/12/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 yuhong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
