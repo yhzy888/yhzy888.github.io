@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,49 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-and" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/13/and/" class="article-date">
+  <time datetime="2017-03-13T13:31:58.654Z" itemprop="datePublished">2017-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/13/and/">javaScript/jQuery的&amp;&amp;和||的学习记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;&amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。<br>文中会多次用到“!”的符号，表示“非”的意思。</p>
+<h4 id="规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b"><a href="#规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b" class="headerlink" title="规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b"></a>规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(4||5);//弹出4；详解：!4时为<span class="literal">false</span>，!!4即!<span class="literal">false</span>，故返回值为<span class="literal">true</span>。</div><div class="line">alert(0||5);//弹出5；详解：0在解析时会直接解析为boolean值，0的boolean值为<span class="literal">false</span>，!0则为<span class="literal">true</span>，!!0==!<span class="literal">true</span>==<span class="literal">false</span>,所以弹出5。</div></pre></td></tr></table></figure>
+<h4 id="规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a"><a href="#规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a" class="headerlink" title="规则二：a&amp;&amp;b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a"></a>规则二：a&amp;&amp;b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(4&amp;&amp;5);//弹出5；原因：!!4返回<span class="literal">true</span>，详解同上。</div><div class="line">alert(0&amp;&amp;5);//弹出0；原因：!!0返回<span class="literal">false</span>，详解同上。</div></pre></td></tr></table></figure>
+<h4 id="规则三：-amp-amp-的优先级高于"><a href="#规则三：-amp-amp-的优先级高于" class="headerlink" title="规则三：&amp;&amp;的优先级高于||"></a>规则三：&amp;&amp;的优先级高于||</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(1&amp;&amp;(3||0&amp;&amp;4));//弹出3；详解：0&amp;&amp;4，返回0，就变成1&amp;&amp;(3||0)，先执行括号中的，3||0返回3，接着就变成了1&amp;&amp;3，再由规则二就可知返回值为3。</div><div class="line">alert(0&amp;&amp;4||2&amp;&amp;3);//弹出3；详解：0&amp;&amp;4，返回0，就变成0||2&amp;&amp;3，2&amp;&amp;3返回3，接着0||3，由规则一就可知返回值为3。</div></pre></td></tr></table></figure>
+<p>这样是不是就能明白&amp;&amp;和||的规则了呢。<br>接着再举几个下例子。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">callback&amp;&amp;callback();//这句话与<span class="keyword">if</span>(callback)&#123;callback()&#125;;的语句是能达到同样的效果。</div><div class="line">this.count = this.count || 0;//实现简单的计数器时常用。</div><div class="line">var obj = obj || &#123;&#125;;//这句话一般用于传参的obj，做个初始化。</div></pre></td></tr></table></figure>
+<p>今天就写这些，看到这篇博客的你，到这里就应该明白&amp;&amp;和||的使用规则了。<br>要注意一个问题，这样写代码会降低代码的可读性，但能精简代码，减少网络流量。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/13/and/" data-id="cj0873pu20000vko03terxjok" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-setTimeout" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -89,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj085655g0003moo0hy3c6d81" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj0873pub0003vko0b6tgoaum" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,7 +171,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj085655a0001moo0xxeeq726" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj0873pu60001vko0v63y0qg1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -168,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj085655d0002moo0e3a0oksz" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj0873puc0004vko0679ro97q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -213,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj08565550000moo0bf0eiwv7" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj0873pu80002vko0m7s3an5n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -248,9 +291,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/03/13/and/">javaScript/jQuery的&amp;&amp;和||的学习记录</a>
+          </li>
         
           <li>
             <a href="/2017/03/12/setTimeout/">setTimeout代替setInterval的方法</a>
@@ -281,7 +328,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 yuhong<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
