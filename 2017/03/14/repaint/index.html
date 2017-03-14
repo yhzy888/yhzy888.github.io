@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>javaScript�����Ż���repaint��reflow | yuhong</title>
+  <title>javaScript性能优化—repaint和reflow | yuhong</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ����ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�
-repaint���ػ棩��repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ�">
+  <meta name="description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。
+repaint（重绘）：repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javaScript�����Ż���repaint��reflow">
+<meta property="og:title" content="javaScript性能优化—repaint和reflow">
 <meta property="og:url" content="http://yoursite.com/2017/03/14/repaint/index.html">
 <meta property="og:site_name" content="yuhong">
-<meta property="og:description" content="��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ����ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�
-repaint���ػ棩��repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ�">
-<meta property="og:updated_time" content="2017-03-14T14:06:07.632Z">
+<meta property="og:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。
+repaint（重绘）：repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中">
+<meta property="og:updated_time" content="2017-03-14T14:38:53.343Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javaScript�����Ż���repaint��reflow">
-<meta name="twitter:description" content="��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ����ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�
-repaint���ػ棩��repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ�">
+<meta name="twitter:title" content="javaScript性能优化—repaint和reflow">
+<meta name="twitter:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。
+repaint（重绘）：repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中">
   
     <link rel="alternate" href="/atom.xml" title="yuhong" type="application/atom+xml">
   
@@ -69,7 +69,7 @@ repaint���ػ棩��repaint��������ʱ��Ԫ����
         <section id="main"><article id="post-repaint" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/14/repaint/" class="article-date">
-  <time datetime="2017-03-14T13:26:55.677Z" itemprop="datePublished">2017-03-14</time>
+  <time datetime="2017-03-14T14:38:53.343Z" itemprop="datePublished">2017-03-14</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@ repaint���ػ棩��repaint��������ʱ��Ԫ����
         
   
     <h1 class="article-title" itemprop="name">
-      javaScript�����Ż���repaint��reflow
+      javaScript性能优化—repaint和reflow
     </h1>
   
 
@@ -88,18 +88,18 @@ repaint���ػ棩��repaint��������ʱ��Ԫ����
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ�<br>���ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�</p>
-<h4 id="repaint���ػ棩��"><a href="#repaint���ػ棩��" class="headerlink" title="repaint���ػ棩��"></a>repaint���ػ棩��</h4><pre><code>repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ���ҵ���Ŀ�о����������ǽ�����ʾ��ʱ���ı�������border���ͷ������ػ棬ռ���˺ܶ���cpu�����ǵ���Ŀ����ͬʱ����������������css3�Ķ����������Ա������������ķ�20%����cpu�������磺outline��visibility��background��color�Ȳ���Ӱ��dom�ṹ��Ⱦ��
-</code></pre><h4 id="reflow����T-��������"><a href="#reflow����T-��������" class="headerlink" title="reflow����Ⱦ/��������"></a>reflow����Ⱦ/��������</h4><pre><code>��repaint������������Ӱ��dom�Ľṹ��Ⱦ��ͬʱ�ᴥ��repaint�������ı������������и���Ԫ�أ��ɴ˿��Կ���ҳ��Ԫ��Խ�࣬�����½��ľͻ�Խ���ԡ�
-</code></pre><p>reflow����Ⱦ/�������ǵ���dom�ű�ִ�е�Ч�Ĺؼ�����֮һ��<br>���ⷽʽ��1.�´����Ķ���dom�ڵ㣬����һ���Լ���document��<br>      2.�����ܼ����޸�Ԫ�ص�styleֵ��<br>      3.����ͨ���޸�className���޸���ʽ��<br>      4.������Ҫ��table���֡�<br>      5.�޸ĵ���ʽ������Ҫ�޸Ķ���ֵ������д��һ����<br>      6.����Ԫ�ص�positionֵΪabsolute��fixed����Ԫ��������׼����Ҳ��dom���ṹ����������������Ҫreflowʱ��<br>      ֻ��Ҫreflow�������¼�Ԫ�ؼ��ɣ�<br>      7.����ʹ��expression����ÿ�ε��ö������¼��㣨��������ҳ�棩���������ƶ���expression��������ǧ�����ϡ�<br>        expression�������ӣ�<br>                 html�У�<br>                 <div id="container"></div><br>                 css�У�</p>
+        <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。</p>
+<h4 id="repaint（重绘）："><a href="#repaint（重绘）：" class="headerlink" title="repaint（重绘）："></a>repaint（重绘）：</h4><pre><code>repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。
+</code></pre><h4 id="reflow（渲染-回流）："><a href="#reflow（渲染-回流）：" class="headerlink" title="reflow（渲染/回流）："></a>reflow（渲染/回流）：</h4><pre><code>与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。
+</code></pre><p>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div id="container"></div><br>                 css中：</p>
 <pre><code>           #container{width:expression((documentElement.clientWidth &lt; 500) ? &quot;500px&quot; : &quot;200px&quot;)}
-  ��css���Ժ���Ϊһ��js�Ĵ��롣
-8.���ⲻ��Ҫ�ĸ��ӵ�cssѡ�����������Ǻ���ѡ��������ΪΪ��ƥ��ѡ�������ķѸ�����cpu��
+  即css属性后可为一段js的代码。
+8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj09n3z6l0000t0o0hfm2xooe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj09na7qq0003kso0iwo3av3c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -112,7 +112,7 @@ repaint���ػ棩��repaint��������ʱ��Ԫ����
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          ��վ�Ż�14��
+          网站优化14条
         
       </div>
     </a>
@@ -157,11 +157,11 @@ repaint���ػ棩��repaint��������ʱ��Ԫ����
       <ul>
         
           <li>
-            <a href="/2017/03/14/yahoo/">��վ�Ż�14��</a>
+            <a href="/2017/03/14/yahoo/">网站优化14条</a>
           </li>
         
           <li>
-            <a href="/2017/03/14/repaint/">javaScript�����Ż���repaint��reflow</a>
+            <a href="/2017/03/14/repaint/">javaScript性能优化—repaint和reflow</a>
           </li>
         
           <li>
