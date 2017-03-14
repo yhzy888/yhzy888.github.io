@@ -88,7 +88,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/yahoo/" data-id="cj09nb67n0006lco0vl6ew8dq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/yahoo/" data-id="cj09nfea90006ioo0jxub7ypz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -120,18 +120,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。</p>
-<h4 id="repaint（重绘）："><a href="#repaint（重绘）：" class="headerlink" title="repaint（重绘）："></a>repaint（重绘）：</h4><pre><code>repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。
-</code></pre><h4 id="reflow（渲染-回流）："><a href="#reflow（渲染-回流）：" class="headerlink" title="reflow（渲染/回流）："></a>reflow（渲染/回流）：</h4><pre><code>与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。
-</code></pre><p>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div id="container"></div><br>                 css中：</p>
-<pre><code>           #container{width:expression((documentElement.clientWidth &lt; 500) ? &quot;500px&quot; : &quot;200px&quot;)}
-  即css属性后可为一段js的代码。
-8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。
-</code></pre>
+        <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。<br>repaint（重绘）：<br>    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。<br>reflow（渲染/回流）：<br>    与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。<br>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div class="container"></div><br>                 css中：<br>                 .container{width:expression((documentElement.clientWidth &lt; 500) ? “500px” : “200px”)}<br>        即css属性后可为一段js的代码。<br>      8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj09nb6780005lco0or1ak6o8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj09nfea90004ioo0zlxqdcfg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -174,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/13/and/" data-id="cj09nb6780001lco0mczmoqnj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/13/and/" data-id="cj09nfe9t0001ioo06qk6yqce" class="article-share-link">Share</a>
       
       
     </footer>
@@ -212,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj09nb6780004lco0nzjfhzma" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj09nfe9t0002ioo08lwypxds" class="article-share-link">Share</a>
       
       
     </footer>
@@ -251,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj09nb6780002lco0z4mfhiv6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj09nfe9t0000ioo0sg3qzrs6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -291,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj09nb6780003lco0uetjd76t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj09nfea90005ioo0dhsb6vil" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj09nb6780000lco0prplstv7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj09nfe9t0003ioo0r0r0wse9" class="article-share-link">Share</a>
       
       
     </footer>
