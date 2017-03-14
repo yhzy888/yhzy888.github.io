@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>javaScript�����Ż���repaint��reflow | yuhong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ����ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�
+repaint���ػ棩��repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ�">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaScript�����Ż���repaint��reflow">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/repaint/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ����ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�
+repaint���ػ棩��repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ�">
+<meta property="og:updated_time" content="2017-03-14T14:06:07.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaScript�����Ż���repaint��reflow">
+<meta name="twitter:description" content="��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ����ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�
+repaint���ػ棩��repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ�">
+  
+    <link rel="alternate" href="/atom.xml" title="yuhong" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">yuhong</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-repaint" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/14/repaint/" class="article-date">
+  <time datetime="2017-03-14T13:26:55.677Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      javaScript�����Ż���repaint��reflow
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>��Ϊǰ�˿�����Ա��һ��Ҫ���������Ż������⡣�����ͼ�¼һ�£���֮ǰ����jvaScript�����Ż���repaint��reflow���ܽ��ʼǡ�<br>���ȶ�repaint��reflow��һ�¼򵥵Ľ��͡�</p>
+<h4 id="repaint���ػ棩��"><a href="#repaint���ػ棩��" class="headerlink" title="repaint���ػ棩��"></a>repaint���ػ棩��</h4><pre><code>repaint��������ʱ��Ԫ�����۱��ı䣬����û�иı䲼�ֵ������·�������һ���ҵ���Ŀ�о����������ǽ�����ʾ��ʱ���ı�������border���ͷ������ػ棬ռ���˺ܶ���cpu�����ǵ���Ŀ����ͬʱ����������������css3�Ķ����������Ա������������ķ�20%����cpu�������磺outline��visibility��background��color�Ȳ���Ӱ��dom�ṹ��Ⱦ��
+</code></pre><h4 id="reflow����T-��������"><a href="#reflow����T-��������" class="headerlink" title="reflow����Ⱦ/��������"></a>reflow����Ⱦ/��������</h4><pre><code>��repaint������������Ӱ��dom�Ľṹ��Ⱦ��ͬʱ�ᴥ��repaint�������ı������������и���Ԫ�أ��ɴ˿��Կ���ҳ��Ԫ��Խ�࣬�����½��ľͻ�Խ���ԡ�
+</code></pre><p>reflow����Ⱦ/�������ǵ���dom�ű�ִ�е�Ч�Ĺؼ�����֮һ��<br>���ⷽʽ��1.�´����Ķ���dom�ڵ㣬����һ���Լ���document��<br>      2.�����ܼ����޸�Ԫ�ص�styleֵ��<br>      3.����ͨ���޸�className���޸���ʽ��<br>      4.������Ҫ��table���֡�<br>      5.�޸ĵ���ʽ������Ҫ�޸Ķ���ֵ������д��һ����<br>      6.����Ԫ�ص�positionֵΪabsolute��fixed����Ԫ��������׼����Ҳ��dom���ṹ����������������Ҫreflowʱ��<br>      ֻ��Ҫreflow�������¼�Ԫ�ؼ��ɣ�<br>      7.����ʹ��expression����ÿ�ε��ö������¼��㣨��������ҳ�棩���������ƶ���expression��������ǧ�����ϡ�<br>        expression�������ӣ�<br>                 html�У�<br>                 <div id="container"></div><br>                 css�У�</p>
+<pre><code>           #container{width:expression((documentElement.clientWidth &lt; 500) ? &quot;500px&quot; : &quot;200px&quot;)}
+  ��css���Ժ���Ϊһ��js�Ĵ��롣
+8.���ⲻ��Ҫ�ĸ��ӵ�cssѡ�����������Ǻ���ѡ��������ΪΪ��ƥ��ѡ�������ķѸ�����cpu��
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj09n3z6l0000t0o0hfm2xooe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/14/yahoo/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ��վ�Ż�14��
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/13/and/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">javaScript/jQuery的&amp;&amp;和||的学习记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/03/14/yahoo/">��վ�Ż�14��</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/14/repaint/">javaScript�����Ż���repaint��reflow</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/13/and/">javaScript/jQuery的&amp;&amp;和||的学习记录</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/12/setTimeout/">setTimeout代替setInterval的方法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/12/css3TransitionEnd /">css3的transitionEnd事件</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 yuhong<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
