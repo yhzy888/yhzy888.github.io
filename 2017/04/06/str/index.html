@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/06/str/index.html">
 <meta property="og:site_name" content="yuhong">
 <meta property="og:description" content="先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。首先单行文本溢出：应用纯css的用法：1234567891011121314151617181920212223&amp;lt;div id=&quot;ellipsis&quot;&amp;gt;单行单行单行单行单行单行单行单行单行单行单行&amp;lt;/div&amp;gt;//css 第一种#ellipsis&amp;#123;	width:200px;	overflow:hid">
-<meta property="og:updated_time" content="2017-04-06T14:35:58.202Z">
+<meta property="og:updated_time" content="2017-04-06T14:39:05.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="单行，多行文本溢出">
 <meta name="twitter:description" content="先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。首先单行文本溢出：应用纯css的用法：1234567891011121314151617181920212223&amp;lt;div id=&quot;ellipsis&quot;&amp;gt;单行单行单行单行单行单行单行单行单行单行单行&amp;lt;/div&amp;gt;//css 第一种#ellipsis&amp;#123;	width:200px;	overflow:hid">
@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -88,7 +88,7 @@
         <p>先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。<br>首先单行文本溢出：<br>应用纯css的用法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"ellipsis"</span>&gt;单行单行单行单行单行单行单行单行单行单行单行&lt;/div&gt;</div><div class="line">//css 第一种</div><div class="line"><span class="comment">#ellipsis&#123;</span></div><div class="line">	width:200px;</div><div class="line">	overflow:hidden;</div><div class="line">	white-space:nowrap;</div><div class="line">	text-overflow:ellipsis;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//css 第二种 用伪类进行模拟（此处提供一种思路，实际遇到问题，需要再调试）</div><div class="line"><span class="comment">#ellipsis&#123;</span></div><div class="line">	width:200px;</div><div class="line">	height:20px;</div><div class="line">	position:relative;</div><div class="line">	overflow: hidden;</div><div class="line">&#125;</div><div class="line"><span class="comment">#ellipsis:after&#123;</span></div><div class="line">	content: <span class="string">"..."</span>;</div><div class="line">	position:absolute;</div><div class="line">	right:0;</div><div class="line">	bottom:0;</div><div class="line">	padding-left:30px;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>接着说一下多行文本溢出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"ellipsis"</span>&gt;</div><div class="line">	CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号</div><div class="line">	CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号</div><div class="line">	CSS实现多行文本溢出显示省略号</div><div class="line">&lt;/div&gt;</div><div class="line">//css 第一种 注意：因使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端</div><div class="line"><span class="comment">#ellipsis&#123;</span></div><div class="line">width:200px;</div><div class="line">display: -webkit-box;//将对象作为弹性伸缩盒子模型显示 </div><div class="line">-webkit-box-orient: vertical;//设置或检索伸缩盒对象的子元素的排列方式 。</div><div class="line">-webkit-line-clamp: 3;//用来限制在一个块元素显示的文本的行数</div><div class="line">overflow: hidden;//多余的隐藏</div><div class="line">&#125;</div><div class="line">//css 第二种 用伪类进行模拟（此处提供一种思路，实际遇到问题，需要再调试）</div><div class="line"><span class="comment">#ellipsis&#123;position: relative; line-height: 20px; max-height: 40px;overflow: hidden;&#125;</span></div><div class="line"><span class="comment">#ellipsis:after&#123;content: "..."; position: absolute; bottom: 0; right: 0; padding-left: 30px;</span></div><div class="line">background: -webkit-linear-gradient(left, transparent, <span class="comment">#fff 55%);</span></div><div class="line">background: -o-linear-gradient(right, transparent, <span class="comment">#fff 55%);</span></div><div class="line">background: -moz-linear-gradient(right, transparent, <span class="comment">#fff 55%);</span></div><div class="line">background: linear-gradient(to right, transparent, <span class="comment">#fff 55%);</span></div><div class="line">&#125; </div><div class="line">//注意：ie6-7不显示content内容</div><div class="line">1.将height设置为line-height的整数倍，防止超出的文字露出。</div><div class="line">2.给p::after添加渐变背景可避免文字只显示一半。</div></pre></td></tr></table></figure></p>
 <p>项目中要对一个div中的文字进行控制，文本溢出在溢出的部分要显示“…”，焦点在当前div时则要进行跑马灯的动作。<br>我们这里用的是字符串截取的方式，比如说：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"txt"</span>&gt;截取字符串&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>在这个div中最多就能显示三个汉字，多余的则用“…”显示，注意是汉字，所以此时问题就出现了，用截取字符串的方法，截取前三个汉字“截取字”，然后再加上“…”，那么“div”中的内容就是“截取字…”，如果文本是英文呢，在浏览器中显示的时候，你就会觉得，这么短就要加“…”了？<br>所以我的方法是把英文字母或是数字以0.5个字符来计算。这样“div”“汉abcd123文字”中只显示三个字符的话就是“汉abcd…”,</p>
+<p>在这个div中最多就能显示三个汉字，多余的则用“…”显示，注意是汉字，所以此时问题就出现了，用截取字符串的方法，截取前三个汉字“截取字”，然后再加上“…”，那么div中的内容就是“截取字…”，如果文本是英文呢，在浏览器中显示的时候，你就会觉得，这么短就要加“…”了？<br>所以我的方法是把英文字母或是数字以0.5个字符来计算。这样div“汉abcd123文字”中只显示三个字符的话就是“汉abcd…”,</p>
 <p>下面上代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//得到文字字符长度，规则：中文字符算一个，英文，数字算0.5个（不足1个的当一个计算）</div><div class="line"><span class="keyword">function</span> getStrLen(str)</div><div class="line">&#123;</div><div class="line">	var reg = /[0-9A-Za-z]/mg;</div><div class="line">	var englishMatch = str.match(reg);</div><div class="line">	var e_len = 0,//英语长度</div><div class="line">		o_len = 0,//汉语长度</div><div class="line">		len = str.length;</div><div class="line">	<span class="keyword">if</span>(englishMatch)</div><div class="line">	&#123;</div><div class="line">		e_len = englishMatch.length;</div><div class="line">		o_len = len - e_len;</div><div class="line">		<span class="keyword">if</span>(e_len%2 == 1)</div><div class="line">		&#123;</div><div class="line">			len = o_len + Math.floor(e_len/2) + 1;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			len = o_len + e_len/2;</div><div class="line">		&#125;</div><div class="line">		console.log(<span class="string">"o_len"</span> + o_len);</div><div class="line">		console.log(<span class="string">"e_len"</span> + e_len);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> len;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//通过源字符串和实际允许显示的字符长度（英文和数字按0.5来算），返回该字符串可截取的索引值	</div><div class="line"><span class="keyword">function</span> cutOutStr(str,len)</div><div class="line">&#123;</div><div class="line">	var reg = /[0-9A-Za-z]/mg;</div><div class="line">	var i_len = 0,</div><div class="line">		t_len = 0,</div><div class="line">		index = 0;</div><div class="line">	<span class="keyword">for</span>(var i=0;i&lt;str.length;i++)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(str[i].match(reg))</div><div class="line">		&#123;</div><div class="line">			i_len = 0.5;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			i_len = 1;</div><div class="line">		&#125;</div><div class="line">		t_len += i_len;</div><div class="line">		<span class="keyword">if</span>(t_len&gt;=len)</div><div class="line">		&#123;</div><div class="line">			index = i;</div><div class="line">			<span class="built_in">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> index;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>下面是验证的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"txt"</span>&gt;验证eng的文字&lt;/div&gt;</div><div class="line">var txt = document.getElementById(<span class="string">"txt"</span>).innerHTML;</div><div class="line">console.log(txt);</div><div class="line">var len = getStrLen(txt);</div><div class="line">var index = cutOutStr(txt,6);</div><div class="line">console.log(index);</div><div class="line">var t = txt.substring(0,index) + <span class="string">"..."</span>;</div><div class="line">console.log(t);</div><div class="line">document.getElementById(<span class="string">"txt"</span>).innerHTML = t;</div></pre></td></tr></table></figure></p>
 <p>这就是我项目中用到的方法，有人看到这会说这就是一个单行文本溢出的问题么，用上边的方法就可以了，其实不然，我们项目里面还有其他的场景要求，这里不会细写，只是提供一种思路。</p>
@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/str/" data-id="cj16i9kax000754o0r924yiro" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/06/str/" data-id="cj16idrsu0007iko0xpyvli3n" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -107,7 +107,7 @@
   
   
     <a href="/2017/03/20/arrarRemove/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Ouder</strong>
       <div class="article-nav-title">js删除数组中元素的方法</div>
     </a>
   
@@ -130,7 +130,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
     </div>
@@ -140,7 +140,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
@@ -177,7 +177,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 yuhong<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
