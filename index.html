@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -60,6 +60,44 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-bat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/07/bat/" class="article-date">
+  <time datetime="2017-04-07T12:34:50.420Z" itemprop="datePublished">2017-04-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/07/bat/">window系统dos命令合并多个文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中要对js，css文件进行合并压缩的处理。window系统的dos命令中有一个特别好用的方法。但只限于对文件的合并的处理。压缩我是用的压缩工具。因为压缩工具每次需要把文件拖入到工具中，所以用dos命令这个来弄就方便太多了。话不多说，说场景。<br>首先：window + r 键调出运行窗口，输入cmd后打开dos窗口。<br>接着，假如你要合并D盘下的yy文件夹下的x.js，y.js和z.js。<br>在dos命令中输入：<br>d:(输入后按“enter”键)<br>cd yy(输入后按“enter”键,表示进入到yy文件夹内)<br>copy x.js+y.js+z.js all.js /b (这句话的意思就是把x.js,y.js和z.js一起copy到all.js中)<br>参数/b指定以二进制格式复制、合并文件；<br>参数/a指定以ASCII格式复制、合并文件。<br>为了方便你的操作，你可以把你要合并的文件放在一个txt里面，这样就不用以后每次在dos命令中输入了。<br>下面是在txt文本中的书写例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d:</div><div class="line"><span class="built_in">cd</span> yy</div><div class="line">copy x.js+y.js+z.js all.js /b</div></pre></td></tr></table></figure></p>
+<p>输入以上这些即可，接着不要忘记把文件另存为后缀为.bat的文件，然后每次你都是要合并这几个文件后，就直接双击这个bat文件即可。<br>如果你的js在不同的文件夹中，你也可以输入你要合并的js文件所在的路径。比如说x.js在common这个文件夹内，copy的时候<br>就copy common\x.js+y.js+z.js all.js /b这样写就可以了。注意，css文件一样可以呦。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/07/bat/" data-id="cj17tesyr0001b8o0hcy8g8ef" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-str" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -94,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/06/str/" data-id="cj16idrsu0007iko0xpyvli3n" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/04/06/str/" data-id="cj17tesz70009b8o0szsjqw8k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -142,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/20/arrarRemove/" data-id="cj16idrse0004iko0e0pzwbed" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/20/arrarRemove/" data-id="cj17tesyr0000b8o0uk8kiyil" class="article-share-link">Share</a>
       
       
     </footer>
@@ -179,7 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/yahoo/" data-id="cj16idrsu0008iko0nm3lew78" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/14/yahoo/" data-id="cj17tesz70007b8o0ughlxe1m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -216,7 +254,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj16idrse0002iko05cefg1e4" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/14/repaint/" data-id="cj17tesz70004b8o0vzxu3iy7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -259,7 +297,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/13/and/" data-id="cj16idrse0000iko0b165wpsa" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/13/and/" data-id="cj17tesz70003b8o0trcddlmf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -297,7 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj16idrse0005iko09tu4mol1" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/12/setTimeout/" data-id="cj17tesz70006b8o0covnwc36" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj16idrse0001iko007wscmht" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/03/12/css3TransitionEnd /" data-id="cj17tesz70005b8o0lhuq4ovw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -376,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj16idrsu0006iko00lev0msi" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2016/09/12/wode/" data-id="cj17tesz70008b8o04fzg4735" class="article-share-link">Share</a>
       
       
     </footer>
@@ -421,7 +459,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj16idrse0003iko01uvmzx9z" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2016/09/12/hello-world/" data-id="cj17tesz70002b8o08ha8tbln" class="article-share-link">Share</a>
       
       
     </footer>
@@ -446,7 +484,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li></ul>
     </div>
@@ -456,9 +494,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/04/07/bat/">window系统dos命令合并多个文件</a>
+          </li>
         
           <li>
             <a href="/2017/04/06/str/">单行，多行文本溢出</a>
@@ -474,10 +516,6 @@
         
           <li>
             <a href="/2017/03/14/repaint/">javaScript性能优化—repaint和reflow</a>
-          </li>
-        
-          <li>
-            <a href="/2017/03/13/and/">javaScript/jQuery的&amp;&amp;和||的学习记录</a>
           </li>
         
       </ul>
