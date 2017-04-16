@@ -101,7 +101,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -199,6 +199,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -215,6 +235,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
           </a>
         </li>
       
@@ -324,10 +354,15 @@
       
         
           
-            <p>项目中要对js，css文件进行合并压缩的处理。window系统的dos命令中有一个特别好用的方法。但只限于对文件的合并的处理。压缩我是用的压缩工具。因为压缩工具每次需要把文件拖入到工具中，所以用dos命令这个来弄就方便太多了。话不多说，说场景。<br>首先：window + r 键调出运行窗口，输入cmd后打开dos窗口。<br>接着，假如你要合并D盘下的yy文件夹下的x.js，y.js和z.js。<br>在dos命令中输入：<br>d:(输入后按“enter”键)<br>cd yy(输入后按“enter”键,表示进入到yy文件夹内)<br>copy x.js+y.js+z.js all.js /b (这句话的意思就是把x.js,y.js和z.js一起copy到all.js中)<br>参数/b指定以二进制格式复制、合并文件；<br>参数/a指定以ASCII格式复制、合并文件。<br>为了方便你的操作，你可以把你要合并的文件放在一个txt里面，这样就不用以后每次在dos命令中输入了。<br>下面是在txt文本中的书写例子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d:</div><div class="line"><span class="built_in">cd</span> yy</div><div class="line">copy x.js+y.js+z.js all.js /b</div></pre></td></tr></table></figure></p>
-<p>输入以上这些即可，接着不要忘记把文件另存为后缀为.bat的文件，然后每次你都是要合并这几个文件后，就直接双击这个bat文件即可。<br>如果你的js在不同的文件夹中，你也可以输入你要合并的js文件所在的路径。比如说x.js在common这个文件夹内，copy的时候<br>就copy common\x.js+y.js+z.js all.js /b这样写就可以了。注意，css文件一样可以呦。</p>
-
-          
+          项目中要对js，css文件进行合并压缩的处理。window系统的dos命令中有一个特别好用的方法。但只限于对文件的合并的处理。压缩我是用的压缩工具。因为压缩工具每次需要把文件拖入到工具中，所以用dos命令这个来弄就方便太多了。话不多说，说场景。首先：window + r 键调出运行窗口，输入cmd后
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/07/bat/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -446,15 +481,15 @@
       
         
           
-            <p>先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。<br>首先单行文本溢出：<br>应用纯css的用法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"ellipsis"</span>&gt;单行单行单行单行单行单行单行单行单行单行单行&lt;/div&gt;</div><div class="line">//css 第一种</div><div class="line"><span class="comment">#ellipsis&#123;</span></div><div class="line">	width:200px;</div><div class="line">	overflow:hidden;</div><div class="line">	white-space:nowrap;</div><div class="line">	text-overflow:ellipsis;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//css 第二种 用伪类进行模拟（此处提供一种思路，实际遇到问题，需要再调试）</div><div class="line"><span class="comment">#ellipsis&#123;</span></div><div class="line">	width:200px;</div><div class="line">	height:20px;</div><div class="line">	position:relative;</div><div class="line">	overflow: hidden;</div><div class="line">&#125;</div><div class="line"><span class="comment">#ellipsis:after&#123;</span></div><div class="line">	content: <span class="string">"..."</span>;</div><div class="line">	position:absolute;</div><div class="line">	right:0;</div><div class="line">	bottom:0;</div><div class="line">	padding-left:30px;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>接着说一下多行文本溢出<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"ellipsis"</span>&gt;</div><div class="line">	CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号</div><div class="line">	CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号CSS实现多行文本溢出显示省略号</div><div class="line">	CSS实现多行文本溢出显示省略号</div><div class="line">&lt;/div&gt;</div><div class="line">//css 第一种 注意：因使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端</div><div class="line"><span class="comment">#ellipsis&#123;</span></div><div class="line">width:200px;</div><div class="line">display: -webkit-box;//将对象作为弹性伸缩盒子模型显示 </div><div class="line">-webkit-box-orient: vertical;//设置或检索伸缩盒对象的子元素的排列方式 。</div><div class="line">-webkit-line-clamp: 3;//用来限制在一个块元素显示的文本的行数</div><div class="line">overflow: hidden;//多余的隐藏</div><div class="line">&#125;</div><div class="line">//css 第二种 用伪类进行模拟（此处提供一种思路，实际遇到问题，需要再调试）</div><div class="line"><span class="comment">#ellipsis&#123;position: relative; line-height: 20px; max-height: 40px;overflow: hidden;&#125;</span></div><div class="line"><span class="comment">#ellipsis:after&#123;content: "..."; position: absolute; bottom: 0; right: 0; padding-left: 30px;</span></div><div class="line">background: -webkit-linear-gradient(left, transparent, <span class="comment">#fff 55%);</span></div><div class="line">background: -o-linear-gradient(right, transparent, <span class="comment">#fff 55%);</span></div><div class="line">background: -moz-linear-gradient(right, transparent, <span class="comment">#fff 55%);</span></div><div class="line">background: linear-gradient(to right, transparent, <span class="comment">#fff 55%);</span></div><div class="line">&#125; </div><div class="line">//注意：ie6-7不显示content内容</div><div class="line">1.将height设置为line-height的整数倍，防止超出的文字露出。</div><div class="line">2.给p::after添加渐变背景可避免文字只显示一半。</div></pre></td></tr></table></figure></p>
-<p>项目中要对一个div中的文字进行控制，文本溢出在溢出的部分要显示“…”，焦点在当前div时则要进行跑马灯的动作。<br>我们这里用的是字符串截取的方式，比如说：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"txt"</span>&gt;截取字符串&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>在这个div中最多就能显示三个汉字，多余的则用“…”显示，注意是汉字，所以此时问题就出现了，用截取字符串的方法，截取前三个汉字“截取字”，然后再加上“…”，那么div中的内容就是“截取字…”，如果文本是英文呢，在浏览器中显示的时候，你就会觉得，这么短就要加“…”了？<br>所以我的方法是把英文字母或是数字以0.5个字符来计算。这样div“汉abcd123文字”中只显示三个字符的话就是“汉abcd…”,</p>
-<p>下面上代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//得到文字字符长度，规则：中文字符算一个，英文，数字算0.5个（不足1个的当一个计算）</div><div class="line"><span class="keyword">function</span> getStrLen(str)</div><div class="line">&#123;</div><div class="line">	var reg = /[0-9A-Za-z]/mg;</div><div class="line">	var englishMatch = str.match(reg);</div><div class="line">	var e_len = 0,//英语长度</div><div class="line">		o_len = 0,//汉语长度</div><div class="line">		len = str.length;</div><div class="line">	<span class="keyword">if</span>(englishMatch)</div><div class="line">	&#123;</div><div class="line">		e_len = englishMatch.length;</div><div class="line">		o_len = len - e_len;</div><div class="line">		<span class="keyword">if</span>(e_len%2 == 1)</div><div class="line">		&#123;</div><div class="line">			len = o_len + Math.floor(e_len/2) + 1;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			len = o_len + e_len/2;</div><div class="line">		&#125;</div><div class="line">		console.log(<span class="string">"o_len"</span> + o_len);</div><div class="line">		console.log(<span class="string">"e_len"</span> + e_len);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> len;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//通过源字符串和实际允许显示的字符长度（英文和数字按0.5来算），返回该字符串可截取的索引值	</div><div class="line"><span class="keyword">function</span> cutOutStr(str,len)</div><div class="line">&#123;</div><div class="line">	var reg = /[0-9A-Za-z]/mg;</div><div class="line">	var i_len = 0,</div><div class="line">		t_len = 0,</div><div class="line">		index = 0;</div><div class="line">	<span class="keyword">for</span>(var i=0;i&lt;str.length;i++)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span>(str[i].match(reg))</div><div class="line">		&#123;</div><div class="line">			i_len = 0.5;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			i_len = 1;</div><div class="line">		&#125;</div><div class="line">		t_len += i_len;</div><div class="line">		<span class="keyword">if</span>(t_len&gt;=len)</div><div class="line">		&#123;</div><div class="line">			index = i;</div><div class="line">			<span class="built_in">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> index;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>下面是验证的代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"txt"</span>&gt;验证eng的文字&lt;/div&gt;</div><div class="line">var txt = document.getElementById(<span class="string">"txt"</span>).innerHTML;</div><div class="line">console.log(txt);</div><div class="line">var len = getStrLen(txt);</div><div class="line">var index = cutOutStr(txt,6);</div><div class="line">console.log(index);</div><div class="line">var t = txt.substring(0,index) + <span class="string">"..."</span>;</div><div class="line">console.log(t);</div><div class="line">document.getElementById(<span class="string">"txt"</span>).innerHTML = t;</div></pre></td></tr></table></figure></p>
-<p>这就是我项目中用到的方法，有人看到这会说这就是一个单行文本溢出的问题么，用上边的方法就可以了，其实不然，我们项目里面还有其他的场景要求，这里不会细写，只是提供一种思路。</p>
-
-          
+          先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。首先单行文本溢出：应用纯css的用法：1234567891011121314151617181920212223&lt;div id="ellipsis"&gt;单行单行单行单行单行单行单行单行单行单行单行&lt;/div&gt;
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/06/str/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -573,20 +608,15 @@
       
         
           
-            <p>项目中有一块要求：要在固定的位置根据宽高比例放图片。返回的数据中有宽高比的值，然后与页面上固定的位置的宽高比做比较，来放对应的图片。<br>问题是：返回数据的顺序和宽高比不固定，所以只是单纯的写两个循环来放海报的位置根本行不通。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">//比如说页面上有13个icon，其中有10个要放海报；所有icon的数组为icons</div><div class="line">//数据返回data有10个，就是要放海报的数据（数据的顺序不固定），数据的数组就是data。</div><div class="line">//说明，该文章中的海报用文字替换来说明问题</div><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html lang=<span class="string">"en"</span>&gt;</div><div class="line">&lt;head&gt;</div><div class="line">	&lt;meta charset=<span class="string">"UTF-8"</span>&gt;</div><div class="line">	&lt;title&gt;Document&lt;/title&gt;</div><div class="line">	&lt;style&gt;</div><div class="line">		*&#123;margin: 0;padding: 0;&#125;</div><div class="line">		ul,li&#123;list-style: none;&#125;</div><div class="line">		<span class="comment">#wrap li&#123;float: left;margin-left:20px;margin-top:20px;border:2px solid #de34af;&#125;</span></div><div class="line">		<span class="comment">#wrap li p&#123;width:100%;height: 70%;background:pink;&#125;</span></div><div class="line">		<span class="comment">#item1,#item9&#123;width:30px;height:100px;&#125;</span></div><div class="line">		<span class="comment">#item2,#item4,#item8,#item10&#123;width:56px;height:100px;&#125;</span></div><div class="line">		<span class="comment">#item3,#item5&#123;width:133px;height:100px;&#125;</span></div><div class="line">		<span class="comment">#item6,#item7&#123;width:123px;height:100px;&#125;</span></div><div class="line">	&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;ul id=<span class="string">"wrap"</span>&gt;</div><div class="line">		&lt;li id=<span class="string">"item_2"</span> ratio=<span class="string">"1.45"</span>&gt;1.45&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item_1"</span> ratio=<span class="string">"1.45"</span>&gt;1.45&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item0"</span> ratio=<span class="string">"1.45"</span>&gt;1.45&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item1"</span> ratio=<span class="string">"0.30"</span>&gt;0.30&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item2"</span> ratio=<span class="string">"0.56"</span>&gt;0.56&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item3"</span> ratio=<span class="string">"1.33"</span>&gt;1.33&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item4"</span> ratio=<span class="string">"0.56"</span>&gt;0.56&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item5"</span> ratio=<span class="string">"1.33"</span>&gt;1.33&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item6"</span> ratio=<span class="string">"1.23"</span>&gt;1.23&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item7"</span> ratio=<span class="string">"1.23"</span>&gt;1.23&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item8"</span> ratio=<span class="string">"0.56"</span>&gt;0.56&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item9"</span> ratio=<span class="string">"0.30"</span>&gt;0.30&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">		&lt;li id=<span class="string">"item10"</span> ratio=<span class="string">"0.56"</span>&gt;0.56&lt;p&gt;&lt;/p&gt;&lt;/li&gt;</div><div class="line">	&lt;/ul&gt;</div><div class="line"></div><div class="line"></div><div class="line">	&lt;script&gt;</div><div class="line">		var jsonList = [</div><div class="line">						&#123;resolution:<span class="string">"0.56"</span>,text:<span class="string">"我是0.56——1"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"1.23"</span>,text:<span class="string">"我是1.23——1"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"0.56"</span>,text:<span class="string">"我是0.56——2"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"1.33"</span>,text:<span class="string">"我是1.33——1"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"0.33"</span>,text:<span class="string">"我是1.33——2"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"1.23"</span>,text:<span class="string">"我是1.23——2"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"0.56"</span>,text:<span class="string">"我是0.56——3"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"0.56"</span>,text:<span class="string">"我是0.56——4"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"0.30"</span>,text:<span class="string">"我是0.30——1"</span>&#125;,</div><div class="line">						&#123;resolution:<span class="string">"0.30"</span>,text:<span class="string">"我是0.30——2"</span>&#125;</div><div class="line">						];</div><div class="line">		window.onload = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">			//获取页面上有多少个li的icon</div><div class="line">			var icons = document.getElementById(<span class="string">"wrap"</span>).children;</div><div class="line">			var arr = jsonList;</div><div class="line">			<span class="keyword">for</span>(var i=0;i&lt;icons.length;i++)</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">for</span>(var j=0;j&lt;arr.length;j++)</div><div class="line">				&#123;</div><div class="line">					var ratio = icons[i].getAttribute(<span class="string">"ratio"</span>),</div><div class="line">						resolution = arr[j].resolution;</div><div class="line">					<span class="keyword">if</span>(ratio == resolution)</div><div class="line">					&#123;</div><div class="line">						//console.log(icons[i].lastChild);</div><div class="line">						icons[i].lastChild.innerHTML = arr[j].text;</div><div class="line">						<span class="built_in">break</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
-<p>以上是这个demo的代码，上面代码执行后的结果如下图：</p>
-<p>由图中可知，所有的数据都只是—1，并没有显示出—2，—3等。这是因为循环时，到—1的时候，就进入了判断中，接着就break跳出循环。这样就会每次只能取出数据中在前的—1的值。这样就不能达到我们的目的：要让所有的对应数据展示在p标签内。此时我们就会想到每次放完一个数据后，把这个数据删除了，那么下一次再循环的时候就不存在这条已经显示过的数据，也就不会每次只显示—1的值了。<br>这个思路也就是要把for循环那里的代码改一下。此处，就要想怎样删除一个数组中的一个值。</p>
-<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//给Array的原型上添加一个remove的方法，index是要删除的索引值</div><div class="line">Array.prototype.remove = <span class="keyword">function</span>(index)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(isNaN(index)||index&gt;this.length)&#123;<span class="built_in">return</span> <span class="literal">false</span>;&#125;</div><div class="line">    this.splice(index,1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面这句话加入到代码中，然后在for循环中break的前面加一句arr.remove(j);就可以达到目的。重新执行代码后的结果如下：</p>
-<p>此时就是我们想要的效果了。</p>
-<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//假如我们不想用索引值来删除数组中的某个值，或是在某些情况下，我们不能具体的知道索引值是多少，只能通过数组中要删除的元素的内容来删除，那就下面的方法。</div><div class="line">Array.prototype.indexOf = <span class="keyword">function</span>(val)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">for</span> (var i = 0; i &lt; this.length; i++) &#123;</div><div class="line">	      <span class="keyword">if</span> (this[i] == val) <span class="built_in">return</span> i;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">return</span> -1;</div><div class="line">&#125;;</div><div class="line">Array.prototype.remove = <span class="keyword">function</span>(val) </div><div class="line">&#123;</div><div class="line">    var index = this.indexOf(val);</div><div class="line">	  <span class="keyword">if</span> (index &gt; -1) &#123;</div><div class="line">	      this.splice(index, 1);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>中，然后在for循环中break的前面加一句arr.remove(arr[j]);同样可以达到目的。</p>
-<h4 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//splice(index,len,[item]);index:数组开始下标; len: 替换/删除的长度; item:替换的值，删除操作的话 item为空</div><div class="line">//该方法会改变原始数组</div><div class="line">//在此例中，只要把<span class="built_in">break</span>之前的那句话换成arr.splice(j,1);即可。</div></pre></td></tr></table></figure>
-<p>针对于splice(index,len,[item]);的方法，还有替换和增加数组中元素的使用方式。<br>替换：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//假如我有一个arr的数组，想要把数组中的第二个元素替换成y，其他元素不变。</div><div class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>];</div><div class="line">arr.splice(1,1,<span class="string">"y"</span>);</div><div class="line">console.log(arr);//浏览器控制台打印结果：[<span class="string">"q"</span>, <span class="string">"y"</span>, <span class="string">"e"</span>, <span class="string">"r"</span>]</div></pre></td></tr></table></figure></p>
-<p>添加：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//将len的值设为0，就是要在某个索引的位置添加某个元素了</div><div class="line">//假如我有一个arr的数组，想要把数组中第二个位置添加一个y，其他元素不变。</div><div class="line">var arr = [<span class="string">"q"</span>,<span class="string">"w"</span>,<span class="string">"e"</span>,<span class="string">"r"</span>];</div><div class="line">arr.splice(1,0,<span class="string">"y"</span>);</div><div class="line">console.log(arr);//浏览器控制台打印结果：[<span class="string">"q"</span>, <span class="string">"y"</span>, <span class="string">"w"</span>, <span class="string">"e"</span>, <span class="string">"r"</span>]</div></pre></td></tr></table></figure></p>
-<p>扩展：<br>delete方法<br>delete删除掉数组中的元素后，会把该下标出的值置为undefined,数组的长度不会变<br>var arr1 = [“q”,”w”,”e”,”r”];<br>delete arr1[1]<br>console.log(arr1);<br>console.log(arr1.length);//4</p>
-
-          
+          项目中有一块要求：要在固定的位置根据宽高比例放图片。返回的数据中有宽高比的值，然后与页面上固定的位置的宽高比做比较，来放对应的图片。问题是：返回数据的顺序和宽高比不固定，所以只是单纯的写两个循环来放海报的位置根本行不通。1234567891011121314151617181920212223242
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/20/arrarRemove/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -705,9 +735,15 @@
       
         
           
-            <p>网站优化的有关知识在网上一搜也是一大把。我今天就是把之前学习的整理下来，先做个笔记。<br>1.减少http请求。（eg：合并css、js文件和图片等。）<br>2.设置cdn节点。（就近设置服务器副本）<br>3.添加Expire/Cache-Control头，expire==&gt;添加一个时间值来做缓存，在时间值内直接取缓存，否则重新获取。<br>4.使用GZip压缩==&gt;在服务器端进行GZip压缩。<br>5.将css放在页面最上面（放在<head>中）。<br>6.将script放在页面最下面。<br>7.避免在css中使用expression，这个在上一篇中也有说过。css expression俗称css表达式，是把css属性（固有属性和自定义属性）与javaScript表达式建立连接。<br>8.将脚本文件，js，css都放在外部文件中。写在页面内的情况：（1）只应用于一个页面（2）不经常被访问到（3）脚本和样式很少<br>9.减少dns查询<br>10.最小化js、css文件（空格，不必要的字符的减少，自定义变量名，函数名和参数尽量减少代码量）<br>11.避免重定向（增加了http请求。301永久重定向，302临时重定向）<br>12.移除重复的脚本（多次引用重复的脚本，会多次执行脚本内的内容）<br>13.ETag（Entity Tag）使用特殊的字符串来标识某个请求资源版本，做实体标签，属于http标签<br>    发送请求时，服务器会根据ETag来做对比，如果浏览器的ETag和服务器的ETag一致。则说明该资源没有修改，与以前相同。则服务器会返回304。告诉浏览器，可以使用本地缓存的版本，这样就减小了服务器的压力，服务器就不用重新计算。<br>14.使用Ajax缓存（get/post两种方法）<br>    post请求：每次都执行，不可以被缓存。<br>    get请求：除非指定了一个不同的地址，否则会缓存。</head></p>
-
-          
+          网站优化的有关知识在网上一搜也是一大把。我今天就是把之前学习的整理下来，先做个笔记。1.减少http请求。（eg：合并css、js文件和图片等。）2.设置cdn节点。（就近设置服务器副本）3.添加Expire/Cache-Control头，expire==&gt;添加一个时间值来做缓存，在时间值内直
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/14/yahoo/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -826,9 +862,15 @@
       
         
           
-            <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。<br>repaint（重绘）：<br>    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。<br>reflow（渲染/回流）：<br>    与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。<br>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div class="container"></div><br>                 css中：<br>                 .container{width:expression((documentElement.clientWidth &lt; 500) ? “500px” : “200px”)}<br>        即css属性后可为一段js的代码。<br>      8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。</p>
-
-          
+          作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/14/repaint/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -947,15 +989,16 @@
       
         
           
-            <p>之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;&amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。<br>文中会多次用到“!”的符号，表示“非”的意思。</p>
-<h4 id="规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b"><a href="#规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b" class="headerlink" title="规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b"></a>规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(4||5);//弹出4；详解：!4时为<span class="literal">false</span>，!!4即!<span class="literal">false</span>，故返回值为<span class="literal">true</span>。</div><div class="line">alert(0||5);//弹出5；详解：0在解析时会直接解析为boolean值，0的boolean值为<span class="literal">false</span>，!0则为<span class="literal">true</span>，!!0==!<span class="literal">true</span>==<span class="literal">false</span>,所以弹出5。</div></pre></td></tr></table></figure>
-<h4 id="规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a"><a href="#规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a" class="headerlink" title="规则二：a&amp;&amp;b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a"></a>规则二：a&amp;&amp;b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(4&amp;&amp;5);//弹出5；原因：!!4返回<span class="literal">true</span>，详解同上。</div><div class="line">alert(0&amp;&amp;5);//弹出0；原因：!!0返回<span class="literal">false</span>，详解同上。</div></pre></td></tr></table></figure>
-<h4 id="规则三：-amp-amp-的优先级高于"><a href="#规则三：-amp-amp-的优先级高于" class="headerlink" title="规则三：&amp;&amp;的优先级高于||"></a>规则三：&amp;&amp;的优先级高于||</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(1&amp;&amp;(3||0&amp;&amp;4));//弹出3；详解：0&amp;&amp;4，返回0，就变成1&amp;&amp;(3||0)，先执行括号中的，3||0返回3，接着就变成了1&amp;&amp;3，再由规则二就可知返回值为3。</div><div class="line">alert(0&amp;&amp;4||2&amp;&amp;3);//弹出3；详解：0&amp;&amp;4，返回0，就变成0||2&amp;&amp;3，2&amp;&amp;3返回3，接着0||3，由规则一就可知返回值为3。</div></pre></td></tr></table></figure>
-<p>这样是不是就能明白&amp;&amp;和||的规则了呢。<br>接着再举几个下例子。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">callback&amp;&amp;callback();//这句话与<span class="keyword">if</span>(callback)&#123;callback()&#125;;的语句是能达到同样的效果。</div><div class="line">this.count = this.count || 0;//实现简单的计数器时常用。</div><div class="line">var obj = obj || &#123;&#125;;//这句话一般用于传参的obj，做个初始化。</div></pre></td></tr></table></figure>
-<p>今天就写这些，看到这篇博客的你，到这里就应该明白&amp;&amp;和||的使用规则了。<br>要注意一个问题，这样写代码会降低代码的可读性，但能精简代码，减少网络流量。</p>
-
-          
+          之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;&amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。文中会多次用到“!”的符号，表示“非”的意思。
+规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b12alert(4||5);/
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/13/and/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1074,10 +1117,15 @@
       
         
           
-            <p>javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。<br>setTimeout和setInterval的方法要注意的问题：<br>    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给人立即执行的假象。<br>之所以要用setTimeout的方法来替代setInterval，是因为setInterval会产生回调堆积，特别是在时间很短的时候，就会有清除不掉setInterval方法的现象。<br>此处用setTimeout的延时递归来代替setInterval。</p>
-<h4 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var timeout = <span class="literal">false</span>;//启动及关闭按钮</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(timeout)<span class="built_in">return</span>;</div><div class="line">    method();//要执行的方法</div><div class="line">    <span class="built_in">set</span>Timeout(timer, 2000);</div><div class="line">    //timer指本身，延时递归调用自己，2000是隔多久调用自己一次，单位ms</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
+          javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/12/setTimeout/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1196,11 +1244,15 @@
       
         
           
-            <p>之前项目中遇到一个问题。我们采用css3的transition动画进行页面焦点的显示。transitionEnd事件是在css动画完成过渡后触发，但是监听事件transitionEnd事件存在一个问题，就是使用动画的这个元素，改变了几个属性，对应就会调用几次监听事件。<br>说一下，我在项目中的解决方法。（此处是举例说明）</p>
-<h3 id="上代码："><a href="#上代码：" class="headerlink" title="上代码："></a>上代码：</h3><p>html中：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"change"</span> style=<span class="string">"width:100px;height:500px;background:blue;"</span>&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>js中（想要测试不要忘记引入了jq，此处应用了jq）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">//公共方法用来remove掉过多的transitionEnd监听事件</div><div class="line">//jqueryObj是要进行动画的对象</div><div class="line">//css3Style是该对象要改变的样式</div><div class="line">//duration是该动画的过渡时长</div><div class="line">//callback是动画结束后的回调函数</div><div class="line"><span class="keyword">function</span> transitionAnimate(jqueryObj,css3Style,duration,callback)</div><div class="line">&#123;</div><div class="line">   var call = <span class="function"><span class="title">function</span></span>()</div><div class="line">   &#123;</div><div class="line">	jqueryObj[0].removeEventListener(<span class="string">"webkitTransitionEnd"</span>, call);</div><div class="line">	callback();  </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(callback)</div><div class="line">    &#123;</div><div class="line">	jqueryObj[0].addEventListener(<span class="string">"webkitTransitionEnd"</span>, call);</div><div class="line">    &#125;</div><div class="line">    $(jqueryObj).css(&#123;<span class="string">"transition"</span>:<span class="string">"all "</span>+duration+<span class="string">"ms"</span>&#125;);</div><div class="line">    $(jqueryObj).css(css3Style);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//调用transitionAnimate方法</div><div class="line">var t_call = <span class="function"><span class="title">function</span></span>()&#123;<span class="keyword">if</span>(callback)callback()&#125;;</div><div class="line">transitionAnimate($(<span class="string">"#change"</span>),&#123;<span class="string">"transform"</span>:<span class="string">"scale(2)"</span>,<span class="string">"border"</span>:<span class="string">"5px solid blue"</span>,<span class="string">"box-shadow"</span>:<span class="string">"0px 0px 10px 10px rgba(0,0,0,0.5)"</span>&#125;,500,call);</div></pre></td></tr></table></figure></p>
-
-          
+          之前项目中遇到一个问题。我们采用css3的transition动画进行页面焦点的显示。transitionEnd事件是在css动画完成过渡后触发，但是监听事件transitionEnd事件存在一个问题，就是使用动画的这个元素，改变了几个属性，对应就会调用几次监听事件。说一下，我在项目中的解决方法。（
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/12/css3TransitionEnd /#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1319,12 +1371,15 @@
       
         
           
-            <p>建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。<br>getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的左侧的距离，top和bottom都是元素相对于可视区域顶部的距离。</p>
-<h3 id="下面上代码"><a href="#下面上代码" class="headerlink" title="下面上代码"></a>下面上代码</h3><p>html中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"box"</span> style=<span class="string">"width:100px;height:100px;margin:0 auto;background:red;"</span>&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>js中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var box = document.getElementById(<span class="string">"box"</span>);//获取元素</div><div class="line">    box.getBoundingClientRect().top;//获取元素顶部与页面可视区域的顶部的距离</div><div class="line">    box.getBoundingClientRect().bottom;//获取元素底部与页面可视区域的顶部的距离</div><div class="line">    box.getBoundingClientRect().right;//获取元素右侧与页面可视区域的左侧的距离</div><div class="line">    box.getBoundingClientRect().left;//获取元素左侧与页面可视区域的左侧的距离</div></pre></td></tr></table></figure></p>
-<p>同时也要注意：在IE，Firefox3+，Opera9.5，Chrome，safari支持。在IE中，默认坐标从(2,2)开始计算，导致最终比其他浏览器多出两个像素。<br>兼容的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> getClientRect(obj)</div><div class="line">&#123;</div><div class="line">   var rect = obj.getBoundingClientRect();</div><div class="line">   var c_left = document.documentElement.clientLeft;//非IE中，获取值为0，否则为2;</div><div class="line">   var c_top = document.documentElement.clientTop;//非IE中，获取值为0，否则为2;</div><div class="line">   var left = rect.left - c_left,</div><div class="line">       right = rect.right - c_left,</div><div class="line">       top = rect.top - c_top,</div><div class="line">       bottom = rect.bottom - c_top;</div><div class="line">   <span class="built_in">return</span> &#123;left,right,top,bottom&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
+          建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/12/wode/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1443,17 +1498,15 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/09/12/hello-world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
