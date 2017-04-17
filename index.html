@@ -199,26 +199,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -354,7 +334,7 @@
       
         
           
-          项目中要对js，css文件进行合并压缩的处理。window系统的dos命令中有一个特别好用的方法。但只限于对文件的合并的处理。压缩我是用的压缩工具。因为压缩工具每次需要把文件拖入到工具中，所以用dos命令这个来弄就方便太多了。话不多说，说场景。首先：window + r 键调出运行窗口，输入cmd后
+          项目中要对js，css文件进行合并压缩的处理。window系统的dos命令中有一个特别好用的方法。但
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -481,7 +461,7 @@
       
         
           
-          先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。首先单行文本溢出：应用纯css的用法：1234567891011121314151617181920212223&lt;div id="ellipsis"&gt;单行单行单行单行单行单行单行单行单行单行单行&lt;/div&gt;
+          先说一下单行和多行文本溢出的解决方法，然后再说一下我项目中用到的方法。首先单行文本溢出：应用纯css
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -608,7 +588,7 @@
       
         
           
-          项目中有一块要求：要在固定的位置根据宽高比例放图片。返回的数据中有宽高比的值，然后与页面上固定的位置的宽高比做比较，来放对应的图片。问题是：返回数据的顺序和宽高比不固定，所以只是单纯的写两个循环来放海报的位置根本行不通。1234567891011121314151617181920212223242
+          项目中有一块要求：要在固定的位置根据宽高比例放图片。返回的数据中有宽高比的值，然后与页面上固定的位置
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -735,7 +715,7 @@
       
         
           
-          网站优化的有关知识在网上一搜也是一大把。我今天就是把之前学习的整理下来，先做个笔记。1.减少http请求。（eg：合并css、js文件和图片等。）2.设置cdn节点。（就近设置服务器副本）3.添加Expire/Cache-Control头，expire==&gt;添加一个时间值来做缓存，在时间值内直
+          网站优化的有关知识在网上一搜也是一大把。我今天就是把之前学习的整理下来，先做个笔记。1.减少http
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -862,7 +842,7 @@
       
         
           
-          作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点
+          作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—r
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -989,8 +969,7 @@
       
         
           
-          之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;&amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。文中会多次用到“!”的符号，表示“非”的意思。
-规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b12alert(4||5);/
+          之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;&amp;和||的符号进行代码的编写，
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1117,7 +1096,7 @@
       
         
           
-          javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如
+          javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1244,7 +1223,7 @@
       
         
           
-          之前项目中遇到一个问题。我们采用css3的transition动画进行页面焦点的显示。transitionEnd事件是在css动画完成过渡后触发，但是监听事件transitionEnd事件存在一个问题，就是使用动画的这个元素，改变了几个属性，对应就会调用几次监听事件。说一下，我在项目中的解决方法。（
+          之前项目中遇到一个问题。我们采用css3的transition动画进行页面焦点的显示。transit
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1371,7 +1350,7 @@
       
         
           
-          建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的
+          建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。getBoundin
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1498,7 +1477,7 @@
       
         
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          Welcome to Hexo! This is your very first post. Che
           ...
           <!--noindex-->
           <div class="post-button text-center">
