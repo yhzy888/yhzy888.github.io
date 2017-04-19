@@ -87,16 +87,21 @@
 
 
 
-<meta name="description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
+<meta name="description" content="之前我的博客中!《网站优化14条》https://yhzy888.github.io/2017/03/14/yahoo.html 一文中，第一条就说过减少http请求，合并css，js文件和图片等。前端自动化的工具grunt，gulp等，还有很多在线工具等都能达到目的。今天就单说一下，前端的图片的优化。单单以我现在的项目入手，说一下图片的优化。
+第一：最大的优化就是不用图片不用图片，小伙伴们是不是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javaScript性能优化—repaint和reflow">
-<meta property="og:url" content="http://yoursite.com/2017/03/14/repaint/index.html">
+<meta property="og:title" content="前端图片优化">
+<meta property="og:url" content="http://yoursite.com/2017/04/19/picOptimize.html/index.html">
 <meta property="og:site_name" content="yuhong">
-<meta property="og:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
-<meta property="og:updated_time" content="2017-03-14T14:43:51.849Z">
+<meta property="og:description" content="之前我的博客中!《网站优化14条》https://yhzy888.github.io/2017/03/14/yahoo.html 一文中，第一条就说过减少http请求，合并css，js文件和图片等。前端自动化的工具grunt，gulp等，还有很多在线工具等都能达到目的。今天就单说一下，前端的图片的优化。单单以我现在的项目入手，说一下图片的优化。
+第一：最大的优化就是不用图片不用图片，小伙伴们是不是">
+<meta property="og:image" content="http://yoursite.com/2017/04/19/picOptimize.html/pic1.png">
+<meta property="og:updated_time" content="2017-04-19T14:20:32.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javaScript性能优化—repaint和reflow">
-<meta name="twitter:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
+<meta name="twitter:title" content="前端图片优化">
+<meta name="twitter:description" content="之前我的博客中!《网站优化14条》https://yhzy888.github.io/2017/03/14/yahoo.html 一文中，第一条就说过减少http请求，合并css，js文件和图片等。前端自动化的工具grunt，gulp等，还有很多在线工具等都能达到目的。今天就单说一下，前端的图片的优化。单单以我现在的项目入手，说一下图片的优化。
+第一：最大的优化就是不用图片不用图片，小伙伴们是不是">
+<meta name="twitter:image" content="http://yoursite.com/2017/04/19/picOptimize.html/pic1.png">
 
 
 
@@ -124,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/14/repaint/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/04/19/picOptimize.html/"/>
 
 
 
 
 
-  <title> javaScript性能优化—repaint和reflow | yuhong </title>
+  <title> 前端图片优化 | yuhong </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +264,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/repaint/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/19/picOptimize.html/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuhong">
@@ -280,7 +285,7 @@
             
             
               
-                javaScript性能优化—repaint和reflow
+                前端图片优化
               
             
           </h1>
@@ -295,8 +300,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T22:38:53+08:00">
-                2017-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T22:09:23+08:00">
+                2017-04-19
               </time>
             
 
@@ -331,7 +336,16 @@
       
 
       
-        <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。<br>repaint（重绘）：<br>    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。<br>reflow（渲染/回流）：<br>    与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。<br>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div class="container"></div><br>                 css中：<br>                 .container{width:expression((documentElement.clientWidth &lt; 500) ? “500px” : “200px”)}<br>        即css属性后可为一段js的代码。<br>      8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。</p>
+        <p>之前我的博客中!<em>《网站优化14条》<a href="https://yhzy888.github.io/2017/03/14/yahoo.html" target="_blank" rel="external">https://yhzy888.github.io/2017/03/14/yahoo.html</a></em> 一文中，第一条就说过减少http请求，合并css，js文件和图片等。<br>前端自动化的工具grunt，gulp等，还有很多在线工具等都能达到目的。今天就单说一下，前端的图片的优化。<br>单单以我现在的项目入手，说一下图片的优化。</p>
+<h3 id="第一：最大的优化就是不用图片"><a href="#第一：最大的优化就是不用图片" class="headerlink" title="第一：最大的优化就是不用图片"></a>第一：最大的优化就是不用图片</h3><p>不用图片，小伙伴们是不是惊呆了。此处的不用图片是指那些特别简单的只要几句css代码就可以实现的图片。比如渐变色的图片，箭头图片等，还有icon font可以用来实现单一颜色的小图片呦，这样还能用css进行操控，改变字体颜色啥啥的。此处不多说。</p>
+<h3 id="第二：图片格式的特点"><a href="#第二：图片格式的特点" class="headerlink" title="第二：图片格式的特点"></a>第二：图片格式的特点</h3><p><img src="/2017/04/19/picOptimize.html/pic1.png" alt="&quot;图片格式的特点&quot;"></p>
+<p>对于jpeg这种格式的文件有两种保存方式，不知道大家晓不晓得。分别是Baseline JPEG（标准型）和Progressive JPEG（渐进式）。两种格式有相同尺寸以及图像数据，扩展名也是相同的，唯一的区别是二者显示的方式不同。<br>这一块的内容在我的另一篇文章中有详细的解释。//此处链接博文地址</p>
+<p>不知道你对图片的http是否有一定的了解，我的<em>《有关图片http请求的总结<br>》<a href="https://yhzy888.github.io/2017/04/19/picHttp.html" target="_blank" rel="external">https://yhzy888.github.io/2017/04/19/picHttp.html</a><em>一文中有解释，不太了解的可以看一下。<br>了解图片的http请求的有关知识后，接着进入正题。</em></em></p>
+<h3 id="图片优化的方案："><a href="#图片优化的方案：" class="headerlink" title="图片优化的方案："></a>图片优化的方案：</h3><p>1.使用base64编码代替图片<br>适用：图片大小小于2KB，页面上引用图片总数不多的情况。<br>原理：将图片转换为base64编码字符串inline到页面或css中。<br>优点：减少http的请求次数，并可以放到后台数据库中，只传输字符串，有较多的构建工具可以直接实现。<br>缺点：这种方法仅限于图片总数较少，而且图片大小小于2KB的情况。否则图片字符串会变得很长。<br>此处要注意一点，base64编码的图片，浏览器不会做缓存。</p>
+<ol>
+<li>按照HTTP协议设置合理的缓存<br>适用：站点中不常换的图片，可以缓存到浏览器的localStorage中。<br>原理：缓存在浏览器的localStorage中后，每次在请求的就是缓存过的图片。<br>优点：减少http请求，加快图片显示速度。<br>缺点：这种方法，服务器中图片更换后，不会实时的展现。所以如果用这种方法建议设置一个时间间隔，来重新获取图片。比如“一天”后再重新获取。</li>
+</ol>
+<p>3.合并图片sprite(雪碧图)<br>适用：描述性图片才适合，对于img标签设置的内容性图片，是不能合并到雪碧图的，否则会影响页面的可读性。<br>原理：雪碧图的制作实际上就是零星小图合并成一张大图。<br>优点：（1）减少http请求，提高页面的性能（最大的优点）。（2）对于整体更换风格方便，只需要在一张或少张图片上修改图片的颜色或样式，整个网页的风格就可以改变，维护起来更加方便。<br>缺点：（1）只能使用到固定大小的盒子（box）里，这样才能够遮挡住不应该看到的部分。（2）对于合成的sprite(雪碧图)中的单个图片的改变，维护性就比较差了，需要更改之前引入其他未更改图片的代码的background-position。（3）在一些需要非单向的平铺背景和需要网页缩放的情况下，CSS Sprites并不合适。YUI的解决方式是，加大图片之间的距离，这样可以保持有限度的缩放。<br>4.图片压缩<br>适用：在不得不加载图片的前提下，要进一步提升优化效果，只能通过有损或无损压缩来减少图片的大小。<br>原理：对图片进行无损、有损压缩，转为压缩后图片来实现。<br>优点：减少图片加载流量，效果比较明显。<br>缺点：服务器和浏览器压力增大，而且服务器需要额外的服务支持。</p>
 
       
     </div>
@@ -368,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/13/and/" rel="next" title="javaScript/jQuery的&&和||的学习记录">
-                <i class="fa fa-chevron-left"></i> javaScript/jQuery的&&和||的学习记录
+              <a href="/2017/04/19/picHttp.html/" rel="next" title="有关图片http请求的总结">
+                <i class="fa fa-chevron-left"></i> 有关图片http请求的总结
               </a>
             
           </div>
@@ -377,10 +391,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/14/yahoo/" rel="prev" title="网站优化14条">
-                网站优化14条 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -427,8 +437,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -472,6 +491,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一：最大的优化就是不用图片"><span class="nav-number">1.</span> <span class="nav-text">第一：最大的优化就是不用图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二：图片格式的特点"><span class="nav-number">2.</span> <span class="nav-text">第二：图片格式的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片优化的方案："><span class="nav-number">3.</span> <span class="nav-text">图片优化的方案：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

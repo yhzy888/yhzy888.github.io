@@ -87,19 +87,16 @@
 
 
 
-<meta name="description" content="建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的左侧的距离，top和bottom都是元素相对于可视区域顶部的距离。
-下面上代码html中1&amp;lt;d">
+<meta name="description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="getBoundingClientRect()方法的使用">
-<meta property="og:url" content="http://yoursite.com/2016/09/12/wode/index.html">
+<meta property="og:title" content="javaScript性能优化—repaint和reflow">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/repaint.html/index.html">
 <meta property="og:site_name" content="yuhong">
-<meta property="og:description" content="建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的左侧的距离，top和bottom都是元素相对于可视区域顶部的距离。
-下面上代码html中1&amp;lt;d">
-<meta property="og:updated_time" content="2017-03-12T13:40:48.037Z">
+<meta property="og:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
+<meta property="og:updated_time" content="2017-03-14T14:43:51.849Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="getBoundingClientRect()方法的使用">
-<meta name="twitter:description" content="建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的左侧的距离，top和bottom都是元素相对于可视区域顶部的距离。
-下面上代码html中1&amp;lt;d">
+<meta name="twitter:title" content="javaScript性能优化—repaint和reflow">
+<meta name="twitter:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
 
 
 
@@ -127,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/09/12/wode/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/14/repaint.html/"/>
 
 
 
 
 
-  <title> getBoundingClientRect()方法的使用 | yuhong </title>
+  <title> javaScript性能优化—repaint和reflow | yuhong </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +259,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/12/wode/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/repaint.html/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuhong">
@@ -283,7 +280,7 @@
             
             
               
-                getBoundingClientRect()方法的使用
+                javaScript性能优化—repaint和reflow
               
             
           </h1>
@@ -298,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-12T22:33:00+08:00">
-                2016-09-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T22:38:53+08:00">
+                2017-03-14
               </time>
             
 
@@ -334,10 +331,7 @@
       
 
       
-        <p>建立了自己的博客，从今天开始，我要陆续的记录我自己学习的东西和工作中遇到的问题。<br>getBoundingClient()方法返回一个矩形对象，它包含4个属性：left,top,right和bottom。分别表示元素个边与页面可视区域的上边和左边的距离。要注意left和right都是元素相对于可视区域的左侧的距离，top和bottom都是元素相对于可视区域顶部的距离。</p>
-<h3 id="下面上代码"><a href="#下面上代码" class="headerlink" title="下面上代码"></a>下面上代码</h3><p>html中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"box"</span> style=<span class="string">"width:100px;height:100px;margin:0 auto;background:red;"</span>&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>js中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var box = document.getElementById(<span class="string">"box"</span>);//获取元素</div><div class="line">    box.getBoundingClientRect().top;//获取元素顶部与页面可视区域的顶部的距离</div><div class="line">    box.getBoundingClientRect().bottom;//获取元素底部与页面可视区域的顶部的距离</div><div class="line">    box.getBoundingClientRect().right;//获取元素右侧与页面可视区域的左侧的距离</div><div class="line">    box.getBoundingClientRect().left;//获取元素左侧与页面可视区域的左侧的距离</div></pre></td></tr></table></figure></p>
-<p>同时也要注意：在IE，Firefox3+，Opera9.5，Chrome，safari支持。在IE中，默认坐标从(2,2)开始计算，导致最终比其他浏览器多出两个像素。<br>兼容的方法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> getClientRect(obj)</div><div class="line">&#123;</div><div class="line">   var rect = obj.getBoundingClientRect();</div><div class="line">   var c_left = document.documentElement.clientLeft;//非IE中，获取值为0，否则为2;</div><div class="line">   var c_top = document.documentElement.clientTop;//非IE中，获取值为0，否则为2;</div><div class="line">   var left = rect.left - c_left,</div><div class="line">       right = rect.right - c_left,</div><div class="line">       top = rect.top - c_top,</div><div class="line">       bottom = rect.bottom - c_top;</div><div class="line">   <span class="built_in">return</span> &#123;left,right,top,bottom&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。<br>repaint（重绘）：<br>    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。<br>reflow（渲染/回流）：<br>    与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。<br>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div class="container"></div><br>                 css中：<br>                 .container{width:expression((documentElement.clientWidth &lt; 500) ? “500px” : “200px”)}<br>        即css属性后可为一段js的代码。<br>      8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。</p>
 
       
     </div>
@@ -374,8 +368,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/12/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2017/03/13/and.html/" rel="next" title="javaScript/jQuery的&&和||的学习记录">
+                <i class="fa fa-chevron-left"></i> javaScript/jQuery的&&和||的学习记录
               </a>
             
           </div>
@@ -384,8 +378,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/12/css3TransitionEnd /" rel="prev" title="css3的transitionEnd事件">
-                css3的transitionEnd事件 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/14/yahoo.html/" rel="prev" title="网站优化14条">
+                网站优化14条 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -433,17 +427,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -487,22 +472,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下面上代码"><span class="nav-number">1.</span> <span class="nav-text">下面上代码</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

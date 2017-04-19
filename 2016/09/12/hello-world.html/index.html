@@ -87,19 +87,19 @@
 
 
 
-<meta name="description" content="之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;amp;&amp;amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。文中会多次用到“!”的符号，表示“非”的意思。
-规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b12alert(4||5);//弹出4；详解：!4时为false，!!4即!false，故返回值为true。alert(0||5)">
+<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick">
 <meta property="og:type" content="article">
-<meta property="og:title" content="javaScript/jQuery的&&和||的学习记录">
-<meta property="og:url" content="http://yoursite.com/2017/03/13/and/index.html">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="http://yoursite.com/2016/09/12/hello-world.html/index.html">
 <meta property="og:site_name" content="yuhong">
-<meta property="og:description" content="之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;amp;&amp;amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。文中会多次用到“!”的符号，表示“非”的意思。
-规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b12alert(4||5);//弹出4；详解：!4时为false，!!4即!false，故返回值为true。alert(0||5)">
-<meta property="og:updated_time" content="2017-03-13T14:19:09.965Z">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick">
+<meta property="og:updated_time" content="2017-03-12T12:52:50.075Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javaScript/jQuery的&&和||的学习记录">
-<meta name="twitter:description" content="之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;amp;&amp;amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。文中会多次用到“!”的符号，表示“非”的意思。
-规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b12alert(4||5);//弹出4；详解：!4时为false，!!4即!false，故返回值为true。alert(0||5)">
+<meta name="twitter:title" content="Hello World">
+<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/13/and/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/09/12/hello-world.html/"/>
 
 
 
 
 
-  <title> javaScript/jQuery的&&和||的学习记录 | yuhong </title>
+  <title> Hello World | yuhong </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +262,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/13/and/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/12/hello-world.html/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuhong">
@@ -283,7 +283,7 @@
             
             
               
-                javaScript/jQuery的&&和||的学习记录
+                Hello World
               
             
           </h1>
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-13T21:31:58+08:00">
-                2017-03-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-12T22:16:47+08:00">
+                2016-09-12
               </time>
             
 
@@ -334,13 +334,15 @@
       
 
       
-        <p>之前看别人项目上的源码时，就看到了项目中大量的使用了&amp;&amp;和||的符号进行代码的编写，今天就记录一下，我之前学习的心得。<br>文中会多次用到“!”的符号，表示“非”的意思。</p>
-<h4 id="规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b"><a href="#规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b" class="headerlink" title="规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b"></a>规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(4||5);//弹出4；详解：!4时为<span class="literal">false</span>，!!4即!<span class="literal">false</span>，故返回值为<span class="literal">true</span>。</div><div class="line">alert(0||5);//弹出5；详解：0在解析时会直接解析为boolean值，0的boolean值为<span class="literal">false</span>，!0则为<span class="literal">true</span>，!!0==!<span class="literal">true</span>==<span class="literal">false</span>,所以弹出5。</div></pre></td></tr></table></figure>
-<h4 id="规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a"><a href="#规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a" class="headerlink" title="规则二：a&amp;&amp;b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a"></a>规则二：a&amp;&amp;b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(4&amp;&amp;5);//弹出5；原因：!!4返回<span class="literal">true</span>，详解同上。</div><div class="line">alert(0&amp;&amp;5);//弹出0；原因：!!0返回<span class="literal">false</span>，详解同上。</div></pre></td></tr></table></figure>
-<h4 id="规则三：-amp-amp-的优先级高于"><a href="#规则三：-amp-amp-的优先级高于" class="headerlink" title="规则三：&amp;&amp;的优先级高于||"></a>规则三：&amp;&amp;的优先级高于||</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(1&amp;&amp;(3||0&amp;&amp;4));//弹出3；详解：0&amp;&amp;4，返回0，就变成1&amp;&amp;(3||0)，先执行括号中的，3||0返回3，接着就变成了1&amp;&amp;3，再由规则二就可知返回值为3。</div><div class="line">alert(0&amp;&amp;4||2&amp;&amp;3);//弹出3；详解：0&amp;&amp;4，返回0，就变成0||2&amp;&amp;3，2&amp;&amp;3返回3，接着0||3，由规则一就可知返回值为3。</div></pre></td></tr></table></figure>
-<p>这样是不是就能明白&amp;&amp;和||的规则了呢。<br>接着再举几个下例子。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">callback&amp;&amp;callback();//这句话与<span class="keyword">if</span>(callback)&#123;callback()&#125;;的语句是能达到同样的效果。</div><div class="line">this.count = this.count || 0;//实现简单的计数器时常用。</div><div class="line">var obj = obj || &#123;&#125;;//这句话一般用于传参的obj，做个初始化。</div></pre></td></tr></table></figure>
-<p>今天就写这些，看到这篇博客的你，到这里就应该明白&amp;&amp;和||的使用规则了。<br>要注意一个问题，这样写代码会降低代码的可读性，但能精简代码，减少网络流量。</p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
       
     </div>
@@ -377,18 +379,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/12/setTimeout/" rel="next" title="setTimeout代替setInterval的方法">
-                <i class="fa fa-chevron-left"></i> setTimeout代替setInterval的方法
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/14/repaint/" rel="prev" title="javaScript性能优化—repaint和reflow">
-                javaScript性能优化—repaint和reflow <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/12/wode.html/" rel="prev" title="getBoundingClientRect()方法的使用">
+                getBoundingClientRect()方法的使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -500,7 +498,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#规则一：a-b，当-a为true时，返回值则为a，当-a为false时，返回值为b"><span class="nav-number">1.</span> <span class="nav-text">规则一：a||b，当!!a为true时，返回值则为a，当!!a为false时，返回值为b</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#规则二：a-amp-amp-b，当-a为true时，返回值则为b，当-a为false时，返回值为a"><span class="nav-number">2.</span> <span class="nav-text">规则二：a&&b，当!!a为true时，返回值则为b，当!!a为false时，返回值为a</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#规则三：-amp-amp-的优先级高于"><span class="nav-number">3.</span> <span class="nav-text">规则三：&&的优先级高于||</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
             
 
           </div>
