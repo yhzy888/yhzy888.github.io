@@ -87,16 +87,12 @@
 
 
 
-<meta name="description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
-<meta property="og:type" content="article">
-<meta property="og:title" content="javaScript性能优化—repaint和reflow">
-<meta property="og:url" content="http://yoursite.com/2017/03/14/repaint.html/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="yuhong">
+<meta property="og:url" content="http://yoursite.com/archives/2017/07/index.html">
 <meta property="og:site_name" content="yuhong">
-<meta property="og:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
-<meta property="og:updated_time" content="2017-03-14T14:43:51.849Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="javaScript性能优化—repaint和reflow">
-<meta name="twitter:description" content="作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。首先对repaint和reflow做一下简单的解释。repaint（重绘）：    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的">
+<meta name="twitter:title" content="yuhong">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/14/repaint.html/"/>
+  <link rel="canonical" href="http://yoursite.com/archives/2017/07/"/>
 
 
 
 
 
-  <title> javaScript性能优化—repaint和reflow | yuhong </title>
+  <title> 归档 | yuhong </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -155,7 +151,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -249,154 +245,66 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/repaint.html/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yuhong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yuhong">
+    <span class="archive-page-counter">
+      
+      
+      
+        
+      
+      嗯..! 目前共计 15 篇日志。 继续努力。
     </span>
 
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                javaScript性能优化—repaint和reflow
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T22:38:53+08:00">
-                2017-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
 
       
       
-
-      
-        <p>作为前端开发人员，一定要考虑性能优化的问题。今天就记录一下，我之前关于jvaScript性能优化—repaint和reflow的总结笔记。<br>首先对repaint和reflow做一下简单的解释。<br>repaint（重绘）：<br>    repaint发生更改时，元素外观被改变，且在没有改变布局的情况下发生（这一点我的项目中就遇到过，是焦点显示的时候改变对象的border，就发生了重绘，占用了很多的cpu，我们的项目中是同时给焦点对象添加了css3的动画，这样对比正常情况多耗费20%多的cpu。）。如：outline、visibility、background和color等不会影响dom结构渲染。<br>reflow（渲染/回流）：<br>    与repaint的区别是它会影响dom的结构渲染，同时会触发repaint，它会改变它本身与所有父辈元素，由此可以看出页面元素越多，性能下降的就会越明显。<br>reflow（渲染/回流）是导致dom脚本执行低效的关键因素之一。<br>避免方式：1.新创建的多个dom节点，最好一次性加入document。<br>      2.尽可能减少修改元素的style值。<br>      3.尽量通过修改className来修改样式。<br>      4.尽量不要用table布局。<br>      5.修改的样式，如果要修改多个值，尽量写在一起。<br>      6.设置元素的position值为absolute或fixed。（元素脱离标准流，也从dom树结构中脱离出来，在需要reflow时，<br>      只需要reflow自身与下级元素即可）<br>      7.避免使用expression，它每次调用都会重新计算（包括加载页面）即便鼠标移动，expression都会计算千次以上。<br>        expression：（例子）<br>                 html中：<br>                 <div class="container"></div><br>                 css中：<br>                 .container{width:expression((documentElement.clientWidth &lt; 500) ? “500px” : “200px”)}<br>        即css属性后可为一段js的代码。<br>      8.避免不必要的复杂的css选择器，尤其是后代选择器，因为为了匹配选择器将耗费更多的cpu。</p>
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
       
 
       
         
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/03/13/and.html/" rel="next" title="javaScript/jQuery的&&和||的学习记录">
-                <i class="fa fa-chevron-left"></i> javaScript/jQuery的&&和||的学习记录
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/14/yahoo.html/" rel="prev" title="网站优化14条">
-                网站优化14条 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
         </div>
       
+      
 
       
-      
-    </footer>
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2017/07/18/console.html/" itemprop="url">
+              
+                <span itemprop="name">未命名</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-07-18T22:21:55+08:00"
+              content="2017-07-18" >
+          07-18
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+    
+
+  </section>
+
+  
+
 
 
           </div>
@@ -404,10 +312,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -581,9 +485,11 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   
