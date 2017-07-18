@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给">
+<meta name="description" content="之前朋友发来了一个这样的面试题来问我，问题是，问两个div之间的间隔是多少。今天就由此问题来展开这篇博文。首先就这个问题来看一下，看官们不要主观直接给出答案呦，先看看这是个什么鬼。话说为了代码的简洁，我用引入jQuery进行编码。12345678//html&amp;lt;div id=&quot;div1&quot; style=&quot;margin:5px&quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div id=&quot;div2&quot; s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="setTimeout代替setInterval的方法">
-<meta property="og:url" content="http://yoursite.com/2017/03/12/setTimeout.html/index.html">
+<meta property="og:title" content="BFC的理解和margin的叠加">
+<meta property="og:url" content="http://yoursite.com/2017/07/18/margin.html/index.html">
 <meta property="og:site_name" content="yuhong">
-<meta property="og:description" content="javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给">
-<meta property="og:updated_time" content="2017-03-12T14:46:33.184Z">
+<meta property="og:description" content="之前朋友发来了一个这样的面试题来问我，问题是，问两个div之间的间隔是多少。今天就由此问题来展开这篇博文。首先就这个问题来看一下，看官们不要主观直接给出答案呦，先看看这是个什么鬼。话说为了代码的简洁，我用引入jQuery进行编码。12345678//html&amp;lt;div id=&quot;div1&quot; style=&quot;margin:5px&quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div id=&quot;div2&quot; s">
+<meta property="og:updated_time" content="2017-07-18T14:48:10.805Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="setTimeout代替setInterval的方法">
-<meta name="twitter:description" content="javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。setTimeout和setInterval的方法要注意的问题：    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给">
+<meta name="twitter:title" content="BFC的理解和margin的叠加">
+<meta name="twitter:description" content="之前朋友发来了一个这样的面试题来问我，问题是，问两个div之间的间隔是多少。今天就由此问题来展开这篇博文。首先就这个问题来看一下，看官们不要主观直接给出答案呦，先看看这是个什么鬼。话说为了代码的简洁，我用引入jQuery进行编码。12345678//html&amp;lt;div id=&quot;div1&quot; style=&quot;margin:5px&quot;&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;div id=&quot;div2&quot; s">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/12/setTimeout.html/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/18/margin.html/"/>
 
 
 
 
 
-  <title> setTimeout代替setInterval的方法 | yuhong </title>
+  <title> BFC的理解和margin的叠加 | yuhong </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +259,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/12/setTimeout.html/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/18/margin.html/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yuhong">
@@ -280,7 +280,7 @@
             
             
               
-                setTimeout代替setInterval的方法
+                BFC的理解和margin的叠加
               
             
           </h1>
@@ -295,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T22:03:18+08:00">
-                2017-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-18T22:48:48+08:00">
+                2017-07-18
               </time>
             
 
@@ -331,8 +331,14 @@
       
 
       
-        <p>javaScript是单线程运行的，浏览器无论在什么时候只且只有一个线程在运行javascript程序。<br>setTimeout和setInterval的方法要注意的问题：<br>    setTimeout和setInterval设置的时间参数具体的意思是：在参数指定的时间后将待执行的方法放到执行的队列中，如果队列中没有其他方法的等待，则立即执行setTimeout/setInterval指定的方法，因此给人立即执行的假象。<br>之所以要用setTimeout的方法来替代setInterval，是因为setInterval会产生回调堆积，特别是在时间很短的时候，就会有清除不掉setInterval方法的现象。<br>此处用setTimeout的延时递归来代替setInterval。</p>
-<h4 id="代码如下："><a href="#代码如下：" class="headerlink" title="代码如下："></a>代码如下：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var timeout = <span class="literal">false</span>;//启动及关闭按钮</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span>(timeout)<span class="built_in">return</span>;</div><div class="line">    method();//要执行的方法</div><div class="line">    <span class="built_in">set</span>Timeout(timer, 2000);</div><div class="line">    //timer指本身，延时递归调用自己，2000是隔多久调用自己一次，单位ms</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>之前朋友发来了一个这样的面试题来问我，问题是<div style="margin:5px;"></div><div style="margin:10px;"></div>，问两个div之间的间隔是多少。<br>今天就由此问题来展开这篇博文。<br>首先就这个问题来看一下，看官们不要主观直接给出答案呦，先看看这是个什么鬼。<br>话说为了代码的简洁，我用引入jQuery进行编码。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//html</div><div class="line">&lt;div id=<span class="string">"div1"</span> style=<span class="string">"margin:5px"</span>&gt;&lt;/div&gt;</div><div class="line">&lt;div id=<span class="string">"div2"</span> style=<span class="string">"margin:10px;"</span>&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">//js</div><div class="line">//打印元素距页面顶部的距离。</div><div class="line">console.log($(<span class="string">"#div1"</span>).offset().top);</div><div class="line">console.log($(<span class="string">"#div2"</span>).offset().top);</div></pre></td></tr></table></figure></p>
+<p>浏览器控制台打印结果如下：<br>[margin1]</p>
+<p>如果问题是两个div之间的距离的话，在没有给定宽高的情况下，得出结论是 0 。</p>
+<p>在此，看到两个打印的结果是10，不禁想吐槽，这又是什么鬼？不要着急，这不是块元素的默认margin或padding。因为在css中我已经”*{margin:0;padding:0;}”了。这个问题稍后会有解释。</p>
+<p>接着，咱们再看看，给定宽高的两个div之间的间隔是什么样子的。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;div id=<span class="string">"div1"</span> style=<span class="string">"margin:5px;background:red;height:10px;"</span>&gt;&lt;/div&gt;</div><div class="line">&lt;div id=<span class="string">"div2"</span> style=<span class="string">"margin:10px;background:blue;height:10px;"</span>&gt;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>浏览器控制台打印如下：<br>[margin2]<br>两个div之间的距离25-5=20，再减去第一个div的高度10,20-10=10；所以两个div之间的距离是10。为什么会是10呢？理论上div1有5px的margin，div2有10px的margin，那么他两个之间的距离不应该是15么。好戏来了，这就是css的margin之间的叠加。</p>
+<p>今天先发布这么多，等待后续…</p>
+<p><a href="http://div.io/topic/973" target="_blank" rel="external">http://div.io/topic/973</a><br><a href="http://justcode.ikeepstudying.com/2016/07/css-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3bfc%E5%92%8Cmargin-collapse-margin%E5%8F%A0%E5%8A%A0%E6%88%96%E8%80%85%E5%90%88%E5%B9%B6%E5%A4%96%E8%BE%B9%E8%B7%9D/" target="_blank" rel="external">http://justcode.ikeepstudying.com/2016/07/css-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3bfc%E5%92%8Cmargin-collapse-margin%E5%8F%A0%E5%8A%A0%E6%88%96%E8%80%85%E5%90%88%E5%B9%B6%E5%A4%96%E8%BE%B9%E8%B7%9D/</a><br><a href="https://github.com/dwqs/blog/issues/22" target="_blank" rel="external">https://github.com/dwqs/blog/issues/22</a><br><a href="http://www.jianshu.com/p/fc1d61dace7b" target="_blank" rel="external">http://www.jianshu.com/p/fc1d61dace7b</a><br><a href="http://www.jianshu.com/p/cabbe1db252d" target="_blank" rel="external">http://www.jianshu.com/p/cabbe1db252d</a></p>
 
       
     </div>
@@ -369,8 +375,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/12/css3TransitionEnd .html/" rel="next" title="css3的transitionEnd事件">
-                <i class="fa fa-chevron-left"></i> css3的transitionEnd事件
+              <a href="/2017/07/18/console.html/" rel="next" title="console的一些方法">
+                <i class="fa fa-chevron-left"></i> console的一些方法
               </a>
             
           </div>
@@ -378,10 +384,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/13/and.html/" rel="prev" title="javaScript/jQuery的&&和||的学习记录">
-                javaScript/jQuery的&&和||的学习记录 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -428,17 +430,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -482,22 +475,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码如下："><span class="nav-number">1.</span> <span class="nav-text">代码如下：</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
