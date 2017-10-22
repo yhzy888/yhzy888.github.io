@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="yuhong">
 <meta property="og:description" content="一.来来来，先说meta标签是个啥，12The &amp;lt;meta&amp;gt; tag provides metadata about the HTML document. Metadata will not be displayed on the page, but will be machine parsable.
 上面这句话的意思是：meta标签就是关于html文档的一个元数据，不会在页面显示却能">
-<meta property="og:updated_time" content="2017-10-22T14:39:49.072Z">
+<meta property="og:updated_time" content="2017-10-22T14:48:33.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用“meta”标签总结">
 <meta name="twitter:description" content="一.来来来，先说meta标签是个啥，12The &amp;lt;meta&amp;gt; tag provides metadata about the HTML document. Metadata will not be displayed on the page, but will be machine parsable.
@@ -338,51 +338,45 @@
 <p>上面这句话的意思是：meta标签就是关于html文档的一个元数据，不会在页面显示却能被计算机识别。<br>那么有啥用呢？<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Meta elements are typically used to specify page description, keywords, author of the document, last modified, and other metadata.</div><div class="line">The metadata can be used by browsers (how to display content or reload page), search engines (keywords), or other web services.</div></pre></td></tr></table></figure></p>
 <p>这里翻译过来的意思就是，meta标签常用于指定页面描述，关键字，文档作者和其他元数据。这些元数据会给浏览器（如何显示内容和加载页面），<br>搜索引擎（关键字）和其他web提供服务。<br>二.常用meta标签<br>1.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta charset=<span class="string">"utf-8"</span>&gt;</div></pre></td></tr></table></figure></p>
 <p>声明文档所用字符编码。</p>
-<p>2.<br>“<meta name="参数" content="具体的描述">”<br>name 这个属性在 w3cshool 中有说明是一个可选属性，是把 content 属性关联到一个名称。它的值在后面会列出一些常用的。<br>content 属性提供名称/值对中的值。该值可以是任何有效的字符串。content 属性始终要与 name 属性或是 http-equiv 属性一起使用。</p>
-<p>(1).<br>“<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">”</p>
-<p>width              //  viewport 的宽度 （范围从200 到10,000，默认为980 像素）<br>height             //  viewport 的高度 （范围从223 到10,000）<br>initial-scale      //  初始的缩放比例 （范围从&gt;0 到10）<br>minimum-scale      //  允许用户缩放到的最小比例<br>maximum-scale      //  允许用户缩放到的最大比例<br>user-scalable      //  用户是否可以手动缩 (no,yes)<br>device-width             //  设备宽度<br>target-densitydpi = [dpi_value | device-dpi | high-dpi | medium-dpi | low-dpi] 目标屏幕像素密度<br>这个是手持设备必用的meta标签了。<br>(2).<br>“<meta content="telephone=no" name="format-detection">”<br>是否将网页内容中的手机号码显示为拨号的超链接，iPhone上默认为yes；<br>同理的还有<meta content="email=no" name="format-detection">,设置为“no”就是告诉设备不识别邮箱，默认情况下为“yes”；</p>
+<p>2.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"参数"</span> content=<span class="string">"具体的描述"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>name 这个属性在 w3cshool 中有说明是一个可选属性，是把 content 属性关联到一个名称。它的值在后面会列出一些常用的。<br>content 属性提供名称/值对中的值。该值可以是任何有效的字符串。content 属性始终要与 name 属性或是 http-equiv 属性一起使用。</p>
+<p>(1).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"viewport"</span> content=<span class="string">"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>width              //  viewport 的宽度 （范围从200 到10,000，默认为980 像素）<br>height             //  viewport 的高度 （范围从223 到10,000）<br>initial-scale      //  初始的缩放比例 （范围从&gt;0 到10）<br>minimum-scale      //  允许用户缩放到的最小比例<br>maximum-scale      //  允许用户缩放到的最大比例<br>user-scalable      //  用户是否可以手动缩 (no,yes)<br>device-width             //  设备宽度<br>target-densitydpi = [dpi_value | device-dpi | high-dpi | medium-dpi | low-dpi] 目标屏幕像素密度<br>这个是手持设备必用的meta标签了。<br>(2).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta content=<span class="string">"telephone=no"</span> name=<span class="string">"format-detection"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>是否将网页内容中的手机号码显示为拨号的超链接，iPhone上默认为yes；<br>同理的还有<meta content="email=no" name="format-detection">,设置为“no”就是告诉设备不识别邮箱，默认情况下为“yes”；</p>
 <p><meta content="adress=no" name="format-detection">,设置为“no”就是告诉设备点击地址禁止跳转至地图，默认情况下为“yes”；</p>
-<p>(3).<br>IOS设备对meta定义的私有属性</p>
-<p><meta name="apple-mobile-web-app-capable" content="yes"><br>是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。</p>
-<p><meta name="apple-mobile-web-app-status-bar-style" content="black"><br>当启动webapp功能时，显示手机信号、时间、电池的顶部导航栏的颜色。<br>默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。</p>
-<p>(4). </p>
-<p><meta name="keywords" content="博客,前端,meta"><br>当搜索引擎遇到这些关键字时，会用这些关键字对文档进行分类。简单的说就是告诉搜索引擎你网页的关键字。<br>这里注意一下，Google在09年就表示忽略keywords [<a href="https://www.mattcutts.com/blog/keywords-meta-tag-in-web-search/" target="_blank" rel="external">https://www.mattcutts.com/blog/keywords-meta-tag-in-web-search/</a>]</p>
-<p>(5).</p>
-<p><meta name="description" content="有关前端的知识"><br>这是告诉搜索引擎你网站的主要内容。</p>
-<p>(6).</p>
-<p><meta name="author" content="https://yhzy888.github.io/"><br>标识创作者。</p>
-<p>(7).</p>
-<p><meta name="generator" content="sublime text2"><br>标识网页制作的编辑软件</p>
-<p>(8).</p>
-<p><meta name="revised" content="yy,2017/9/21"><br>定义页面最新修订的版本</p>
-<p>(9).</p>
-<p><meta name="revisit-after" content="7 days"><br>设置爬虫重访时间。注意如果爬虫重访时间过短，那么爬虫将会以他们定义的默认时间来访问。这个默认时间具体值，我查资料是说20s到3或4分钟不等。<br>这里的默认时间到底是多少，表示不确定，有知道的可以留言告诉我一下@_@。</p>
-<p>(10).</p>
-<p><meta name="robots" content="all"><br>定义搜索引擎爬虫（机器人）的索引方式。就是告诉爬虫哪些需要索引哪些不需要。<br>content 的值默认是 all 。所以如果你要设置 all/index/follow 的值，就不要写这段代码了，没有意义，只会增加网页的大小。<br>[<a href="http://blog.seo-tw.org/2010/10/seo-meta.html" target="_blank" rel="external">http://blog.seo-tw.org/2010/10/seo-meta.html</a>]<br>content：<br>all : 搜索引擎将索引此网页和通过此网页的链接继续索引其他的网页。等价于 index , follow.<br>index : 搜索引擎索引此网页。<br>follow : 搜索引擎通过此网页的链接继续索引其他的网页。<br>none : 搜索引擎忽略此网页。等价于 noindex 和 nofollow.<br>noindex : 搜索引擎不索引此网页。<br>nofollow : 搜索引擎不继续通过此网页的链接索引其他的网页。</p>
-<p>(11).<br>meta 标签 name 为 renderer 时，指定双核浏览器以何种方式渲染页面。</p>
-<p><meta name="renderer" content="webkit">   //默认webkit内核</p>
-<p><meta name="renderer" content="ie-comp">  //默认IE兼容模式</p>
-<p><meta name="renderer" content="ie-stand"> //默认IE标准模式</p>
-<p>(12).</p>
-<p><meta name="copyright" content="yy"><br>用于标注版权信息</p>
+<p>(3).<br>IOS设备对meta定义的私有属性<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"apple-mobile-web-app-capable"</span> content=<span class="string">"yes"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>是否启动webapp功能，会删除默认的苹果工具栏和菜单栏。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"apple-mobile-web-app-status-bar-style"</span> content=<span class="string">"black"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>当启动webapp功能时，显示手机信号、时间、电池的顶部导航栏的颜色。<br>默认值为default（白色），可以定为black（黑色）和black-translucent（灰色半透明）。</p>
+<p>(4).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"keywords"</span> content=<span class="string">"博客,前端,meta"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>当搜索引擎遇到这些关键字时，会用这些关键字对文档进行分类。简单的说就是告诉搜索引擎你网页的关键字。<br>这里注意一下，Google在09年就表示忽略keywords [<a href="https://www.mattcutts.com/blog/keywords-meta-tag-in-web-search/" target="_blank" rel="external">https://www.mattcutts.com/blog/keywords-meta-tag-in-web-search/</a>]</p>
+<p>(5).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"description"</span> content=<span class="string">"有关前端的知识"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>这是告诉搜索引擎你网站的主要内容。</p>
+<p>(6).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"author"</span> content=<span class="string">"https://yhzy888.github.io/"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>标识创作者。</p>
+<p>(7).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"generator"</span> content=<span class="string">"sublime text2"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>标识网页制作的编辑软件</p>
+<p>(8).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"revised"</span> content=<span class="string">"yy,2017/9/21"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>定义页面最新修订的版本</p>
+<p>(9).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"revisit-after"</span> content=<span class="string">"7 days"</span> &gt;</div></pre></td></tr></table></figure></p>
+<p>设置爬虫重访时间。注意如果爬虫重访时间过短，那么爬虫将会以他们定义的默认时间来访问。这个默认时间具体值，我查资料是说20s到3或4分钟不等。<br>这里的默认时间到底是多少，表示不确定，有知道的可以留言告诉我一下@_@。</p>
+<p>(10).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"robots"</span> content=<span class="string">"all"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>定义搜索引擎爬虫（机器人）的索引方式。就是告诉爬虫哪些需要索引哪些不需要。<br>content 的值默认是 all 。所以如果你要设置 all/index/follow 的值，就不要写这段代码了，没有意义，只会增加网页的大小。<br>[<a href="http://blog.seo-tw.org/2010/10/seo-meta.html" target="_blank" rel="external">http://blog.seo-tw.org/2010/10/seo-meta.html</a>]<br>content：<br>all : 搜索引擎将索引此网页和通过此网页的链接继续索引其他的网页。等价于 index , follow.<br>index : 搜索引擎索引此网页。<br>follow : 搜索引擎通过此网页的链接继续索引其他的网页。<br>none : 搜索引擎忽略此网页。等价于 noindex 和 nofollow.<br>noindex : 搜索引擎不索引此网页。<br>nofollow : 搜索引擎不继续通过此网页的链接索引其他的网页。</p>
+<p>(11).<br>meta 标签 name 为 renderer 时，指定双核浏览器以何种方式渲染页面。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"renderer"</span> content=<span class="string">"webkit"</span>&gt;   //默认webkit内核</div><div class="line">&lt;meta name=<span class="string">"renderer"</span> content=<span class="string">"ie-comp"</span>&gt;  //默认IE兼容模式</div><div class="line">&lt;meta name=<span class="string">"renderer"</span> content=<span class="string">"ie-stand"</span>&gt; //默认IE标准模式</div></pre></td></tr></table></figure></p>
+<p>(12).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=<span class="string">"copyright"</span> content=<span class="string">"yy"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>用于标注版权信息</p>
 <p>3.<br>http-equiv : 把 content 属性关联到 http 头部。</p>
 <p>下面借用 w3cSchool 中的一段话说明一下：<br>使用带有 http-equiv 属性的 <meta> 标签时，服务器将把名称/值对添加到发送给浏览器的内容头部。<br>当服务器向浏览器发送文档时，所有服务器都至少要发送一个：content-type:text/html。这将告诉浏览器准备接受一个 HTML 文档。<br>例如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"charset"</span> content=<span class="string">"iso-8859-1"</span>&gt;</div><div class="line">&lt;meta http-equiv=<span class="string">"expires"</span> content=<span class="string">"31 Dec 2008"</span>&gt;</div></pre></td></tr></table></figure></p>
 <p>这样发送到浏览器的头部就应该包含：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">content-type: text/html</div><div class="line">charset:iso-8859-1</div><div class="line">expires:31 Dec 2008</div></pre></td></tr></table></figure></p>
 <p>插播常见文件类型：<br>text/plain                      //文本文件<br>text/html                       //html文件<br>application/binary              //二进制文件<br>application/postscripts         //PostScript（PS）是主要用于电子产业和桌面出版领域的一种页面描述语言和编程语言。<br>image/gif                       //gif图片<br>image/xbm                       //xbm图片<br>image/jpeg                      //jpeg图片<br>audio/basic                     //basic格式视频文件<br>video/mpeg                      //mpeg格式视频文件<br>video/QuickTime                 //QuickTime格式视频文件</p>
-<p>以下，对常用的 http-equiv 的属性值做下介绍。<br>(1).</p>
-<p><meta http-equiv="content-type" content="text/html; charset=gb2312"></p>
-<p><meta http-equiv="content-language" content="zh-CN"><br>用以说明网页制作使用的文字语言，浏览器会根据此来调用相应的字符集显示网页内容。<br>目前第一种写法都用 <meta charset="utf-8"> ，这是 html5 设定网页字符集的方式，常用 utf-8。</p>
-<p>(2).</p>
-<p><meta http-equiv="expires" content="Thursday 21 September 2017 10:00 GMT"><br>指定网页过期时间，过期后网页必须到服务器上重新传输。注意时间格式必须是 GMT.</p>
-<p>(3).</p>
-<p><meta http-equiv="refresh" content="30"><br>指定网页在 30s 后刷新。</p>
-<p><meta http-equiv="refresh" content="10; Url=http://www.baidu.com"><br>指定网页在 10s 后，重定向到百度的网页</p>
-<p>(4).</p>
-<p><meta http-equiv="Set-Cookie" content="name, date"> //格式</p>
-<p><meta http-equiv="Set-Cookie" content="user=yy; password=123456; expires=Thursday 21 September 2017 10:00 GMT"> //具体范例<br>缓存cookie,时间格式必须使用GMT。注意：如果网页过期。那么这个网页存在本地的cookies也会被自动删除。</p>
-<p>(5).</p>
-<p><meta http-equiv="pragma" content="no-cache"><br>定义页面不缓存页面。</p>
-<p><meta http-equiv="cache-control" content="no-cache"><br>不缓存页面。<br>no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。<br>no-store: 不允许缓存，不让浏览器缓存副本，每次都要去服务器上，下载完整的响应。（安全措施）<br>public :  共有缓存，可被缓存代理服务器缓存,比如CDN<br>private : 私有缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）<br>maxage [秒] :  表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。</p>
+<p>以下，对常用的 http-equiv 的属性值做下介绍。<br>(1).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"content-type"</span> content=<span class="string">"text/html; charset=gb2312"</span>&gt;</div><div class="line">&lt;meta http-equiv=<span class="string">"content-language"</span> content=<span class="string">"zh-CN"</span>&gt;</div></pre></td></tr></table></figure></p>
+<p>用以说明网页制作使用的文字语言，浏览器会根据此来调用相应的字符集显示网页内容。<br>目前第一种写法都用 <meta charset="utf-8"> ，这是 html5 设定网页字符集的方式，常用 utf-8。</p>
+<p>(2).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"expires"</span> content=<span class="string">"Thursday 21 September 2017 10:00 GMT"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>指定网页过期时间，过期后网页必须到服务器上重新传输。注意时间格式必须是 GMT.</p>
+<p>(3).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"refresh"</span> content=<span class="string">"30"</span>&gt;    //指定网页在 30s 后刷新。</div><div class="line">&lt;meta http-equiv=<span class="string">"refresh"</span> content=<span class="string">"10; Url=http://www.baidu.com"</span>&gt; //指定网页在 10s 后，重定向到百度的网页</div></pre></td></tr></table></figure></p>
+<p>(4).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"Set-Cookie"</span> content=<span class="string">"name, date"</span>&gt; //格式</div><div class="line">&lt;meta http-equiv=<span class="string">"Set-Cookie"</span> content=<span class="string">"user=yy; password=123456; expires=Thursday 21 September 2017 10:00 GMT"</span>&gt; //具体范例</div></pre></td></tr></table></figure></p>
+<p>缓存cookie,时间格式必须使用GMT。注意：如果网页过期。那么这个网页存在本地的cookies也会被自动删除。</p>
+<p>(5).<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"pragma"</span> content=<span class="string">"no-cache"</span>&gt;   //定义页面不缓存页面。</div><div class="line">&lt;meta http-equiv=<span class="string">"cache-control"</span> content=<span class="string">"no-cache"</span>&gt;   //不缓存页面。</div></pre></td></tr></table></figure></p>
+<p>no-cache: 先发送请求，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。<br>no-store: 不允许缓存，不让浏览器缓存副本，每次都要去服务器上，下载完整的响应。（安全措施）<br>public :  共有缓存，可被缓存代理服务器缓存,比如CDN<br>private : 私有缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）<br>maxage [秒] :  表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。</p>
 <p>(HTTP规定，如果出现max-age和expires，则max-age默认覆盖掉expires)<br>当expires为负数表示no-cache，正数或零表示max-age=time。<br>如果你不想缓存，可以直接设置:</p>
 <p>expires -1; //永远过期，Cache-Control: no-cache</p>
 <p>到这里的时候，不知道你是不是跟我有一样的疑问： http-equiv=”pragma” 和 http-equiv=”cache-control”都是起到不缓存页面的作用，那么他们的区别在哪呢。<br>经过我查资料得出的结论：<br>Pragma是HTTP /1.0实现，cache-control是同样概念的HTTP /1.1实现。它们都是为了防止客户端缓存响应。较旧的客户端可能不支持HTTP /1.1，这就是为什么Pragma仍在使用中。</p>
@@ -391,9 +385,9 @@
 <p><meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">是什么意思呢？<br>是强制浏览器按照特定的版本标准进行渲染。但不支持IE7及以下版本。如果用分号（;）分隔，对于不同的浏览器版本就有不同的兼容性。<br>例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=7; IE=9"</span> /&gt; //表示将IE8和IE7按照IE7标准渲染，但是IE9还是按照IE9的标准渲染。</div></pre></td></tr></table></figure></p>
 <p>上面那句话也就是向后兼容，如果只考虑 IE8 以下的，那么就可以这样写：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=8"</span> /&gt;</div></pre></td></tr></table></figure></p>
 <p>还有一种方式是进行仿真模拟，代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=EmulateIE8"</span> /&gt;</div></pre></td></tr></table></figure></p>
-<p><meta http-equiv="X-UA-Compatible" content="IE=Edge">，这个是强制浏览器按照最新的标准去渲染，缺点是有可能你的布局因为没有固定版本而被破坏。</p>
-<p><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><br>这句话添加”chrome=1“将允许站点在使用了谷歌浏览器内嵌框架（Chrome Frame）的客户端渲染，对于没有使用的，则没有任何影响。</p>
-<p>推荐写法：<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"></p>
+<p>下面这个是强制浏览器按照最新的标准去渲染，缺点是有可能你的布局因为没有固定版本而被破坏。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=Edge"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>接着这句话添加”chrome=1“将允许站点在使用了谷歌浏览器内嵌框架（Chrome Frame）的客户端渲染，对于没有使用的，则没有任何影响。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=Edge,chrome=1"</span> /&gt;</div></pre></td></tr></table></figure></p>
+<p>推荐写法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"X-UA-Compatible"</span> content=<span class="string">"IE=EmulateIE7"</span> /&gt;</div></pre></td></tr></table></figure></p>
 <p>到这里关于 meta 标签的总结告一段落。用了我5,6个小时。总结下来，自己对一些常用的有了更深的理解。其实成文后的内容要比我计划的要多写了很多，边查资料边写，<br>也让自己有了更多的了解。如发现有问题的地方，还望帮忙指正！</p>
 
       
