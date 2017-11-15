@@ -1,0 +1,670 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="研究jquery源码，能让我更深入的了解js的机制和开阔一下自己的思路。不想只知其然，而不知其所以然。所以这里记录一下我的学习路线，和我对jquery源码的理解。这是我学习的路线，因为怕当时解读的有误，我会分批次发布博文。若还有其他问题，会后期更正。
+对对对，有必要的说一下，我是对jquery的 3.1.1 的版本进行源码解析的。
+首先说一下，jquery的整体结构，那就是一个大的自运行的匿名函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路一（整体架构--自运行）">
+<meta property="og:url" content="http://yoursite.com/2017/11/15/jquery1.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="研究jquery源码，能让我更深入的了解js的机制和开阔一下自己的思路。不想只知其然，而不知其所以然。所以这里记录一下我的学习路线，和我对jquery源码的理解。这是我学习的路线，因为怕当时解读的有误，我会分批次发布博文。若还有其他问题，会后期更正。
+对对对，有必要的说一下，我是对jquery的 3.1.1 的版本进行源码解析的。
+首先说一下，jquery的整体结构，那就是一个大的自运行的匿名函数">
+<meta property="og:updated_time" content="2017-11-15T14:23:02.692Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路一（整体架构--自运行）">
+<meta name="twitter:description" content="研究jquery源码，能让我更深入的了解js的机制和开阔一下自己的思路。不想只知其然，而不知其所以然。所以这里记录一下我的学习路线，和我对jquery源码的理解。这是我学习的路线，因为怕当时解读的有误，我会分批次发布博文。若还有其他问题，会后期更正。
+对对对，有必要的说一下，我是对jquery的 3.1.1 的版本进行源码解析的。
+首先说一下，jquery的整体结构，那就是一个大的自运行的匿名函数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/15/jquery1.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路一（整体架构--自运行） | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/15/jquery1.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路一（整体架构--自运行）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T22:23:31+08:00">
+                2017-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>研究jquery源码，能让我更深入的了解js的机制和开阔一下自己的思路。不想只知其然，而不知其所以然。<br>所以这里记录一下我的学习路线，和我对jquery源码的理解。这是我学习的路线，因为怕当时解读的有误，<br>我会分批次发布博文。若还有其他问题，会后期更正。</p>
+<p>对对对，有必要的说一下，我是对jquery的 3.1.1 的版本进行源码解析的。</p>
+<p>首先说一下，jquery的整体结构，那就是一个大的自运行的匿名函数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">( <span class="keyword">function</span>( global, factory ) &#123;</div><div class="line"></div><div class="line">	//jquery内部代码省略</div><div class="line">	</div><div class="line">&#125; )( typeof window !== <span class="string">"undefined"</span> ? window : this, <span class="keyword">function</span>( window, noGlobal ) &#123;</div><div class="line"></div><div class="line">	//jquery内部代码省略</div><div class="line">	</div><div class="line">&#125; );</div></pre></td></tr></table></figure></p>
+<p>上面的代码就是jquery代码的整个实现的基础。把里面所有的代码抽除，就变成下面这样：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="title">function</span></span>()&#123;&#125;)();</div></pre></td></tr></table></figure></p>
+<p>这样你是不是就很熟悉了呢，一个标准的自运行（立即调用）。这么做的目的就是利用了JavaScript函数作用域的特性，<br>解决命名空间与变量污染的问题。</p>
+<p>自运行以前在学习的时候，老师还教过一种写法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">!(<span class="function"><span class="title">function</span></span>()&#123;console.log(<span class="string">"aa"</span>);&#125;)();   //控制台打印：aa;</div></pre></td></tr></table></figure></p>
+<p>还有几种写法我列举一下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">~(<span class="function"><span class="title">function</span></span>()&#123;console.log(<span class="string">"bb"</span>);&#125;)();  //控制台打印：bb;</div><div class="line">+(<span class="function"><span class="title">function</span></span>()&#123;console.log(<span class="string">"cc"</span>);&#125;)();  //控制台打印：cc;</div><div class="line">-(<span class="function"><span class="title">function</span></span>()&#123;console.log(<span class="string">"dd"</span>);&#125;)();  //控制台打印：dd;</div></pre></td></tr></table></figure></p>
+<p>这几种也都是可以达到自运行的目的。</p>
+<p>而且，自执行的函数表达式也可以像普通函数一样可以传参：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">function</span>(a,b)&#123;</div><div class="line">	console.log(a); //1</div><div class="line">	console.log(b); //2</div><div class="line">	console.log(a+b); //3</div><div class="line">&#125;)(1,2);</div></pre></td></tr></table></figure></p>
+<p>运行上面的代码，a，b对应的值分别是传值进来的 1 和 2。</p>
+<p>然后再来看jq源码中的这个自运行的函数：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">( <span class="keyword">function</span>( global, factory ) &#123;</div><div class="line"></div><div class="line">	//jquery内部代码省略</div><div class="line">	</div><div class="line">&#125; )( typeof window !== <span class="string">"undefined"</span> ? window : this, <span class="keyword">function</span>( window, noGlobal ) &#123;</div><div class="line"></div><div class="line">	//jquery内部代码省略</div><div class="line">	</div><div class="line">&#125; );</div></pre></td></tr></table></figure></p>
+<p>对，还是这句话，这里的 global 指的就是 window 对象，factory 指的就是function( window, noGlobal ) {} 这个函数。<br>这里为啥要传window，就是为了要给 window 暴露一个 $/jQuery 的接口。</p>
+<p>来两段代码，你就明白了：（这里我们先暂不考虑传入的第二个参数）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//假如说传参</div><div class="line">(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line"></div><div class="line">	var jQ = <span class="string">"测试传值window"</span>;</div><div class="line">	</div><div class="line">&#125;)();</div><div class="line">console.log(jQ);  // jQ is not defined</div></pre></td></tr></table></figure></p>
+<p>为啥  jQ is not defined 了呢，因为 jQ 是一个局部变量呀，你这么直接去访问一个局部变量，肯定是 not defined 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//假如说传参window</div><div class="line">(<span class="keyword">function</span>(g)&#123;</div><div class="line"></div><div class="line">	g.jQ = <span class="string">"测试传值window"</span>;</div><div class="line">	</div><div class="line">&#125;)(window);</div><div class="line">console.log(jQ);   //测试传值window</div></pre></td></tr></table></figure>
+<p>这样就可以了，打印出值了。其实就是简单粗暴的把 jQ 这个对象赋给 window ，这时候 jQ 也就是一个全局的变量了，所以就访问到了。</p>
+<p>——————————————-华丽的分界线————————————————————–<br>最后我要说一下源码中的对 $ 这个的冲突处理：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var</div><div class="line">	// Map over jQuery <span class="keyword">in</span> <span class="keyword">case</span> of overwrite</div><div class="line">	_jQuery = window.jQuery,</div><div class="line"></div><div class="line">	// Map over the $ <span class="keyword">in</span> <span class="keyword">case</span> of overwrite</div><div class="line">	_$ = window.$;</div><div class="line"></div><div class="line">jQuery.noConflict = <span class="keyword">function</span>( deep ) &#123;</div><div class="line">	<span class="keyword">if</span> ( window.$ === jQuery ) &#123;</div><div class="line">		window.$ = _$;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> ( deep &amp;&amp; window.jQuery === jQuery ) &#123;</div><div class="line">		window.jQuery = _jQuery;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> jQuery;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>jQuery.noConflict 这个方法达到的目的就是，当你引入其他库，也有对 $ 的引用时，可以释放jQuery 对 $ 的控制权。<br>首先在 jQuery 自运行时用临时变量 _jQuery 存储了一下 window.jQuery 这个对象，此时window.jQuery 的值还是 undefined；<br> window.$ 指向的是之前实现 $ 的库，没有就是 undefined；<br>在调用jQuery.noConflict方法时，就会移交对 $ 的控制权，如果 window.$ 是 jQuery 对象，那么 window.$ 就等于之前实现 $ 的库的那个对象（否则undefined）。<br>最后再把 jQuery 对象返回出来。这段代码也是非常简单粗暴的呀。</p>
+<p>不知道会不会有人不明白， window.jQuery 一开始是undefined，那么后来是怎么又变成 jQuery 对象的呢，那就是 jQuery 自运行时的下面这段代码了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ( !noGlobal ) &#123;</div><div class="line">	window.jQuery = window.$ = jQuery;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以与 .ready() 方法结合起来使用，不需要为 jQuery 对象起别名，这项技术非常有效：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"other_lib.js"</span>&gt;&lt;/script&gt;</div><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span> src=<span class="string">"jquery.js"</span>&gt;&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">  $.noConflict();</div><div class="line">  jQuery(document).ready(<span class="keyword">function</span>($) &#123;</div><div class="line">    // 使用 jQuery $ 的代码</div><div class="line">  &#125;);</div><div class="line">  // 使用其他库的 $ 的代码</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>附上一句， $.noConflict(true); 是将 $ 和 jQuery 的控制权都交还给原来的库。用之前请考虑清楚！</p>
+<p>最后还要奉上我学习后仿 jq 的一段小代码：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">function</span>(g,fn)&#123;</div><div class="line"></div><div class="line">    fn(g);</div><div class="line"></div><div class="line">&#125;)(window,<span class="keyword">function</span>(a)&#123;</div><div class="line"></div><div class="line">  var yh = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">    console.log(<span class="string">"yuhong"</span>);</div><div class="line">  &#125;;</div><div class="line"> </div><div class="line">  a.yh = yh ;</div><div class="line"></div><div class="line">&#125;);</div><div class="line">yh(); //控制台打印 yuhong</div></pre></td></tr></table></figure></p>
+<p>2017-11-10，明天就是双十一了，然而我并没有什么要买的。。。啦啦啦啦。。。。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/22/meta.html/" rel="next" title="常用“meta”标签总结">
+                <i class="fa fa-chevron-left"></i> 常用“meta”标签总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
