@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery.contains, jQuery.globalEval, jQuery.grep, jQuery.inArray, jQuery.isArray, jQuery.isEmptyObject从这篇文章开始，我可能更多的是从api入手，根据api去分析源码。（api文档地址：http://www.css88.com/jqapi-1.9/）
+1. 核心==》实用工具 ==》jQuery.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路四（jQuery api 核心==》实用工具系列一）">
+<meta property="og:url" content="http://yoursite.com/2017/11/15/jquery4_1.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="jQuery.contains, jQuery.globalEval, jQuery.grep, jQuery.inArray, jQuery.isArray, jQuery.isEmptyObject从这篇文章开始，我可能更多的是从api入手，根据api去分析源码。（api文档地址：http://www.css88.com/jqapi-1.9/）
+1. 核心==》实用工具 ==》jQuery.c">
+<meta property="og:updated_time" content="2017-11-15T14:54:28.831Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路四（jQuery api 核心==》实用工具系列一）">
+<meta name="twitter:description" content="jQuery.contains, jQuery.globalEval, jQuery.grep, jQuery.inArray, jQuery.isArray, jQuery.isEmptyObject从这篇文章开始，我可能更多的是从api入手，根据api去分析源码。（api文档地址：http://www.css88.com/jqapi-1.9/）
+1. 核心==》实用工具 ==》jQuery.c">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/15/jquery4_1.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路四（jQuery api 核心==》实用工具系列一） | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/15/jquery4_1.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路四（jQuery api 核心==》实用工具系列一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T22:52:41+08:00">
+                2017-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="jQuery-contains-jQuery-globalEval-jQuery-grep-jQuery-inArray-jQuery-isArray-jQuery-isEmptyObject"><a href="#jQuery-contains-jQuery-globalEval-jQuery-grep-jQuery-inArray-jQuery-isArray-jQuery-isEmptyObject" class="headerlink" title="jQuery.contains, jQuery.globalEval, jQuery.grep, jQuery.inArray, jQuery.isArray, jQuery.isEmptyObject"></a>jQuery.contains, jQuery.globalEval, jQuery.grep, jQuery.inArray, jQuery.isArray, jQuery.isEmptyObject</h3><p>从这篇文章开始，我可能更多的是从api入手，根据api去分析源码。（api文档地址：<a href="http://www.css88.com/jqapi-1.9/）" target="_blank" rel="external">http://www.css88.com/jqapi-1.9/）</a></p>
+<h4 id="1-核心-》实用工具-》jQuery-contains-container-contained"><a href="#1-核心-》实用工具-》jQuery-contains-container-contained" class="headerlink" title="1. 核心==》实用工具 ==》jQuery.contains( container, contained )"></a>1. 核心==》实用工具 ==》jQuery.contains( container, contained )</h4><h6 id="1-用法："><a href="#1-用法：" class="headerlink" title="(1)用法："></a>(1)用法：</h6><p>检测一个元素是否在另一个元素之内。 不支持文档和注释节点。<br>注意: 第一个参数必须是一个DOM元素，不是一个jQuery对象或普通的JavaScript对象。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">console.log($.contains( document.documentElement, document.body )); // <span class="literal">true</span></div><div class="line">console.log($.contains( document.body, document.documentElement )); // <span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<p>//jQuery,.contains底层调用的方法来自于JS的contains方法和compareDocumentPosition方法<br>1&gt;. JS的contains方法是直接判断一个元素是否包含另一个元素，返回值为布尔值<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log(document.contains(document.body)); //<span class="literal">true</span></div></pre></td></tr></table></figure></p>
+<p>2&gt;.  compareDocumentPosition() 方法比较两个节点，并返回描述它们在文档中位置的整数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;body&gt;</div><div class="line">	&lt;p id=<span class="string">"p1"</span>&gt;This is a paragraph&lt;/p&gt;</div><div class="line">	&lt;p id=<span class="string">"p2"</span>&gt;This is another paragraph&lt;/p&gt;</div><div class="line">	&lt;p id=<span class="string">"demo"</span>&gt;请点击按钮来比较两个段落的位置。&lt;/p&gt;</div><div class="line">	&lt;button onclick=<span class="string">"myFunction()"</span>&gt;试一下&lt;/button&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">	<span class="keyword">function</span> <span class="function"><span class="title">myFunction</span></span>()</div><div class="line">	&#123;</div><div class="line">		var p1=document.getElementById(<span class="string">"p1"</span>).lastChild;</div><div class="line">		var p2=document.getElementById(<span class="string">"p2"</span>).lastChild;</div><div class="line">		var x=document.getElementById(<span class="string">"demo"</span>);</div><div class="line">		x.innerHTML=p1.compareDocumentPosition(p2);</div><div class="line">	&#125;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line"></div><div class="line">//1：没有关系，两个节点不属于同一个文档。</div><div class="line">//2：第一节点（P1）位于第二个节点后（P2）。</div><div class="line">//4：第一节点（P1）定位在第二节点（P2）前。</div><div class="line">//8：第一节点（P1）位于第二节点内（P2）。</div><div class="line">//16：第二节点（P2）位于第一节点内（P1）。</div><div class="line">//32：没有关系，或是两个节点是同一元素的两个属性。</div><div class="line">//注释：返回值可以是值的组合。例如，返回 20 意味着在 p2 在 p1 内部（16），并且 p1 在 p2 之前（4）。</div></pre></td></tr></table></figure></p>
+<h6 id="2-源码"><a href="#2-源码" class="headerlink" title="(2)源码"></a>(2)源码</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/* Contains</div><div class="line">	---------------------------------------------------------------------- */</div><div class="line">//判断浏览器是否支持compareDocumentPosition</div><div class="line">hasCompare = rnative.test( docElem.compareDocumentPosition );</div><div class="line"></div><div class="line">// Element contains another</div><div class="line">// Purposefully self-exclusive</div><div class="line">// As <span class="keyword">in</span>, an element does not contain itself</div><div class="line">//一个元素包含另一个，但是不包含自身</div><div class="line">//若浏览器不支持compareDocumentPosition，则检测是否支持js的contains函数</div><div class="line">contains = hasCompare || rnative.test( docElem.contains ) ?</div><div class="line">	<span class="keyword">function</span>( a, b ) &#123;</div><div class="line">		//nodeType = 9,代表整个文档（DOM 树的根节点）。如果a元素是document对象，</div><div class="line">		//那么获取a的documentElement对象，否则保存a对象即可</div><div class="line">		var adown = a.nodeType === 9 ? a.documentElement : a,</div><div class="line">		//若 b 元素存在，则获取 b 元素的父节点</div><div class="line">			bup = b &amp;&amp; b.parentNode;</div><div class="line">		//1. 若 b 元素的父节点是 a 元素，则直接 <span class="built_in">return</span> <span class="literal">true</span>。</div><div class="line">		//2. 若 b 元素的父节点不是 a 元素， b 的父元素存在且其 nodeType 值为1</div><div class="line">		<span class="built_in">return</span> a === bup || !!( bup &amp;&amp; bup.nodeType === 1 &amp;&amp; (</div><div class="line">			adown.contains ?</div><div class="line">				//若支持contains方法，那么调用原生js的contains方法，判断 a 是否包含 b 元素的父节点</div><div class="line">				//contains方法直接返回布尔值</div><div class="line">				adown.contains( bup ) :</div><div class="line">				//若不支持contains方法，则用compareDocumentPosition方法来判断,16这个数值在上面有说明</div><div class="line">				a.compareDocumentPosition &amp;&amp; a.compareDocumentPosition( bup ) &amp; 16</div><div class="line">		));</div><div class="line">	&#125; :</div><div class="line">	//若浏览器不支持compareDocumentPosition 和 contains函数</div><div class="line">	// b 元素存在，且 b 元素的父节点和 a 元素完全相等时，<span class="built_in">return</span> <span class="literal">true</span>。</div><div class="line">	<span class="keyword">function</span>( a, b ) &#123;</div><div class="line">		<span class="keyword">if</span> ( b ) &#123;</div><div class="line">			<span class="keyword">while</span> ( (b = b.parentNode) ) &#123;</div><div class="line">				<span class="keyword">if</span> ( b === a ) &#123;</div><div class="line">					<span class="built_in">return</span> <span class="literal">true</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		// 否则返回<span class="literal">false</span></div><div class="line">		<span class="built_in">return</span> <span class="literal">false</span>;</div><div class="line">	&#125;;</div></pre></td></tr></table></figure>
+<h4 id="2-核心-》实用工具-》jQuery-globalEval-code"><a href="#2-核心-》实用工具-》jQuery-globalEval-code" class="headerlink" title="2. 核心==》实用工具 ==》jQuery.globalEval( code )"></a>2. 核心==》实用工具 ==》jQuery.globalEval( code )</h4><p>code 是用来执行的JavaScript代码，为 string 类型。它是在全局上下文下执行（这对加载外部动态脚本很重要）。</p>
+<h6 id="1-用法：-1"><a href="#1-用法：-1" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">test</span></span>()&#123;</div><div class="line">   jQuery.globalEval(<span class="string">"var newVar = true;"</span>)</div><div class="line">&#125;</div><div class="line"><span class="built_in">test</span>();</div><div class="line">console.log(newVar); //<span class="literal">true</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码："><a href="#2-源码：" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> DOMEval( code, doc ) &#123;</div><div class="line">	//若 doc 不存在，则 doc 就是 document 对象</div><div class="line">	doc = doc || document;</div><div class="line">	// 创建一个 script 标签</div><div class="line">	var script = doc.createElement( <span class="string">"script"</span> );</div><div class="line">	// 标签的内容是传值过来的 code</div><div class="line">	script.text = code;</div><div class="line">	// 把 script 标签动态添加给 head 的头部，然后 全局的对象添加给了window，接着再把 script 这个标签删除</div><div class="line">	// 即便 script 标签删除了，全局对象已经添加给了 window 对象。</div><div class="line">	doc.head.appendChild( script ).parentNode.removeChild( script );</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">// Evaluates a script <span class="keyword">in</span> a global context</div><div class="line">globalEval: <span class="keyword">function</span>( code ) &#123;</div><div class="line">	// 调用 DOMEval 方法</div><div class="line">	DOMEval( code );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-核心-》实用工具-》jQuery-grep-array-function-elementOfArray-indexInArray-invert"><a href="#3-核心-》实用工具-》jQuery-grep-array-function-elementOfArray-indexInArray-invert" class="headerlink" title="3.核心==》实用工具 ==》jQuery.grep( array, function(elementOfArray, indexInArray) [, invert ] )"></a>3.核心==》实用工具 ==》jQuery.grep( array, function(elementOfArray, indexInArray) [, invert ] )</h4><p>$.grep() 函数使用指定的函数过滤数组中的元素，并返回过滤后的数组。<br>提示：源数组不会受到影响，过滤结果只反映在返回的结果数组中。</p>
+<p>array : 用于查询元素的类数组对象.<br>elementOfArray : Function类型 指定的过滤函数。grep()方法为function提供了两个参数：<br>                                 其一为当前迭代的数组元素，其二是当前迭代元素在数组中的索引。<br>invert : 可选。 Boolean类型 默认值为false，指定是否反转过滤结果。</p>
+<h6 id="1-用法：-2"><a href="#1-用法：-2" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var arr1 = [ 1, 9, 3, 8, 6, 1, 5, 9, 4, 7, 3, 8, 6, 9, 1 ];</div><div class="line">console.log( arr1.join( <span class="string">", "</span> ) );    // 1, 9, 3, 8, 6, 1, 5, 9, 4, 7, 3, 8, 6, 9, 1</div><div class="line">var arr = jQuery.grep(arr1, <span class="keyword">function</span>( n, i ) &#123;</div><div class="line">    <span class="built_in">return</span> ( n !== 5 &amp;&amp; i &gt; 4 );</div><div class="line">&#125;);</div><div class="line">console.log( arr.join( <span class="string">", "</span> ) );    //1, 9, 4, 7, 3, 8, 6, 9, 1   返回数组中不为 5 和索引值在原数组中大于 4 的</div><div class="line">arr = jQuery.grep(arr, <span class="keyword">function</span>( a ) &#123;</div><div class="line">    <span class="built_in">return</span> a !== 9;</div><div class="line">&#125;);</div><div class="line">console.log( arr.join( <span class="string">", "</span> ) );    // 1, 4, 7, 3, 8, 6, 1   返回数组不包含 9 </div><div class="line">var arr2 = [0,1,2,3,4];</div><div class="line">var iArr = $.grep(arr2,<span class="keyword">function</span>(b)&#123;</div><div class="line">	<span class="built_in">return</span> b !== 3;</div><div class="line">&#125;,<span class="literal">true</span>);</div><div class="line">console.log(iArr.join(<span class="string">","</span>));  // 3  不加<span class="literal">true</span>，正常应返回不包含 3 的数组；加<span class="literal">true</span>，就是返回与条件相反的数组，即返回 3 </div><div class="line">```								 </div><div class="line"><span class="comment">###### (2)源码：</span></div><div class="line">```bash</div><div class="line">grep: <span class="keyword">function</span>( elems, callback, invert ) &#123;</div><div class="line">	var callbackInverse,</div><div class="line">		matches = [],</div><div class="line">		i = 0,</div><div class="line">		length = elems.length,   // 数组长度</div><div class="line">		callbackExpect = !invert;  // callbackExpect 默认值给 <span class="literal">true</span></div><div class="line"></div><div class="line">	// Go through the array, only saving the items</div><div class="line">	// that pass the validator <span class="keyword">function</span></div><div class="line">	<span class="keyword">for</span> ( ; i &lt; length; i++ ) &#123;</div><div class="line">		//对数组进行循环，判断当前元素值和索引值是否满足过滤函数中的要求</div><div class="line">		// 因为我们的过滤函数中是 <span class="built_in">return</span> 出来的是一个布尔值</div><div class="line">		// 若不满足过滤条件 callbackInverse 则为 <span class="literal">true</span></div><div class="line">		callbackInverse = !callback( elems[ i ], i );</div><div class="line">		// 当callbackInverse与callbackExpect不相等时，就往matches中添加当前元素</div><div class="line">		<span class="keyword">if</span> ( callbackInverse !== callbackExpect ) &#123;</div><div class="line">			matches.push( elems[ i ] );</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	//最后返回 matches 数组，即过滤后的数组</div><div class="line">	<span class="built_in">return</span> matches;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-核心-》实用工具-》jQuery-inArray-value-array-fromIndex"><a href="#4-核心-》实用工具-》jQuery-inArray-value-array-fromIndex" class="headerlink" title="4.核心==》实用工具 ==》jQuery.inArray( value, array [, fromIndex ] )"></a>4.核心==》实用工具 ==》jQuery.inArray( value, array [, fromIndex ] )</h4><p>$.inArray() 函数用于在数组中查找指定值，并返回它的索引值（如果没有找到，则返回-1）<br>提示：源数组不会受到影响，过滤结果只反映在返回的结果数组中。<br>value ： 任意类型 用于查找的值。<br>array ： Array类型 指定被查找的数组。<br>fromIndex ：可选。Number类型 指定从数组的指定索引位置开始查找，默认为 0。</p>
+<h4 id="1-用法：-3"><a href="#1-用法：-3" class="headerlink" title="(1)用法："></a>(1)用法：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var arr = [ 4, <span class="string">"Pete"</span>, 8, <span class="string">"John"</span> ];</div><div class="line">console.log( jQuery.inArray( <span class="string">"John"</span>, arr ) );     // 3 </div><div class="line">console.log( jQuery.inArray( 4, arr ) );          // 0</div><div class="line">console.log( jQuery.inArray( <span class="string">"Karl"</span>, arr ) );			// -1</div><div class="line">console.log( jQuery.inArray( <span class="string">"Pete"</span>, arr, 2 ) );  // -1</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-1"><a href="#2-源码：-1" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">in</span>Array: <span class="keyword">function</span>( elem, arr, i ) &#123;</div><div class="line">	// 数组不存在，则直接返回 -1；</div><div class="line">	// 如果你不太了解js中 call 和 apply的用法，可以参考我的另一篇文章  [!文章路径]</div><div class="line">	// indexOf.call(arr,elem,i) ; 其实就是把字符串的indexOf 继承给数组，并且传递 elem  和 i 参数。</div><div class="line">  // 更简单一点其实可以理解为: arr.indexOf(elem,i);</div><div class="line">	<span class="built_in">return</span> arr == null ? -1 : indexOf.call( arr, elem, i );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-核心-》实用工具-》jQuery-isArray-obj"><a href="#5-核心-》实用工具-》jQuery-isArray-obj" class="headerlink" title="5. 核心==》实用工具 ==》jQuery.isArray( obj )"></a>5. 核心==》实用工具 ==》jQuery.isArray( obj )</h4><p>$.isArray()函数用于判断指定参数是否是一个数组。<br>obj ： 任意类型 需要进行判断的任意值。</p>
+<h6 id="1-用法：-4"><a href="#1-用法：-4" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">console.log($.isArray([0,1,2]));      // <span class="literal">true</span></div><div class="line">console.log($.isArray(<span class="string">"string"</span>));     // <span class="literal">false</span></div><div class="line">console.log($.isArray(new Object())); // <span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-2"><a href="#2-源码：-2" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">isArray: Array.isArray  // 就是调用原生js 的 Array.isArray 方法</div><div class="line"></div><div class="line">// 仿 jq 用原生 js 的 Array.isArray 方法</div><div class="line">var arr = [0,1,2];</div><div class="line">var isArr =  Array.isArray;</div><div class="line">console.log(isArr(arr));  // <span class="literal">true</span></div></pre></td></tr></table></figure>
+<h4 id="6-核心-》实用工具-》jQuery-isEmptyObject-object"><a href="#6-核心-》实用工具-》jQuery-isEmptyObject-object" class="headerlink" title="6. 核心==》实用工具 ==》jQuery.isEmptyObject( object )"></a>6. 核心==》实用工具 ==》jQuery.isEmptyObject( object )</h4><p>检查对象是否为空（不包含任何属性）。<br>object ： 将要检查是否为空的对象。</p>
+<h6 id="1-用法：-5"><a href="#1-用法：-5" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(jQuery.isEmptyObject())       // <span class="literal">true</span></div><div class="line">console.log(jQuery.isEmptyObject(<span class="string">""</span>));    // <span class="literal">true</span></div><div class="line">console.log(jQuery.isEmptyObject(<span class="string">"aaa"</span>)); //<span class="literal">false</span></div><div class="line">console.log(jQuery.isEmptyObject(&#123;&#125;));    // <span class="literal">true</span></div><div class="line">console.log(jQuery.isEmptyObject(&#123; foo: <span class="string">"bar"</span> &#125;)); //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-3"><a href="#2-源码：-3" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">isEmptyObject: <span class="keyword">function</span>( obj ) &#123;</div><div class="line"></div><div class="line">	/* eslint-disable no-unused-vars */</div><div class="line">	// See https://github.com/eslint/eslint/issues/6125</div><div class="line">	var name;</div><div class="line">	// 只要<span class="keyword">for</span>循环执行了，说明obj不是空的否则返回<span class="literal">true</span>,这种判断很简单没有判断参数是否是对象的情况下就直接循环了。</div><div class="line">	// 也可以用它来判断是否是空字符串。</div><div class="line">	<span class="keyword">for</span> ( name <span class="keyword">in</span> obj ) &#123;</div><div class="line">		<span class="built_in">return</span> <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">return</span> <span class="literal">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="结束语"><a href="#结束语" class="headerlink" title="结束语:"></a>结束语:</h4><p>这篇文章先写到这里，实用工具这一模块还有很多的方法，但不在这一篇文章中全部展现了，是为了避免篇幅太长。下一篇，接着聊。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/15/jquery3.html/" rel="next" title="jQuery 源码学习之路三（jQuery.extend）">
+                <i class="fa fa-chevron-left"></i> jQuery 源码学习之路三（jQuery.extend）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery-contains-jQuery-globalEval-jQuery-grep-jQuery-inArray-jQuery-isArray-jQuery-isEmptyObject"><span class="nav-number">1.</span> <span class="nav-text">jQuery.contains, jQuery.globalEval, jQuery.grep, jQuery.inArray, jQuery.isArray, jQuery.isEmptyObject</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-核心-》实用工具-》jQuery-contains-container-contained"><span class="nav-number">1.1.</span> <span class="nav-text">1. 核心==》实用工具 ==》jQuery.contains( container, contained )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">(2)源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-核心-》实用工具-》jQuery-globalEval-code"><span class="nav-number">1.2.</span> <span class="nav-text">2. 核心==》实用工具 ==》jQuery.globalEval( code )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码："><span class="nav-number">1.2.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-核心-》实用工具-》jQuery-grep-array-function-elementOfArray-indexInArray-invert"><span class="nav-number">1.3.</span> <span class="nav-text">3.核心==》实用工具 ==》jQuery.grep( array, function(elementOfArray, indexInArray) [, invert ] )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-2"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">(1)用法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-核心-》实用工具-》jQuery-inArray-value-array-fromIndex"><span class="nav-number">1.4.</span> <span class="nav-text">4.核心==》实用工具 ==》jQuery.inArray( value, array [, fromIndex ] )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-用法：-3"><span class="nav-number">1.5.</span> <span class="nav-text">(1)用法：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-1"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-核心-》实用工具-》jQuery-isArray-obj"><span class="nav-number">1.6.</span> <span class="nav-text">5. 核心==》实用工具 ==》jQuery.isArray( obj )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-4"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-2"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-核心-》实用工具-》jQuery-isEmptyObject-object"><span class="nav-number">1.7.</span> <span class="nav-text">6. 核心==》实用工具 ==》jQuery.isEmptyObject( object )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-5"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-3"><span class="nav-number">1.7.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束语"><span class="nav-number">1.8.</span> <span class="nav-text">结束语:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
