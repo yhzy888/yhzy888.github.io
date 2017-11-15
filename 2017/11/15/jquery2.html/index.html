@@ -1,0 +1,669 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="源码中应用 prototype 原型来做处理。那么用 prototype 处理的好处是什么呢？首先举个例子：用构造函数生成实例对象：12345678910111213141516function House(name)&amp;#123;		this.name = name;		this.door = &quot;防盗门&quot;;  //此属性为实例对象的共有属性		this.getRoomPhoto = functio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路二(prototype 与 jq源码设计)">
+<meta property="og:url" content="http://yoursite.com/2017/11/15/jquery2.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="源码中应用 prototype 原型来做处理。那么用 prototype 处理的好处是什么呢？首先举个例子：用构造函数生成实例对象：12345678910111213141516function House(name)&amp;#123;		this.name = name;		this.door = &quot;防盗门&quot;;  //此属性为实例对象的共有属性		this.getRoomPhoto = functio">
+<meta property="og:image" content="http://yoursite.com/2017/11/15/jquery2.html/prototype.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/15/jquery2.html/prototypeRouter.png">
+<meta property="og:updated_time" content="2017-11-15T14:44:47.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路二(prototype 与 jq源码设计)">
+<meta name="twitter:description" content="源码中应用 prototype 原型来做处理。那么用 prototype 处理的好处是什么呢？首先举个例子：用构造函数生成实例对象：12345678910111213141516function House(name)&amp;#123;		this.name = name;		this.door = &quot;防盗门&quot;;  //此属性为实例对象的共有属性		this.getRoomPhoto = functio">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/15/jquery2.html/prototype.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/15/jquery2.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路二(prototype 与 jq源码设计) | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/15/jquery2.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路二(prototype 与 jq源码设计)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T22:39:16+08:00">
+                2017-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>源码中应用 prototype 原型来做处理。那么用 prototype 处理的好处是什么呢？<br>首先举个例子：<br>用构造函数生成实例对象：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> House(name)&#123;</div><div class="line">		this.name = name;</div><div class="line">		this.door = <span class="string">"防盗门"</span>;  //此属性为实例对象的共有属性</div><div class="line">		this.getRoomPhoto = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">			console.log(<span class="string">"房照"</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//生成两个实例对象，看看。</div><div class="line">	var homeownerA = new House(<span class="string">"小明"</span>);</div><div class="line">	var homeownerB = new House(<span class="string">"小粒"</span>);</div><div class="line">	console.log(homeownerA === homeownerB);   //<span class="literal">false</span>   两个实例对象不相等，所占内存地址不同</div><div class="line">	homeownerA.door = <span class="string">"玻璃门"</span>;  //更改homeownerA的door属性</div><div class="line">	console.log(homeownerA.door);  // 玻璃门</div><div class="line">	console.log(homeownerB.door);  // 防盗门</div><div class="line">	console.log(homeownerA.getRoomPhoto === homeownerB.getRoomPhoto);  //<span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<p>上面例子说明了，每个实例对象都有自己的方法和属性的副本，这样就无法做到数据共享，而且也很浪费资源。这样操作多了，对性能上也是有一定的影响。javascript中的每个对象都有prototype属性，Javascript中对象的prototype属性的解释是：返回对象类型原型的引用。每一个构造函数都有一个属性叫做原型。这个属性非常有用：为一个特定类声明通用的变量或者函数。prototype 就像一把钥匙，只要拥有这把钥匙，你就可以享有 构造函数 这个房子里的一切。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">function</span> House(name)&#123;</div><div class="line">	this.name = name;</div><div class="line">&#125;</div><div class="line">House.prototype = &#123;</div><div class="line">	door:<span class="string">"防盗门"</span>,</div><div class="line">	getRoomPhoto : <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		console.log(<span class="string">"房照"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">//生成两个实例对象，看看。</div><div class="line">var homeownerA = new House(<span class="string">"小明"</span>);</div><div class="line">var homeownerB = new House(<span class="string">"小粒"</span>);</div><div class="line">console.log(homeownerA === homeownerB);   //<span class="literal">false</span>   两个实例对象不相等，所占内存地址不同</div><div class="line">House.prototype.door = <span class="string">"玻璃门"</span>;  //更改House原型的door属性,同时影响了两个实例对象</div><div class="line">console.log(homeownerA.door);  // 玻璃门</div><div class="line">console.log(homeownerB.door);  // 玻璃门</div><div class="line">console.log(homeownerA.getRoomPhoto === homeownerB.getRoomPhoto);  //<span class="literal">true</span>  共享方法，所指向内存地址什么的都相同</div></pre></td></tr></table></figure></p>
+<p><img src="/2017/11/15/jquery2.html/prototype.png" alt="&quot;prototype&quot;"></p>
+<p>下面这一小段代码就说明了先会在自身实例中查找一个属性或方法。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//接着上面的例子</div><div class="line">homeownerA.door = <span class="string">"水晶门"</span>;</div><div class="line">console.log(homeownerA.door);  // 水晶门</div><div class="line">console.log(homeownerB.door);  // 玻璃门</div></pre></td></tr></table></figure></p>
+<p>这里面有一个注意点，就是你更改一个实例对象的属性时，并不会影响到原型。<br>源码中，下面的代码可谓是jQuery的整个架构了。（这是我从jquery源码中抽离出来的）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var jQuery = <span class="keyword">function</span>( selector, context ) &#123;</div><div class="line">	// The jQuery object is actually just the init constructor <span class="string">'enhanced'</span></div><div class="line">	// Need init <span class="keyword">if</span> jQuery is called (just allow error to be thrown <span class="keyword">if</span> not included)</div><div class="line">	<span class="built_in">return</span> new jQuery.fn.init( selector, context );</div><div class="line">&#125;,</div><div class="line">jQuery.fn = jQuery.prototype = &#123; //xxx; &#125;</div><div class="line">init = jQuery.fn.init = <span class="keyword">function</span>( selector, context, root ) &#123; //xxx; &#125;</div><div class="line">init.prototype = jQuery.fn;</div></pre></td></tr></table></figure></p>
+<p><img src="/2017/11/15/jquery2.html/prototypeRouter.png" alt="&quot;prototype&quot;"><br>1.jq 无 new 构建，就是因为 jq 为我们封装了 new。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var jQuery = <span class="keyword">function</span>( selector, context ) &#123;</div><div class="line">	<span class="built_in">return</span> new jQuery.fn.init( selector, context );</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>每次调用$()方法等于是创建了一个新的实例，所以说为此为了减少多余空间，以后最好用var a = $();的方式让下文使用提供方便，避免多余的封装和空间的浪费。</p>
+<ol>
+<li>$(“xxx”) 这种实例化方式，其内部调用的是 “return new jQuery.fn.init( selector, context );” ，就是构造实例交给 jQuery.fn.init 方法去处理。</li>
+<li>init = jQuery.fn.init = function( selector, context, root ) {} ，jQuery.fn.init 的方法就与 jQuery.init方法像等同，</li>
+<li>jQuery.init.prototype 指向 jQuery.fn，然后 jQuery.fn 最终指向 jQuery.prototype。所有jq对象都有jQuery.fn的属性和方法。</li>
+</ol>
+<p>到这里虽然弄明白了 jQuery 源码的逻辑。这时，俺就又不明白了，为个啥子非要弄得这么麻烦，直接像下面这种写法不就行了么。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var $$ = yjQuery = <span class="keyword">function</span>(selector) &#123;</div><div class="line">    this.selector = selector;</div><div class="line">    <span class="built_in">return</span> new yjQuery(selector);</div><div class="line">&#125;</div><div class="line">console.log($$(<span class="string">"yh"</span>)); //报错  Maximum call stack size exceeded</div></pre></td></tr></table></figure></p>
+<p>看到这个结果，呵呵哒了吧，都像你想的那么简单，你早就是大神了。看没，无限的递归自己，所以造成死循环并溢出了。所以人家 jQuery采取的手段是把原型上的一个init方法作为构造器。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">var $$ = yjQuery = <span class="keyword">function</span>(selector) &#123;</div><div class="line">    //把原型上的init作为构造器</div><div class="line">    //通过实例init函数，每次都构建新的init实例对象，来分隔this,使new的init跟jquery类的this分离</div><div class="line">    <span class="built_in">return</span> new yjQuery.fn.init( selector );</div><div class="line">&#125;</div><div class="line"></div><div class="line">yjQuery.fn = yjQuery.prototype = &#123;</div><div class="line">    name: <span class="string">'aaron'</span>,</div><div class="line">    init: <span class="keyword">function</span>(selector) &#123;</div><div class="line">    		this.selector = selector;</div><div class="line">        console.log(this);</div><div class="line">        console.log(this.constructor.name); //init</div><div class="line">    &#125;,</div><div class="line">    constructor: yjQuery</div><div class="line">&#125;</div><div class="line">console.log($$(<span class="string">"yh"</span>)); //  this 指向 init 而不是 yjQuery。</div></pre></td></tr></table></figure></p>
+<p>在上面的代码中再加上这句话：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yjQuery.fn.init.prototype = yjQuery.fn;</div><div class="line">// console.log(this.constructor.name); // this 指向 yjQuery</div></pre></td></tr></table></figure></p>
+<p>通过原型传递解决问题，把jQuery的原型传递给jQuery.prototype.init.prototype,换句话说jQuery的原型对象覆盖了init构造器的原型对象。</p>
+<p>对上面的代码还有一点需要说明一下，为什么要写 constructor: yjQuery 这句话：用 obj.prototype 去写一个东西的时候，constructor 的指向就不是构造函数，而是object ，所以这里要手动的把 constructor 设置为原构造函数。</p>
+<p>还有在jQuery里面，你既可以用$.isArray()调用jq的静态方法，也可以通过$().css()获取对象执行实例方法。慕课网jq源码解析中也有解释说是静态与实例方法共享设计。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var j = <span class="function"><span class="title">function</span></span> () &#123;&#125;;</div><div class="line">j.func = <span class="function"><span class="title">function</span></span> () &#123;console.log(<span class="string">"静态方法"</span>);&#125;;</div><div class="line">j.prototype.t = <span class="function"><span class="title">function</span></span> () &#123;console.log(<span class="string">"实例方法"</span>);&#125;;</div><div class="line"></div><div class="line">var t = new j();</div><div class="line">t.t();</div><div class="line">j.func();</div></pre></td></tr></table></figure></p>
+<p>所谓静态方法是jQuery本身得公共方法，并不需要通过实例化来调用，一般也称为工具方法。反之，实例化方法就是需要实例化调用。来段代码瞧一瞧，看一看啦！<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">    var yh = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">      <span class="built_in">return</span> new yh.prototype.init();</div><div class="line">    &#125;;</div><div class="line">    yh.func = <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">        console.log(<span class="string">"静态方法"</span>);</div><div class="line">    &#125;;</div><div class="line">    yh.prototype = &#123;</div><div class="line">        init:<span class="function"><span class="title">function</span></span> () &#123;&#125;,</div><div class="line">        t:<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">            console.log(<span class="string">"实例方法"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    yh.prototype.init.prototype = yh.prototype;</div><div class="line">    window.yh = yh;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">var t =yh();</div><div class="line">t.t(); //实例方法</div><div class="line">yh.func(); //静态方法</div><div class="line">//静态方法不能被实例对象调用</div><div class="line">//若直接用实例对象 t 去调用 func</div><div class="line">t.func();   //t.func is not a <span class="keyword">function</span></div></pre></td></tr></table></figure></p>
+<p>再说一下jq架构中的源码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var jQuery = <span class="keyword">function</span>( selector, context ) &#123;</div><div class="line">	// The jQuery object is actually just the init constructor <span class="string">'enhanced'</span></div><div class="line">	// Need init <span class="keyword">if</span> jQuery is called (just allow error to be thrown <span class="keyword">if</span> not included)</div><div class="line">	<span class="built_in">return</span> new jQuery.fn.init( selector, context );</div><div class="line">&#125;,</div><div class="line">jQuery.fn = jQuery.prototype = &#123; //静态方法; &#125;</div><div class="line">init = jQuery.fn.init = <span class="keyword">function</span>( selector, context, root ) &#123; //实例方法; &#125;</div><div class="line">init.prototype = jQuery.fn; // 点睛之笔，把jQuery.prototype原型的引用赋给jQuery.fn.init.prototype的原型</div></pre></td></tr></table></figure></p>
+<p>jQuery的无new构建原理中在$()内部中首先保证是通过new创建,使得我们在函数调用中可以使用this来代表该jq实例，通过原型的共享而实现了静态方法与实例方法的共存。这样 this 的指向一直指的是 jQuery 的对象。</p>
+<p>——————————————-华丽的分界线————————————————————–<br>加个分界线其实是有一点要补充一下：<br>通过prototype 或是 this 指针来绑定的实例方法，直接定义在实例上的变量的优先级要高于定义在“this”上的，而定义在“this”上的又高于 prototype定义的变量。即直接定义在实例上的变量会覆盖定义在“this”上和prototype定义的变量，定义在“this”上的会覆盖prototype定义的变量。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var Zy = <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	this.userName = <span class="string">"yh"</span>; //定义在“this”上的变量    优先级第二</div><div class="line">&#125;</div><div class="line">Zy.prototype.userName = <span class="string">"zy"</span>; //定义在原型上的变量   优先级最后</div><div class="line">var zy = new Zy();</div><div class="line">zy.userName = <span class="string">"yz"</span>; //直接定义在实例上的变量   优先级最高</div><div class="line">console.log(zy.userName);</div><div class="line"></div><div class="line">console.log(zy.userName);</div></pre></td></tr></table></figure></p>
+<p>可以把上面的代码copy一下，直接进行测试。</p>
+<p>总结：<br>通过new jQuery.fn.init() 构建一个新的对象，拥有init构造器的prototype原型对象的方法<br>通过改变prorotype指针的指向，让这个新的对象也指向了jQuery类的原型prototype<br>所以这样构建出来的对象就继续了jQuery.fn原型定义的所有方法了</p>
+<p>2017-11-13</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/15/jquery1.html/" rel="next" title="jQuery 源码学习之路一（整体架构--自运行）">
+                <i class="fa fa-chevron-left"></i> jQuery 源码学习之路一（整体架构--自运行）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
