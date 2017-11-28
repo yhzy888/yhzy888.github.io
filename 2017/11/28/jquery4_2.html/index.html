@@ -1,0 +1,703 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery.isFunction, jQuery.isNumeric, jQuery.isPlainObject, jQuery.isWindow, jQuery.isXMLDoc, jQuery.merge, jQuery.type, jQuery.makeArray, jQuery.noop, jQuery.now, jQuery.parseJSON, jQuery.trim来！端起酒杯，拿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路四（jQuery api 核心==>实用工具系列二）">
+<meta property="og:url" content="http://yoursite.com/2017/11/28/jquery4_2.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="jQuery.isFunction, jQuery.isNumeric, jQuery.isPlainObject, jQuery.isWindow, jQuery.isXMLDoc, jQuery.merge, jQuery.type, jQuery.makeArray, jQuery.noop, jQuery.now, jQuery.parseJSON, jQuery.trim来！端起酒杯，拿">
+<meta property="og:updated_time" content="2017-11-23T08:21:48.712Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路四（jQuery api 核心==>实用工具系列二）">
+<meta name="twitter:description" content="jQuery.isFunction, jQuery.isNumeric, jQuery.isPlainObject, jQuery.isWindow, jQuery.isXMLDoc, jQuery.merge, jQuery.type, jQuery.makeArray, jQuery.noop, jQuery.now, jQuery.parseJSON, jQuery.trim来！端起酒杯，拿">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/28/jquery4_2.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路四（jQuery api 核心==>实用工具系列二） | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/jquery4_2.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路四（jQuery api 核心==>实用工具系列二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:45:29+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="jQuery-isFunction-jQuery-isNumeric-jQuery-isPlainObject-jQuery-isWindow-jQuery-isXMLDoc-jQuery-merge-jQuery-type-jQuery-makeArray-jQuery-noop-jQuery-now-jQuery-parseJSON-jQuery-trim"><a href="#jQuery-isFunction-jQuery-isNumeric-jQuery-isPlainObject-jQuery-isWindow-jQuery-isXMLDoc-jQuery-merge-jQuery-type-jQuery-makeArray-jQuery-noop-jQuery-now-jQuery-parseJSON-jQuery-trim" class="headerlink" title="jQuery.isFunction, jQuery.isNumeric, jQuery.isPlainObject, jQuery.isWindow, jQuery.isXMLDoc, jQuery.merge, jQuery.type, jQuery.makeArray, jQuery.noop, jQuery.now, jQuery.parseJSON, jQuery.trim"></a>jQuery.isFunction, jQuery.isNumeric, jQuery.isPlainObject, jQuery.isWindow, jQuery.isXMLDoc, jQuery.merge, jQuery.type, jQuery.makeArray, jQuery.noop, jQuery.now, jQuery.parseJSON, jQuery.trim</h3><p>来！端起酒杯，拿起碗，磕着花生瓜子咱们就着上篇[! 上篇文章地址链接 ] 接着聊。。。<br>注意:用法中的测试代码，需要引入jq。</p>
+<h4 id="1-核心-gt-实用工具-gt-jQuery-isFunction-obj"><a href="#1-核心-gt-实用工具-gt-jQuery-isFunction-obj" class="headerlink" title="1. 核心==&gt;实用工具 ==&gt;jQuery.isFunction( obj )"></a>1. 核心==&gt;实用工具 ==&gt;jQuery.isFunction( obj )</h4><p>$.isFunction(obj)函数用于判断指定参数是否是一个函数。<br>将要被检查的对象。用于判断该对象是否为函数。<br>注意：jQuery 1.3之后的版本，例如在 Internet Explorer 中，由浏览器提供的函数alert()，以及 DOM 元素方法(比如 getAttribute())将不被认为是函数。</p>
+<h6 id="1-用法："><a href="#1-用法：" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">fun</span></span>()&#123;&#125;;</div><div class="line">console.log($.isFunction(fun));   //<span class="literal">true</span></div><div class="line">var obj = new Object();</div><div class="line">console.log($.isFunction(obj));     //<span class="literal">false</span></div><div class="line">console.log($.isFunction(null));    //<span class="literal">false</span></div><div class="line">console.log($.isFunction(<span class="string">"fun"</span>));   //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码："><a href="#2-源码：" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">isFunction: <span class="keyword">function</span>( obj ) &#123;</div><div class="line">	<span class="built_in">return</span> jQuery.type( obj ) === <span class="string">"function"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个源码就是通过调用jQuery.type方法判断返回值是否为function。</p>
+<h4 id="2-核心-gt-实用工具-gt-jQuery-isNumeric-value"><a href="#2-核心-gt-实用工具-gt-jQuery-isNumeric-value" class="headerlink" title="2. 核心==&gt;实用工具==&gt;jQuery.isNumeric( value )"></a>2. 核心==&gt;实用工具==&gt;jQuery.isNumeric( value )</h4><p>value 用于测试的值。<br>描述: 确定它的参数是否是一个JavaScript数字。<br>$.isNumeric()方法检查它的参数是否能代表一个数值。如果是这样，则返回true。否则返回false。该参数可以是任何类型。（jQuery 3.0之前，这个方法会强制转换参数为Number，转换后的值类型如果是如果是Number，也会返回true）<br>在jQuery 3.0中，$.isNumeric()方法只有接收number类型的参数时候，或者是可以被强制为有限数值的 string类型的参数，才会返回true，在其他情况下，返回false。</p>
+<h6 id="1-用法：-1"><a href="#1-用法：-1" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">console.log($.isNumeric( 0 ));       //<span class="literal">true</span></div><div class="line">console.log($.isNumeric( <span class="string">"0xFF"</span> ));  //<span class="literal">true</span></div><div class="line">console.log($.isNumeric( NaN ));		 //<span class="literal">false</span></div><div class="line">console.log($.isNumeric( null ));    //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-1"><a href="#2-源码：-1" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">isNumeric: <span class="keyword">function</span>( obj ) &#123;</div><div class="line"></div><div class="line">	// As of jQuery 3.0, isNumeric is limited to</div><div class="line">	// strings and numbers (primitives or objects)</div><div class="line">	// that can be coerced to finite numbers (gh-2662)</div><div class="line">	</div><div class="line">	//$.type() 函数用于确定JavaScript内置对象的类型，并返回小写形式的类型名称。</div><div class="line">	var <span class="built_in">type</span> = jQuery.type( obj );</div><div class="line">	//<span class="built_in">type</span>类型是“number”或“string”，同时运算后不能是NAN，则返回 <span class="literal">true</span></div><div class="line">	<span class="built_in">return</span> ( <span class="built_in">type</span> === <span class="string">"number"</span> || <span class="built_in">type</span> === <span class="string">"string"</span> ) &amp;&amp;</div><div class="line"></div><div class="line">		// parseFloat NaNs numeric-cast <span class="literal">false</span> positives (<span class="string">""</span>)</div><div class="line">		// ...but misinterprets leading-number strings, particularly hex literals (<span class="string">"0x..."</span>)</div><div class="line">		// subtraction forces infinities to NaN</div><div class="line">		!isNaN( obj - parseFloat( obj ) );</div><div class="line">&#125;</div><div class="line"></div><div class="line">//不用原生 typeof 方法的原因：console.log(typeof NaN); //number</div></pre></td></tr></table></figure>
+<h4 id="3-核心-gt-实用工具-gt-jQuery-isPlainObject-object"><a href="#3-核心-gt-实用工具-gt-jQuery-isPlainObject-object" class="headerlink" title="3. 核心==&gt;实用工具==&gt;jQuery.isPlainObject( object )"></a>3. 核心==&gt;实用工具==&gt;jQuery.isPlainObject( object )</h4><p>object 用于测试是否为纯粹的对象。<br>描述: 测试对象是否是纯粹的对象（通过 “{}” 或者 “new Object” 创建的）<br>注意：检测跨平台时存在很多的不一致，例如在IE8中使用$.isPlainObject()测试document.location<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">console.log($.isPlainObject(document.location));</div><div class="line">//抛出一个无效的指针异常</div></pre></td></tr></table></figure></p>
+<h6 id="1-用法：-2"><a href="#1-用法：-2" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">console.log(jQuery.isPlainObject(&#123;&#125;));      //<span class="literal">true</span></div><div class="line">console.log(jQuery.isPlainObject(<span class="string">"test"</span>));  //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-2"><a href="#2-源码：-2" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">isPlainObject: <span class="keyword">function</span>( obj ) &#123;</div><div class="line">	var proto, Ctor;</div><div class="line"></div><div class="line">	// Detect obvious negatives</div><div class="line">	// Use toString instead of jQuery.type to catch host objects</div><div class="line">	//  toString.call( obj ) !== <span class="string">"[object Object]"</span> 判断obj类型不是一个object, apply和call可看我的另一篇文章[!apply]</div><div class="line">	<span class="keyword">if</span> ( !obj || toString.call( obj ) !== <span class="string">"[object Object]"</span> ) &#123;</div><div class="line">		<span class="built_in">return</span> <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line">	//getProto获取原型链上的对象。var getProto = Object.getPrototypeOf; 用于读取一个对象的 prototype 对象。在源码中一开始的时候就声明了</div><div class="line">	proto = getProto( obj );</div><div class="line"></div><div class="line">	// Objects with no prototype (e.g., `Object.create( null )`) are plain</div><div class="line">	<span class="keyword">if</span> ( !proto ) &#123;</div><div class="line">		<span class="built_in">return</span> <span class="literal">true</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Objects with prototype are plain iff they were constructed by a global Object <span class="keyword">function</span></div><div class="line">	//obj 对象上有 constructor 的属性，hasOwn ==》Object.hasOwnProperty,若obj对象有 constructor 这个属性</div><div class="line">	//那么 Ctor 的值就是 constructor 这个属性值，即 obj 的构造函数</div><div class="line">	Ctor = hasOwn.call( proto, <span class="string">"constructor"</span> ) &amp;&amp; proto.constructor;</div><div class="line">	// 当 Ctor 的类型是 <span class="keyword">function</span>，且检验 Ctor 最后调用 toString 的方法返回的字符串是否</div><div class="line">	//是 <span class="string">"function Object() &#123; [native code] &#125;"</span>的字符串，两个条件都满足，则返回 <span class="literal">true</span>，表示是纯粹的 object 对象。</div><div class="line">	<span class="built_in">return</span> typeof Ctor === <span class="string">"function"</span> &amp;&amp; fnToString.call( Ctor ) === ObjectFunctionString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-核心-gt-实用工具-gt-jQuery-isWindow-obj"><a href="#4-核心-gt-实用工具-gt-jQuery-isWindow-obj" class="headerlink" title="4. 核心==&gt;实用工具==&gt;jQuery.isWindow( obj )"></a>4. 核心==&gt;实用工具==&gt;jQuery.isWindow( obj )</h4><p>obj 用于测试是否为一个window对象<br>描述: 确定参数是否为一个window对象。</p>
+<h6 id="1-用法：-3"><a href="#1-用法：-3" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">console.log($.isWindow(window));     //<span class="literal">true</span></div><div class="line">console.log($.isWindow(new Object));  //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-3"><a href="#2-源码：-3" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">isWindow: <span class="keyword">function</span>( obj ) &#123;</div><div class="line">	//当前对象不为 null 且 当前对象obj与obj的属性window完全相等，返回 <span class="literal">true</span>，否则返回 <span class="literal">false</span>。</div><div class="line">	<span class="built_in">return</span> obj != null &amp;&amp; obj === obj.window;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="5-核心-gt-实用工具-gt-jQuery-isXMLDoc-node"><a href="#5-核心-gt-实用工具-gt-jQuery-isXMLDoc-node" class="headerlink" title="5. 核心==&gt;实用工具==&gt;jQuery.isXMLDoc( node )"></a>5. 核心==&gt;实用工具==&gt;jQuery.isXMLDoc( node )</h4><p>node 用来检查是否在一个XML文档中的DOM节点。<br>描述: 检查一个DOM节点是否在XML文档中（或者是一个XML文档）。</p>
+<h6 id="1-用法：-4"><a href="#1-用法：-4" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">console.log(jQuery.isXMLDoc(document)) 			// <span class="literal">false</span></div><div class="line">console.log(jQuery.isXMLDoc(document.body)) // <span class="literal">false</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-4"><a href="#2-源码：-4" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jQuery.isXMLDoc = Sizzle.isXML;  //此处看有关Sizzle的解释，[!Sizzle 文章链接]，后补</div></pre></td></tr></table></figure>
+<h4 id="6-核心-gt-实用工具-gt-jQuery-merge-first-second"><a href="#6-核心-gt-实用工具-gt-jQuery-merge-first-second" class="headerlink" title="6. 核心==&gt;实用工具==&gt;jQuery.merge( first, second )"></a>6. 核心==&gt;实用工具==&gt;jQuery.merge( first, second )</h4><p>first 第一个用于合并的数组，其中将会包含合并后的第二个数组的内容。<br>second 第二个用于合并的数组，该数组不会被修改，其中的内容将会被合并到第一个数组中。<br>描述: 合并两个数组内容到第一个数组。<br>注意：第一个数组会被修改，所以如需对第一个数组进行其他操作，应先拷贝出来一份数组待用。</p>
+<h6 id="1-用法：-5"><a href="#1-用法：-5" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var first = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>];</div><div class="line">var second = [<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>];</div><div class="line">//第一个数组被修改</div><div class="line">console.log($.merge(first,second));   // [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</div><div class="line">console.log(first);										// [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</div><div class="line">//不要第一个数组被修改，同时满足两个数组的合并</div><div class="line">console.log($.merge( $.merge([],first), second));	//[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>]</div><div class="line">console.log(first);				//[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>]</div></pre></td></tr></table></figure>
+<h6 id="2-源码"><a href="#2-源码" class="headerlink" title="(2)源码"></a>(2)源码</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">merge: <span class="keyword">function</span>( first, second ) &#123;</div><div class="line">	var len = +second.length, // 第二个数组的长度；</div><div class="line">		j = 0, //初始化 j 的值为 0 ；</div><div class="line">		i = first.length; // 初始化 i 的值是第一个数组的长度；</div><div class="line">	//对第二个数组做循环处理，在第一个数组索引值为长度值的位置开始追加第二个数组的值</div><div class="line">	//说白了，就是在第一个数组后追加第二个数组的值</div><div class="line">	<span class="keyword">for</span> ( ; j &lt; len; j++ ) &#123;</div><div class="line">		first[ i++ ] = second[ j ];</div><div class="line">	&#125;</div><div class="line">	//第一个数组的长度就是 first.length + second.length;</div><div class="line">	first.length = i;</div><div class="line">	//返回第一个数组</div><div class="line">	<span class="built_in">return</span> first;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="7-核心-gt-实用工具-gt-jQuery-type-obj"><a href="#7-核心-gt-实用工具-gt-jQuery-type-obj" class="headerlink" title="7. 核心==&gt;实用工具==&gt;jQuery.type( obj )"></a>7. 核心==&gt;实用工具==&gt;jQuery.type( obj )</h4><p>obj 用来获取JavaScript数据类型[[Class]]的对象。<br>描述: 确定JavaScript 对象的类型[[Class]] 。</p>
+<h6 id="1-用法：-6"><a href="#1-用法：-6" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">console.log(jQuery.type( undefined ));	//undefined</div><div class="line">console.log(jQuery.type( null ));       //null</div><div class="line">console.log(jQuery.type( <span class="literal">true</span> ));       //boolean</div><div class="line">console.log(jQuery.type( <span class="function"><span class="title">function</span></span>()&#123;&#125; ));  //<span class="keyword">function</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码：-5"><a href="#2-源码：-5" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">type</span>: <span class="keyword">function</span>( obj ) &#123;</div><div class="line">	//若 obj 为 null 或 undefined ，则返回字符串 <span class="string">"null"</span> 或 <span class="string">"undefined"</span></div><div class="line">	<span class="keyword">if</span> ( obj == null ) &#123;</div><div class="line">		<span class="built_in">return</span> obj + <span class="string">""</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Support: Android &lt;=2.3 only (functionish RegExp)</div><div class="line">	// 如果 obj 是一个 object 或是 <span class="keyword">function</span> ，那么返回 obj 类型的字符串</div><div class="line">	<span class="built_in">return</span> typeof obj === <span class="string">"object"</span> || typeof obj === <span class="string">"function"</span> ?</div><div class="line">		//class2<span class="built_in">type</span>[!class2<span class="built_in">type</span>文章链接]是一个使用tostring()检测对象类返回值的集合，此处若不明白tostring()检测对象类，可看[!apply文章链接]</div><div class="line">		class2<span class="built_in">type</span>[ toString.call( obj ) ] || <span class="string">"object"</span> :</div><div class="line">		//否则返回该 obj 的类型</div><div class="line">		typeof obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="8-核心-gt-实用工具-gt-jQuery-makeArray-obj"><a href="#8-核心-gt-实用工具-gt-jQuery-makeArray-obj" class="headerlink" title="8. 核心==&gt;实用工具==&gt;jQuery.makeArray( obj )"></a>8. 核心==&gt;实用工具==&gt;jQuery.makeArray( obj )</h4><p>obj 转换成一个原生数组的任何对象。<br>描述: 转换一个类似数组的对象成为真正的JavaScript数组。</p>
+<h6 id="1-用法：-7"><a href="#1-用法：-7" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;div&gt;First&lt;/div&gt;</div><div class="line">&lt;div&gt;Second&lt;/div&gt;</div><div class="line">&lt;div&gt;Third&lt;/div&gt;</div><div class="line">&lt;div&gt;Fourth&lt;/div&gt;</div><div class="line">&lt;script&gt;</div><div class="line">    var elems = document.getElementsByTagName(<span class="string">"div"</span>); // 返回节点列表</div><div class="line">    var arr = jQuery.makeArray(elems);</div><div class="line">    arr.reverse(); // 用数组的方法</div><div class="line">    $(arr).appendTo(document.body);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-6"><a href="#2-源码：-6" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">makeArray: <span class="keyword">function</span>( arr, results ) &#123;</div><div class="line">	var ret = results || [];</div><div class="line">	//判断传入的 arr 是否为 null</div><div class="line">	<span class="keyword">if</span> ( arr != null ) &#123;</div><div class="line">		//判断传入的对象是否是类数组[!isArrayLike文章 ]，如果是类数组对象，则调用 jQuery.merge 方法合并数组</div><div class="line">		<span class="keyword">if</span> ( isArrayLike( Object( arr ) ) ) &#123;</div><div class="line">			jQuery.merge( ret,</div><div class="line">				typeof arr === <span class="string">"string"</span> ?    //若是字符串类型，则转换成数组</div><div class="line">				[ arr ] : arr</div><div class="line">			);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			//若不是类数组对象，则直接调用Array的push方法，转换成一个原生数组</div><div class="line">			push.call( ret, arr );</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>makeArray 这个方法从源码可以看出是可以传两个参数的，而且第二个参数应该是数组格式。</p>
+<h4 id="9-核心-gt-实用工具-gt-jQuery-noop"><a href="#9-核心-gt-实用工具-gt-jQuery-noop" class="headerlink" title="9. 核心==&gt;实用工具==&gt;jQuery.noop()"></a>9. 核心==&gt;实用工具==&gt;jQuery.noop()</h4><p>此方法不接受任何参数。<br>这对一些插件作者很有用，当插件提供了一个可选的回调函数接口，那么如果调用的时候没有传递这个回调函数，就用jQuery.noop来代替执行。</p>
+<h6 id="1-源码："><a href="#1-源码：" class="headerlink" title="(1)源码："></a>(1)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">noop: <span class="function"><span class="title">function</span></span>() &#123;&#125;;</div></pre></td></tr></table></figure>
+<h4 id="10-核心-gt-实用工具-gt-jQuery-now"><a href="#10-核心-gt-实用工具-gt-jQuery-now" class="headerlink" title="10. 核心==&gt;实用工具==&gt;jQuery.now()"></a>10. 核心==&gt;实用工具==&gt;jQuery.now()</h4><p>此方法不接受任何参数。<br>$.now()方法是表达式(new Date).getTime()返回数值的一个简写</p>
+<h6 id="1-源码：-1"><a href="#1-源码：-1" class="headerlink" title="(1)源码："></a>(1)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">now: Date.now;</div></pre></td></tr></table></figure>
+<h4 id="11-核心-gt-实用工具-gt-jQuery-parseJSON-json"><a href="#11-核心-gt-实用工具-gt-jQuery-parseJSON-json" class="headerlink" title="11. 核心==&gt;实用工具==&gt;jQuery.parseJSON( json )"></a>11. 核心==&gt;实用工具==&gt;jQuery.parseJSON( json )</h4><p>json 要解析的 JSON 字符串。<br>从jQuery 3.0开始，不推荐使用$.parseJSON。 要解析JSON字符串，请改用原生的 JSON.parse 方法。</p>
+<h6 id="1-源码：-2"><a href="#1-源码：-2" class="headerlink" title="(1)源码："></a>(1)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jQuery.parseJSON = JSON.parse;</div></pre></td></tr></table></figure>
+<h4 id="12-核心-gt-实用工具-gt-jQuery-trim-str"><a href="#12-核心-gt-实用工具-gt-jQuery-trim-str" class="headerlink" title="12. 核心==&gt;实用工具==&gt;jQuery.trim( str )"></a>12. 核心==&gt;实用工具==&gt;jQuery.trim( str )</h4><p>str  : The string to trim.<br>描述: 去掉字符串起始和结尾的空格。</p>
+<h6 id="1-用法：-8"><a href="#1-用法：-8" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log($.trim(<span class="string">"    hello, how are you?    "</span>));   //hello, how are you?   注意：前后的空格已经去掉了</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-7"><a href="#2-源码：-7" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;</div><div class="line">// Support: Android &lt;=4.0 only</div><div class="line">trim: <span class="keyword">function</span>( text ) &#123;</div><div class="line">	//text 为空，则返回空字符串，否则用正则匹配，去掉前后的空格</div><div class="line">	<span class="built_in">return</span> text == null ?</div><div class="line">		<span class="string">""</span> :</div><div class="line">		( text + <span class="string">""</span> ).replace( rtrim, <span class="string">""</span> );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>好了，这篇也先写到这，下一篇接着说。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/apply.html/" rel="next" title="javaScript 中的 call 、 apply 和 bind 的区别">
+                <i class="fa fa-chevron-left"></i> javaScript 中的 call 、 apply 和 bind 的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery-isFunction-jQuery-isNumeric-jQuery-isPlainObject-jQuery-isWindow-jQuery-isXMLDoc-jQuery-merge-jQuery-type-jQuery-makeArray-jQuery-noop-jQuery-now-jQuery-parseJSON-jQuery-trim"><span class="nav-number">1.</span> <span class="nav-text">jQuery.isFunction, jQuery.isNumeric, jQuery.isPlainObject, jQuery.isWindow, jQuery.isXMLDoc, jQuery.merge, jQuery.type, jQuery.makeArray, jQuery.noop, jQuery.now, jQuery.parseJSON, jQuery.trim</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-核心-gt-实用工具-gt-jQuery-isFunction-obj"><span class="nav-number">1.1.</span> <span class="nav-text">1. 核心==>实用工具 ==>jQuery.isFunction( obj )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码："><span class="nav-number">1.1.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-核心-gt-实用工具-gt-jQuery-isNumeric-value"><span class="nav-number">1.2.</span> <span class="nav-text">2. 核心==>实用工具==>jQuery.isNumeric( value )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-1"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-核心-gt-实用工具-gt-jQuery-isPlainObject-object"><span class="nav-number">1.3.</span> <span class="nav-text">3. 核心==>实用工具==>jQuery.isPlainObject( object )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-2"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-2"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-核心-gt-实用工具-gt-jQuery-isWindow-obj"><span class="nav-number">1.4.</span> <span class="nav-text">4. 核心==>实用工具==>jQuery.isWindow( obj )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-3"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-3"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-核心-gt-实用工具-gt-jQuery-isXMLDoc-node"><span class="nav-number">1.5.</span> <span class="nav-text">5. 核心==>实用工具==>jQuery.isXMLDoc( node )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-4"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-4"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-核心-gt-实用工具-gt-jQuery-merge-first-second"><span class="nav-number">1.6.</span> <span class="nav-text">6. 核心==>实用工具==>jQuery.merge( first, second )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-5"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">(2)源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-核心-gt-实用工具-gt-jQuery-type-obj"><span class="nav-number">1.7.</span> <span class="nav-text">7. 核心==>实用工具==>jQuery.type( obj )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-6"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-5"><span class="nav-number">1.7.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-核心-gt-实用工具-gt-jQuery-makeArray-obj"><span class="nav-number">1.8.</span> <span class="nav-text">8. 核心==>实用工具==>jQuery.makeArray( obj )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-7"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-6"><span class="nav-number">1.8.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-核心-gt-实用工具-gt-jQuery-noop"><span class="nav-number">1.9.</span> <span class="nav-text">9. 核心==>实用工具==>jQuery.noop()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-源码："><span class="nav-number">1.9.0.1.</span> <span class="nav-text">(1)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-核心-gt-实用工具-gt-jQuery-now"><span class="nav-number">1.10.</span> <span class="nav-text">10. 核心==>实用工具==>jQuery.now()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-源码：-1"><span class="nav-number">1.10.0.1.</span> <span class="nav-text">(1)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-核心-gt-实用工具-gt-jQuery-parseJSON-json"><span class="nav-number">1.11.</span> <span class="nav-text">11. 核心==>实用工具==>jQuery.parseJSON( json )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-源码：-2"><span class="nav-number">1.11.0.1.</span> <span class="nav-text">(1)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-核心-gt-实用工具-gt-jQuery-trim-str"><span class="nav-number">1.12.</span> <span class="nav-text">12. 核心==>实用工具==>jQuery.trim( str )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-8"><span class="nav-number">1.12.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-7"><span class="nav-number">1.12.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
