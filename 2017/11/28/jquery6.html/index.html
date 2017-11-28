@@ -1,0 +1,691 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jquery, jQuery.error, length, pushStack1. 核心==&amp;gt;内部构件 ==&amp;gt;.jquery.jquery原型指向jQuery的原型， 通常被称为它的别名$.fn。它是一个字符串，其中包含的jQuery的版本号，如“3.1.1”或“1.9.1”。
+(1)用法：1console.log($(&apos;body&apos;).jquery);    //&quot;3.1.1&quot;
+(2)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路五（jQuery api 核心==>内部构件）">
+<meta property="og:url" content="http://yoursite.com/2017/11/28/jquery6.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="jquery, jQuery.error, length, pushStack1. 核心==&amp;gt;内部构件 ==&amp;gt;.jquery.jquery原型指向jQuery的原型， 通常被称为它的别名$.fn。它是一个字符串，其中包含的jQuery的版本号，如“3.1.1”或“1.9.1”。
+(1)用法：1console.log($(&apos;body&apos;).jquery);    //&quot;3.1.1&quot;
+(2)">
+<meta property="og:updated_time" content="2017-11-24T10:05:44.461Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路五（jQuery api 核心==>内部构件）">
+<meta name="twitter:description" content="jquery, jQuery.error, length, pushStack1. 核心==&amp;gt;内部构件 ==&amp;gt;.jquery.jquery原型指向jQuery的原型， 通常被称为它的别名$.fn。它是一个字符串，其中包含的jQuery的版本号，如“3.1.1”或“1.9.1”。
+(1)用法：1console.log($(&apos;body&apos;).jquery);    //&quot;3.1.1&quot;
+(2)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/28/jquery6.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路五（jQuery api 核心==>内部构件） | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/jquery6.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路五（jQuery api 核心==>内部构件）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:51:27+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="jquery-jQuery-error-length-pushStack"><a href="#jquery-jQuery-error-length-pushStack" class="headerlink" title="jquery, jQuery.error, length, pushStack"></a>jquery, jQuery.error, length, pushStack</h3><h4 id="1-核心-gt-内部构件-gt-jquery"><a href="#1-核心-gt-内部构件-gt-jquery" class="headerlink" title="1. 核心==&gt;内部构件 ==&gt;.jquery"></a>1. 核心==&gt;内部构件 ==&gt;.jquery</h4><p>.jquery原型指向jQuery的原型， 通常被称为它的别名$.fn。它是一个字符串，其中包含的jQuery的版本号，如“3.1.1”或“1.9.1”。</p>
+<h6 id="1-用法："><a href="#1-用法：" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">console.log($(<span class="string">'body'</span>).jquery);    //<span class="string">"3.1.1"</span></div></pre></td></tr></table></figure>
+<h6 id="2-源码："><a href="#2-源码：" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var version = <span class="string">"3.1.1"</span>;</div><div class="line">jquery: version ;   //指向版本号</div></pre></td></tr></table></figure>
+<h4 id="2-核心-gt-内部构件-gt-jQuery-error-message"><a href="#2-核心-gt-内部构件-gt-jQuery-error-message" class="headerlink" title="2. 核心==&gt;内部构件 ==&gt;jQuery.error( message )"></a>2. 核心==&gt;内部构件 ==&gt;jQuery.error( message )</h4><p>message  将要发出的消息.<br>这个方法主要是为了让插件开发人员可以重载此方法，并以更好的方式显示错误消息，或者提供更多相关信息。</p>
+<h6 id="1-用法：-1"><a href="#1-用法：-1" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jQuery.error = console.error;</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-1"><a href="#2-源码：-1" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//这里我觉得没有什么解释的必要了</div><div class="line">error: <span class="keyword">function</span>( msg ) &#123;</div><div class="line">	throw new Error( msg );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-核心-gt-内部构件-gt-length"><a href="#3-核心-gt-内部构件-gt-length" class="headerlink" title="3. 核心==&gt;内部构件 ==&gt;length"></a>3. 核心==&gt;内部构件 ==&gt;length</h4><p>描述: 在jQuery对象中元素的数量。</p>
+<h6 id="1-用法：-2"><a href="#1-用法：-2" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li id=<span class="string">"foo"</span>&gt;foo&lt;/li&gt;</div><div class="line">  &lt;li id=<span class="string">"bar"</span>&gt;bar&lt;/li&gt;</div><div class="line">  &lt;li id=<span class="string">"baz"</span>&gt;baz&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  console.log($(<span class="string">"li"</span>).length);    //3</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-2"><a href="#2-源码：-2" class="headerlink" title="(2)源码："></a>(2)源码：</h6><p> 其实这里也是很好理解的， $(“li”) 是一个类数组的对象，所以具有 length 的属性。就会返回对应的长度。</p>
+<h4 id="4-核心-gt-内部构件-gt-pushStack"><a href="#4-核心-gt-内部构件-gt-pushStack" class="headerlink" title="4. 核心==&gt;内部构件 ==&gt;.pushStack()"></a>4. 核心==&gt;内部构件 ==&gt;.pushStack()</h4><p>描述: 将一个DOM元素集合加入到jQuery栈。<br>.pushStack( elements )<br>elements  类型: Array   将要压入jQuery栈的元素，用于生成一个新的jQuery对象<br>.pushStack( elements, name, arguments )<br>elements   类型: Array    将要压入jQuery栈的元素，用于生成一个新的jQuery对象。<br>name   类型: String    将要压入jQuery栈的元素，用于生成一个新的jQuery对象。<br>arguments   类型: Array   传递给jQuery方法的参数(用于序列化)。<br>.pushStack()这个方法在写个涉及DOM遍历的插件时,它就会显得尤其有用. </p>
+<h6 id="1-用法：-3"><a href="#1-用法：-3" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jQuery([]).pushStack( document.getElementsByTagName(<span class="string">"div"</span>) ).remove().end();</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-3"><a href="#2-源码：-3" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">pushStack: <span class="keyword">function</span>( elems ) &#123;</div><div class="line">	//栈的实现，先进后出。</div><div class="line">	// Build a new jQuery matched element <span class="built_in">set</span></div><div class="line">	//构建一个新的jQuery匹配元素集(jQuery和传入新对象（集合）)</div><div class="line">	// this.constructor()就是jQuery的构造函数init，所以this.constructor()返回一个jQuery对象.</div><div class="line">	</div><div class="line">	var ret = jQuery.merge( this.constructor(), elems );</div><div class="line"></div><div class="line">	// Add the old object onto the stack (as a reference)</div><div class="line">	// 这句话是用来做回溯处理的，比如$(<span class="string">"ul"</span>).find(<span class="string">"li"</span>).css(<span class="string">"color"</span>,<span class="string">"red"</span>);</div><div class="line">	//想在上面的链式调用，再接着链式操作来找到$(<span class="string">"ul"</span>),来操作$(<span class="string">"ul"</span>)的样式</div><div class="line">	//$(<span class="string">"ul"</span>).find(<span class="string">"li"</span>).css(<span class="string">"color"</span>,<span class="string">"red"</span>).end().css(<span class="string">"padding"</span>,<span class="string">"20px"</span>);</div><div class="line">	// 新构建的这个 jquery 对象的 prevObject 指向 this</div><div class="line">	</div><div class="line">	ret.prevObject = this; </div><div class="line"></div><div class="line">	// Return the newly-formed element <span class="built_in">set</span></div><div class="line">	//返回这个新构建的jquery对象</div><div class="line">	<span class="built_in">return</span> ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注释：.selector属性在jQuery 1.7中已经不赞成使用，在jQuery 1.9中已经被移除。所以也就没什么可说的了。<br>pushStack 这个方法真的要好好掌握，虽然平时基本不会用到，但是在 jquery 内部代码实现上，很多地方都调用了pushStack这个方法，了解这个方法很利于我们了解jquery的运行原理。</p>
+<h6 id="链接"><a href="#链接" class="headerlink" title="链接:"></a>链接:</h6><p>(ps:之前写文章的时候，看的一些其他人文章链接都忘记保留了，从这篇开始，以后会保留自己学习过程中看到的有用的相关链接)<br><a href="http://www.52ij.com/jishu/javascript/144135.html" target="_blank" rel="external">http://www.52ij.com/jishu/javascript/144135.html</a><br><a href="http://www.jb51.net/article/60686.htm" target="_blank" rel="external">http://www.jb51.net/article/60686.htm</a></p>
+<p>2017-11-24</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/jquery5.html/" rel="next" title="jQuery 源码学习之路五（jQuery api 核心==>DOM 元素方法）">
+                <i class="fa fa-chevron-left"></i> jQuery 源码学习之路五（jQuery api 核心==>DOM 元素方法）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/28/jquery7.html/" rel="prev" title="jQuery 源码学习之路七（ready）">
+                jQuery 源码学习之路七（ready） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jquery-jQuery-error-length-pushStack"><span class="nav-number">1.</span> <span class="nav-text">jquery, jQuery.error, length, pushStack</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-核心-gt-内部构件-gt-jquery"><span class="nav-number">1.1.</span> <span class="nav-text">1. 核心==>内部构件 ==>.jquery</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码："><span class="nav-number">1.1.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-核心-gt-内部构件-gt-jQuery-error-message"><span class="nav-number">1.2.</span> <span class="nav-text">2. 核心==>内部构件 ==>jQuery.error( message )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-1"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-核心-gt-内部构件-gt-length"><span class="nav-number">1.3.</span> <span class="nav-text">3. 核心==>内部构件 ==>length</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-2"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-2"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-核心-gt-内部构件-gt-pushStack"><span class="nav-number">1.4.</span> <span class="nav-text">4. 核心==>内部构件 ==>.pushStack()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-3"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-3"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">(2)源码：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#链接"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">链接:</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

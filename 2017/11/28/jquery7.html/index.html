@@ -1,0 +1,679 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="下面 3 种都是 $.ready 的语法123$(function()&amp;#123;&amp;#125;);$(document).ready(function()&amp;#123;&amp;#125;);$().ready(function()&amp;#123;&amp;#125;);
+在jQuery 3.0 中，只建议使用第一种语法，其他语法仍然能正常工作，但已被标记为弃用。这是因为，这些选择器跟.ready()方法的行为没有任何">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路七（ready）">
+<meta property="og:url" content="http://yoursite.com/2017/11/28/jquery7.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="下面 3 种都是 $.ready 的语法123$(function()&amp;#123;&amp;#125;);$(document).ready(function()&amp;#123;&amp;#125;);$().ready(function()&amp;#123;&amp;#125;);
+在jQuery 3.0 中，只建议使用第一种语法，其他语法仍然能正常工作，但已被标记为弃用。这是因为，这些选择器跟.ready()方法的行为没有任何">
+<meta property="og:updated_time" content="2017-11-24T10:20:10.469Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路七（ready）">
+<meta name="twitter:description" content="下面 3 种都是 $.ready 的语法123$(function()&amp;#123;&amp;#125;);$(document).ready(function()&amp;#123;&amp;#125;);$().ready(function()&amp;#123;&amp;#125;);
+在jQuery 3.0 中，只建议使用第一种语法，其他语法仍然能正常工作，但已被标记为弃用。这是因为，这些选择器跟.ready()方法的行为没有任何">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/28/jquery7.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路七（ready） | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/jquery7.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路七（ready）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:51:35+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h6 id="下面-3-种都是-ready-的语法"><a href="#下面-3-种都是-ready-的语法" class="headerlink" title="下面 3 种都是 $.ready 的语法"></a>下面 3 种都是 $.ready 的语法</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="function"><span class="title">function</span></span>()&#123;&#125;);</div><div class="line">$(document).ready(<span class="function"><span class="title">function</span></span>()&#123;&#125;);</div><div class="line">$().ready(<span class="function"><span class="title">function</span></span>()&#123;&#125;);</div></pre></td></tr></table></figure>
+<p>在jQuery 3.0 中，只建议使用第一种语法，其他语法仍然能正常工作，但已被标记为弃用。这是因为，这些选择器跟.ready()方法的行为没有任何关系，这是低效的，并可能导致对该方法行为不正确的假设。<br>那么，为什么jquery要加一个这样的方法呢，直接用 winfdow.onload = function(){}; 来操作页面加载后再执行不好么。这就要看一下DOM文档加载的步骤：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(1) 解析HTML结构。</div><div class="line">(2) 加载外部脚本和样式表文件。</div><div class="line">(3) 解析并执行脚本代码。</div><div class="line">(4) 构造HTML DOM模型。  //ready  越早处理 DOM ，对用户的体验越好</div><div class="line">(5) 加载图片等外部文件。</div><div class="line">(6) 页面加载完毕。      //window.onload</div></pre></td></tr></table></figure></p>
+<p>从上面 DOM 文档加载的步骤可知，用 $.ready 先在DOM结构树加载完之后开始做事了，不用等其他资源加载完毕。有利于用户体验。</p>
+<h6 id="源码："><a href="#源码：" class="headerlink" title="源码："></a>源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">// jQuery使用的ready异常处理方式是保证DOM刷新完毕再把异常抛出</div><div class="line">jQuery.readyException = <span class="keyword">function</span>( error ) &#123;</div><div class="line">	window.setTimeout( <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">		throw error;</div><div class="line">	&#125; );</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// The deferred used on DOM ready</div><div class="line">var readyList = jQuery.Deferred(); //jQuery.js加载时候就执行</div><div class="line"></div><div class="line">jQuery.fn.ready = <span class="keyword">function</span>( fn ) &#123;</div><div class="line">//在Deferred内部的<span class="keyword">then</span>方法做了一个<span class="built_in">set</span>TimeOut的操作，做了递归。</div><div class="line">//所以保证了DOM肯定是完全加载，相当于监听了DOMContentLoaded</div><div class="line">//此处[! Deferred的文章路径]</div><div class="line"></div><div class="line">	readyList</div><div class="line">		.then( fn )  // 先执行完deferred里面的内容再执行fn</div><div class="line"></div><div class="line">		// Wrap jQuery.readyException <span class="keyword">in</span> a <span class="keyword">function</span> so that the lookup</div><div class="line">		// happens at the time of error handling instead of callback</div><div class="line">		// registration.</div><div class="line">		.catch( <span class="keyword">function</span>( error ) &#123;</div><div class="line">			//若fn出错则调用jQuery的ready异常处理方法</div><div class="line">			jQuery.readyException( error );</div><div class="line">		&#125; );</div><div class="line"></div><div class="line">	<span class="built_in">return</span> this;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//从源码中摘取</div><div class="line">//init = jQuery.fn.init = <span class="keyword">function</span>( selector, context, root )</div><div class="line">//$(<span class="function"><span class="title">function</span></span>()&#123;&#125;); 调用时，root 为 undefined，故 root = rootjQuery;</div><div class="line">//$(<span class="function"><span class="title">function</span></span>()&#123;&#125;); 这种方式就是 $(document).ready(<span class="function"><span class="title">function</span></span>()&#123;&#125;);</div><div class="line">rootjQuery = jQuery( document );</div><div class="line">root = root || rootjQuery;  </div><div class="line">//在 selector 是个方法的情况下</div><div class="line"><span class="keyword">else</span> <span class="keyword">if</span> ( jQuery.isFunction( selector ) ) &#123;</div><div class="line">	//若 ready 存在时，就调用ready方法</div><div class="line">	<span class="built_in">return</span> root.ready !== undefined ?</div><div class="line">		root.ready( selector ) :</div><div class="line"></div><div class="line">		// Execute immediately <span class="keyword">if</span> ready is not present</div><div class="line">		// 否则立即执行 </div><div class="line">		selector( jQuery );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面是对$(document).ready()方法的解释，对应的，juqery 还有一个静态的方法 $.ready();那这个方法又可以做什么呢？<br>从jQuery 3.0开始， 可以通过jQuery.when 或者原生的 Promise.resolve() 使用这个对象。你的代码不应该假设这个对象是否是一个 jQuery.Deferred，原生的 Promise ，或者其他类型的promise对象。</p>
+<h6 id="使用-jQuery-when-监听-document-ready"><a href="#使用-jQuery-when-监听-document-ready" class="headerlink" title="使用 jQuery.when 监听 document ready"></a>使用 jQuery.when 监听 document ready</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$.when( $.ready ).then(<span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">  // Document is ready.</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h6 id="典型用法涉及另一个-promise-，使用-jQuery-when"><a href="#典型用法涉及另一个-promise-，使用-jQuery-when" class="headerlink" title="典型用法涉及另一个 promise ，使用 jQuery.when."></a>典型用法涉及另一个 promise ，使用 jQuery.when.</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$.when(</div><div class="line">  $.getJSON( <span class="string">"ajax/test.json"</span> ),</div><div class="line">  $.ready</div><div class="line">).done(<span class="keyword">function</span>( data ) &#123;</div><div class="line">  // Document is ready.</div><div class="line">  // Value of test.json is passed as `data`.</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h6 id="源码：-1"><a href="#源码：-1" class="headerlink" title="源码："></a>源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">jQuery.extend( &#123;</div><div class="line"></div><div class="line">	// Is the DOM ready to be used? Set to <span class="literal">true</span> once it occurs.</div><div class="line">	// DOM 是否准备好，默认是<span class="literal">false</span>，一旦准备好，isReady的值被设置为 <span class="literal">true</span></div><div class="line">	</div><div class="line">	isReady: <span class="literal">false</span>,</div><div class="line"></div><div class="line">	// A counter to track how many items to <span class="built_in">wait</span> <span class="keyword">for</span> before</div><div class="line">	// the ready event fires. See <span class="comment">#6781</span></div><div class="line">	// 设置一个等待 DOM 准备好的计数器</div><div class="line">	</div><div class="line">	readyWait: 1,</div><div class="line"></div><div class="line">	// Hold (or release) the ready event</div><div class="line">	// 保持或是释放就绪事件</div><div class="line">	holdReady: <span class="keyword">function</span>( hold ) &#123;</div><div class="line">		<span class="keyword">if</span> ( hold ) &#123;</div><div class="line">			jQuery.readyWait++;     //若是在等待阶段，那么计数器就进行加法运算</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			jQuery.ready( <span class="literal">true</span> );   //已经不用等待，就直接调用 jQuery.ready 方法</div><div class="line">		&#125;</div><div class="line">	&#125;,</div><div class="line"></div><div class="line">	// Handle when the DOM is ready</div><div class="line">	ready: <span class="keyword">function</span>( <span class="built_in">wait</span> ) &#123;</div><div class="line"></div><div class="line">		// Abort <span class="keyword">if</span> there are pending holds or we<span class="string">'re already ready</span></div><div class="line">		// 已经加载完成，跳出</div><div class="line">		if ( wait === true ? --jQuery.readyWait : jQuery.isReady ) &#123;</div><div class="line">			return;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// Remember that the DOM is ready</div><div class="line">		// 记录 DOM 已经准备好了</div><div class="line">		jQuery.isReady = true;</div><div class="line"></div><div class="line">		// If a normal DOM Ready event fired, decrement, and wait if need be</div><div class="line">		if ( wait !== true &amp;&amp; --jQuery.readyWait &gt; 0 ) &#123;</div><div class="line">			return;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// If there are functions bound, to execute</div><div class="line">		readyList.resolveWith( document, [ jQuery ] );</div><div class="line">	&#125;</div><div class="line">&#125; );</div><div class="line"></div><div class="line">jQuery.ready.then = readyList.then;</div><div class="line">// The ready event handler and self cleanup method</div><div class="line">// 页面加载完毕，移除监听事件并调用 jQuery.ready 方法</div><div class="line">function completed() &#123;</div><div class="line">	document.removeEventListener( "DOMContentLoaded", completed );</div><div class="line">	window.removeEventListener( "load", completed );</div><div class="line">	jQuery.ready();</div><div class="line">&#125;</div><div class="line"></div><div class="line">// Catch cases where $(document).ready() is called</div><div class="line">// after the browser event has already occurred.</div><div class="line">// Support: IE &lt;=9 - 10 only</div><div class="line">// Older IE sometimes signals "interactive" too soon</div><div class="line">// 判断当前页面是否加载完成</div><div class="line">if ( document.readyState === "complete" ||</div><div class="line">	( document.readyState !== "loading" &amp;&amp; !document.documentElement.doScroll ) ) &#123;</div><div class="line"></div><div class="line">	// Handle it asynchronously to allow scripts the opportunity to delay ready</div><div class="line">	//异步处理以允许脚本有延迟准备的机会。</div><div class="line">	window.setTimeout( jQuery.ready );</div><div class="line"></div><div class="line">&#125; else &#123;</div><div class="line">	// 添加监听事件</div><div class="line">	// Use the handy event callback</div><div class="line">	document.addEventListener( "DOMContentLoaded", completed );</div><div class="line"></div><div class="line">	// A fallback to window.onload, that will always work</div><div class="line">	window.addEventListener( "load", completed );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2017-11-24</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/jquery6.html/" rel="next" title="jQuery 源码学习之路五（jQuery api 核心==>内部构件）">
+                <i class="fa fa-chevron-left"></i> jQuery 源码学习之路五（jQuery api 核心==>内部构件）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#下面-3-种都是-ready-的语法"><span class="nav-number">1.</span> <span class="nav-text">下面 3 种都是 $.ready 的语法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#源码："><span class="nav-number">2.</span> <span class="nav-text">源码：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#使用-jQuery-when-监听-document-ready"><span class="nav-number">3.</span> <span class="nav-text">使用 jQuery.when 监听 document ready</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#典型用法涉及另一个-promise-，使用-jQuery-when"><span class="nav-number">4.</span> <span class="nav-text">典型用法涉及另一个 promise ，使用 jQuery.when.</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#源码：-1"><span class="nav-number">5.</span> <span class="nav-text">源码：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
