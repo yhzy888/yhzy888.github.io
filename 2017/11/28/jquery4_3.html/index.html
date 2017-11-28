@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="jQuery.each, jQuery.map, jQuery.proxy, jQuery.parseHTML, jQuery.parseXML1. 核心==&amp;gt;实用工具 ==&amp;gt;jQuery.each()jQuery.each(array, callback )array  遍历的数组。callback 该函数会在每个对象上（迭代）调用。jQuery.each( object, call">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery 源码学习之路四（jQuery api 核心==>实用工具系列三）">
+<meta property="og:url" content="http://yoursite.com/2017/11/28/jquery4_3.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="jQuery.each, jQuery.map, jQuery.proxy, jQuery.parseHTML, jQuery.parseXML1. 核心==&amp;gt;实用工具 ==&amp;gt;jQuery.each()jQuery.each(array, callback )array  遍历的数组。callback 该函数会在每个对象上（迭代）调用。jQuery.each( object, call">
+<meta property="og:updated_time" content="2017-11-24T02:35:52.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery 源码学习之路四（jQuery api 核心==>实用工具系列三）">
+<meta name="twitter:description" content="jQuery.each, jQuery.map, jQuery.proxy, jQuery.parseHTML, jQuery.parseXML1. 核心==&amp;gt;实用工具 ==&amp;gt;jQuery.each()jQuery.each(array, callback )array  遍历的数组。callback 该函数会在每个对象上（迭代）调用。jQuery.each( object, call">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/28/jquery4_3.html/"/>
+
+
+
+
+
+  <title> jQuery 源码学习之路四（jQuery api 核心==>实用工具系列三） | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/jquery4_3.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                jQuery 源码学习之路四（jQuery api 核心==>实用工具系列三）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:48:07+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="jQuery-each-jQuery-map-jQuery-proxy-jQuery-parseHTML-jQuery-parseXML"><a href="#jQuery-each-jQuery-map-jQuery-proxy-jQuery-parseHTML-jQuery-parseXML" class="headerlink" title="jQuery.each, jQuery.map, jQuery.proxy, jQuery.parseHTML, jQuery.parseXML"></a>jQuery.each, jQuery.map, jQuery.proxy, jQuery.parseHTML, jQuery.parseXML</h3><h4 id="1-核心-gt-实用工具-gt-jQuery-each"><a href="#1-核心-gt-实用工具-gt-jQuery-each" class="headerlink" title="1. 核心==&gt;实用工具 ==&gt;jQuery.each()"></a>1. 核心==&gt;实用工具 ==&gt;jQuery.each()</h4><p>jQuery.each(array, callback )<br>array  遍历的数组。<br>callback 该函数会在每个对象上（迭代）调用。<br>jQuery.each( object, callback )<br>object  遍历的对象。<br>callback 该函数会在每个对象上（迭代）调用。<br>描述: 一个通用的迭代函数，它可以用来无缝迭代对象和数组。数组和类似数组的对象通过一个长度属性（如一个函数的参数对象）来迭代数字索引，从0到length - 1。其他对象通过其属性名进行迭代。<br>注意: $.each()函数会在内部检索并且使用传递集合的 length属性。 所以，如果集合有一个名为length的属性 - 比如 {bar: ‘foo’, length: 10} - 这个函数可能无法正常工作。<br>$.each()函数和 $(selector).each()是不一样的，那个是专门用来遍历一个jQuery对象。$.each()函数可用于迭代任何集合，无论是“名/值”对象（JavaScript对象）或数组。在迭代数组的情况下，回调函数每次传递一个数组索引和相应的数组值作为参数。（该值也可以通过访问this关键字得到，但是JavaScript将始终将this值作为一个Object ，即使它是一个简单的字符串或数字值。）该方法返回其第一个参数，这是迭代的对象。</p>
+<h6 id="1-用法："><a href="#1-用法：" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//迭代一个数组，并同时访问迭代的元素及它的索引值。</div><div class="line">$.each( [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>], <span class="keyword">function</span>(i, l)&#123;</div><div class="line">   console.log( <span class="string">"Index #"</span> + i + <span class="string">": "</span> + l );</div><div class="line">&#125;);</div><div class="line">// Index <span class="comment">#0: a</span></div><div class="line">// Index <span class="comment">#1: b</span></div><div class="line">// Index <span class="comment">#2: c</span></div><div class="line"></div><div class="line">//在一个元素的属性上进行迭代，并同时访问它的键及值。</div><div class="line">$.each( &#123; name: <span class="string">"John"</span>, lang: <span class="string">"JS"</span> &#125;, <span class="keyword">function</span>(k, v)&#123;</div><div class="line">   console.log( <span class="string">"Key: "</span> + k + <span class="string">", Value: "</span> + v );</div><div class="line">&#125;);</div><div class="line">// Key: name, Value: John</div><div class="line">// Key: lang, Value: JS</div></pre></td></tr></table></figure>
+<h6 id="2-源码："><a href="#2-源码：" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">each: <span class="keyword">function</span>( obj, callback ) &#123;</div><div class="line">	var length, i = 0;  //初始化 length 和 i 的值为 0;</div><div class="line">	//判断传入的对象是否是类数组</div><div class="line">	<span class="keyword">if</span> ( isArrayLike( obj ) ) &#123;</div><div class="line">		//是类数组的情况，length 就等于数组长度</div><div class="line">		length = obj.length;</div><div class="line">		<span class="keyword">for</span> ( ; i &lt; length; i++ ) &#123;</div><div class="line">			//去执行回调函数，直到回调函数的执行 <span class="built_in">return</span> <span class="literal">false</span> 的情况或是循环结束</div><div class="line">			<span class="keyword">if</span> ( callback.call( obj[ i ], i, obj[ i ] ) === <span class="literal">false</span> ) &#123;</div><div class="line">				<span class="built_in">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		//不是类数组的情况，<span class="keyword">for</span> <span class="keyword">in</span> 循环对象</div><div class="line">		<span class="keyword">for</span> ( i <span class="keyword">in</span> obj ) &#123;</div><div class="line">			<span class="keyword">if</span> ( callback.call( obj[ i ], i, obj[ i ] ) === <span class="literal">false</span> ) &#123;</div><div class="line">				<span class="built_in">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="built_in">return</span> obj;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-核心-gt-实用工具-gt-jQuery-map"><a href="#2-核心-gt-实用工具-gt-jQuery-map" class="headerlink" title="2. 核心==&gt;实用工具 ==&gt;jQuery.map()"></a>2. 核心==&gt;实用工具 ==&gt;jQuery.map()</h4><p>jQuery.map( array, callback(elementOfArray, indexInArray) )<br>array  待转换数组。<br>callback(elementOfArray, indexInArray)   处理每一个元素的函数。第一个参数是数组元素，第二个参数是该元素的索引值。该函数可以返回任何值。在函数内部，this将是全局的window对象。<br>jQuery.map( arrayOrObject, callback( value, indexOrKey ) )<br>arrayOrObject   待转换数组或对象。<br>callback( value, indexOrKey )   处理每一个元素的函数。第一个参数是数组中元素或对象的值，第二个参数是该元素在数组中的索引值或该对象的键。该函数可以返回任何值，该返回值会被添加到数组中。若返回是数组，则会将该数组中的元素添加到最终的结果数组中。在函数内部， this指的是全球（window）的对象。<br>描述: 将一个数组中的所有元素转换到另一个数组中。</p>
+<h6 id="1-用法：-1"><a href="#1-用法：-1" class="headerlink" title="(1)用法："></a>(1)用法：</h6><p>这里只是列举两个例子，具体的，可以到api中去查看[!<a href="http://www.css88.com/jqapi-1.9/jQuery.map/" target="_blank" rel="external">http://www.css88.com/jqapi-1.9/jQuery.map/</a>]<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//若原始数组中的值大于 0，则将该值加 1 后，映射到新的数组中，否则在结果数组中将不包含该值。</div><div class="line">var m1 = $.map( [0,1,2], <span class="keyword">function</span>(n)&#123;</div><div class="line">  <span class="built_in">return</span> n &gt; 0 ? n + 1 : null;</div><div class="line">&#125;);</div><div class="line">console.log(m1);  //[2, 3]</div><div class="line">//返回对象属性值乘以 2 的数组</div><div class="line">var dimensions = &#123; width: 10, height: 15, length: 20 &#125;;</div><div class="line">dimensions = $.map( dimensions, <span class="keyword">function</span>( value, index ) &#123;</div><div class="line">  <span class="built_in">return</span> value * 2;</div><div class="line">&#125;);</div><div class="line">console.log(dimensions);  // [20, 30, 40]</div></pre></td></tr></table></figure></p>
+<h6 id="2-源码：-1"><a href="#2-源码：-1" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">// arg is <span class="keyword">for</span> internal usage only</div><div class="line">map: <span class="keyword">function</span>( elems, callback, arg ) &#123;</div><div class="line">	var length, value,</div><div class="line">			i = 0,</div><div class="line">			ret = [];</div><div class="line"></div><div class="line">	// Go through the array, translating each of the items to their new values</div><div class="line">	//判断是否是一个类数组对象</div><div class="line">	<span class="keyword">if</span> ( isArrayLike( elems ) ) &#123;</div><div class="line">		length = elems.length;  // length 的长度即数组的长度 </div><div class="line">		//对数组做循环处理，value即callback 中 <span class="built_in">return</span> 出的值</div><div class="line">		<span class="keyword">for</span> ( ; i &lt; length; i++ ) &#123;</div><div class="line">			value = callback( elems[ i ], i, arg );</div><div class="line">			<span class="keyword">if</span> ( value != null ) &#123;   //value值不为空，则向数组 ret 中添加</div><div class="line">				ret.push( value );</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	// Go through every key on the object,</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		//如果不是类数组对象，直接用 <span class="keyword">for</span> <span class="keyword">in</span> 循环对象，value即callback 中 <span class="built_in">return</span> 出的值</div><div class="line">		<span class="keyword">for</span> ( i <span class="keyword">in</span> elems ) &#123;</div><div class="line">			value = callback( elems[ i ], i, arg );</div><div class="line">			//value值不为空，则向数组 ret 中添加</div><div class="line">			<span class="keyword">if</span> ( value != null ) &#123;</div><div class="line">				ret.push( value );</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Flatten any nested arrays</div><div class="line">	//返回数组</div><div class="line">	<span class="built_in">return</span> concat.apply( [], ret );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-核心-gt-实用工具-gt-jQuery-proxy"><a href="#3-核心-gt-实用工具-gt-jQuery-proxy" class="headerlink" title="3. 核心==&gt;实用工具 ==&gt;jQuery.proxy()"></a>3. 核心==&gt;实用工具 ==&gt;jQuery.proxy()</h4><p>描述: 接受一个函数，然后返回一个新函数，并且这个新函数始终保持了特定的上下文语境。</p>
+<h5 id="jQuery-proxy-function-context"><a href="#jQuery-proxy-function-context" class="headerlink" title="jQuery.proxy( function, context )"></a>jQuery.proxy( function, context )</h5><p>function 将要改变上下文语境的函数。<br>context 函数的上下文语境(this)会被设置成这个 object 对象。</p>
+<h6 id="例一："><a href="#例一：" class="headerlink" title="例一："></a>例一：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;button id=<span class="string">"proxy"</span>&gt;proxy&lt;/button&gt;</div></pre></td></tr></table></figure>
+<p>(1)目标：点击button时，button的文字变成红色。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"#proxy"</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	$(this).css(&#123;<span class="string">"color"</span> : <span class="string">"red"</span>&#125;);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>(2)接着上面的需求，现在要求，500ms后再变换字体的颜色<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"#proxy"</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	<span class="built_in">set</span>Timeout(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		$(this).css(&#123;<span class="string">"color"</span> : <span class="string">"red"</span>&#125;);</div><div class="line">	&#125;,500)</div><div class="line">&#125;);</div><div class="line">//这么写没有成功，那是因为此时this的指向不再是$(<span class="string">"#proxy"</span>)这个对象</div></pre></td></tr></table></figure></p>
+<p>看$.proxy大展身手：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"#proxy"</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	<span class="built_in">set</span>Timeout($.proxy(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		$(this).css(&#123;<span class="string">"color"</span>:<span class="string">"red"</span>&#125;);</div><div class="line">	&#125;,this),500)</div><div class="line">&#125;);</div><div class="line">//点击button后，500ms后，button的颜色变成了红色。</div></pre></td></tr></table></figure></p>
+<h5 id="jQuery-proxy-context-name"><a href="#jQuery-proxy-context-name" class="headerlink" title="jQuery.proxy( context, name )"></a>jQuery.proxy( context, name )</h5><p>context 函数的上下文语境会被设置成这个 object 对象。<br>name  (string类型)将要改变上下文语境的函数名(这个函数必须是前一个参数 context 对象的属性)。</p>
+<h6 id="例二："><a href="#例二：" class="headerlink" title="例二："></a>例二：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//还是接着例一后面的那个需求：</div><div class="line">$(<span class="string">"#proxy"</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	this.fun = <span class="function"><span class="title">function</span></span>()&#123;   //fun 前一个参数 this 对象的属性</div><div class="line">		$(this).css(&#123;<span class="string">"color"</span>:<span class="string">"red"</span>&#125;);</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">set</span>Timeout($.proxy(this,<span class="string">"fun"</span>),500);</div><div class="line">&#125;);</div><div class="line">//注意，这里这么调用，感觉并不方便。此处只是为了演示一下用法。</div></pre></td></tr></table></figure>
+<h5 id="jQuery-proxy-function-context-additionalArguments"><a href="#jQuery-proxy-function-context-additionalArguments" class="headerlink" title="jQuery.proxy( function, context [, additionalArguments ] )"></a>jQuery.proxy( function, context [, additionalArguments ] )</h5><p>function 将要改变上下文语境的函数。<br>context 函数的上下文语境会被设置成这个 object 对象。<br>additionalArguments 任何数目的参数传递给function参数的函数引用。</p>
+<h6 id="例三："><a href="#例三：" class="headerlink" title="例三："></a>例三：</h6><p>还接着例一的例子继续说，现在又有一个需求了，想要第一次点击button时，button文字颜色是红色，之后的每次点击button的颜色是绿色。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var count = 0;</div><div class="line">$(<span class="string">"#proxy"</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	<span class="built_in">set</span>Timeout($.proxy(<span class="keyword">function</span>(num)&#123;</div><div class="line">		<span class="keyword">if</span>(num &gt; 0)&#123;</div><div class="line">			$(this).css(&#123;<span class="string">"color"</span>:<span class="string">"green"</span>&#125;);</div><div class="line">			<span class="built_in">return</span>;</div><div class="line">		&#125;</div><div class="line">		$(this).css(&#123;<span class="string">"color"</span>:<span class="string">"red"</span>&#125;);</div><div class="line">		count ++;</div><div class="line">	&#125;,this,count),500);</div><div class="line">&#125;);</div><div class="line">//实现要的效果，对 $.proxy 内的函数进行了传参。</div></pre></td></tr></table></figure></p>
+<h5 id="jQuery-proxy-context-name-additionalArguments"><a href="#jQuery-proxy-context-name-additionalArguments" class="headerlink" title="jQuery.proxy( context, name [, additionalArguments ] )"></a>jQuery.proxy( context, name [, additionalArguments ] )</h5><p>context 函数的上下文语境会被设置成这个 object 对象。<br>name  将要改变上下文语境的函数名(这个函数必须是前一个参数 context 对象的属性)。<br>additionalArguments 任何数目的参数传递给name参数中命名的函数。</p>
+<h6 id="例四："><a href="#例四：" class="headerlink" title="例四："></a>例四：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//此处需求还是例三的需求，只是代码需要更改一下</div><div class="line">var count = 0;</div><div class="line">$(<span class="string">"#proxy"</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">	this.fun = <span class="keyword">function</span>(num)&#123;</div><div class="line">		<span class="keyword">if</span>(num &gt; 0)&#123;</div><div class="line">			$(this).css(&#123;<span class="string">"color"</span>:<span class="string">"green"</span>&#125;);</div><div class="line">			<span class="built_in">return</span>;</div><div class="line">		&#125;</div><div class="line">		$(this).css(&#123;<span class="string">"color"</span>:<span class="string">"red"</span>&#125;);</div><div class="line">		count ++;</div><div class="line">	&#125;</div><div class="line">	<span class="built_in">set</span>Timeout($.proxy(this,<span class="string">"fun"</span>,count),500);</div><div class="line">&#125;);</div><div class="line">//看完上面的例子，此处也就没有什么解释的必要了。</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-2"><a href="#2-源码：-2" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">// A global GUID counter <span class="keyword">for</span> objects</div><div class="line">guid: 1,  //一个jquery的全局变量</div><div class="line"></div><div class="line">// Bind a <span class="keyword">function</span> to a context, optionally partially applying any</div><div class="line">// arguments.</div><div class="line">proxy: <span class="keyword">function</span>( fn, context ) &#123;</div><div class="line">	var tmp, args, proxy;</div><div class="line">	//判断 context 的类型是否是字符串，是字符串的话，代表传参过来的 fn 是上下文语句要设置的对象</div><div class="line">	// context 是 fn 的一个属性，且是一个函数名</div><div class="line">	<span class="keyword">if</span> ( typeof context === <span class="string">"string"</span> ) &#123;</div><div class="line">		//通过 tmp 这个变量，把上下文的对象和函数做个调换，这样就与jQuery.proxy( <span class="keyword">function</span>, context )一样</div><div class="line">		tmp = fn[ context ];</div><div class="line">		context = fn;</div><div class="line">		fn = tmp;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Quick check to determine <span class="keyword">if</span> target is callable, <span class="keyword">in</span> the spec</div><div class="line">	// this throws a TypeError, but we will just <span class="built_in">return</span> undefined.</div><div class="line">	//若 fn 不是一个函数，则返回 undefined。</div><div class="line">	<span class="keyword">if</span> ( !jQuery.isFunction( fn ) ) &#123;</div><div class="line">		<span class="built_in">return</span> undefined;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Simulated <span class="built_in">bind</span></div><div class="line">	// args 是 arguments 除了前两个参数的集合</div><div class="line">	args = slice.call( arguments, 2 );</div><div class="line">	proxy = <span class="function"><span class="title">function</span></span>() &#123;</div><div class="line">		//对传入的那个函数进行传参的处理</div><div class="line">		<span class="built_in">return</span> fn.apply( context || this, args.concat( slice.call( arguments ) ) );</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	// Set the guid of unique handler to the same of original handler, so it can be removed</div><div class="line">	proxy.guid = fn.guid = fn.guid || jQuery.guid++;   //这里我的理解是记录了$.proxy调用的次数</div><div class="line"></div><div class="line">	<span class="built_in">return</span> proxy;</div><div class="line">&#125;</div><div class="line"><span class="comment">#### 4. 核心==&gt;实用工具 ==&gt;jQuery.parseHTML( data [, context ] [, keepScripts ] )</span></div><div class="line">data  类型: String   用来解析的HTML字符串。</div><div class="line">context   (默认: document) 类型: Element   DOM元素的上下文，在这个上下文中将创建的HTML片段。</div><div class="line">keepScripts  (默认: <span class="literal">false</span>) 类型: Boolean 一个布尔值，表明是否在传递的HTML字符串中包含脚本。</div><div class="line">安全注意事项:</div><div class="line">大多数的jQuery的API接受的HTML字符串将运行所包含在HTML中的脚本。jQuery.parseHTML不运行HTML中解析出来的脚本，除非 keepScripts参数为<span class="literal">true</span>。然而，它仍然是可能在大多数环境中间接地执行脚本，例如通过&lt;img onerror&gt;属性。调用者应该意识到这一点，并通过清理或避免任何不可信来源的输入，如URL或cookies，来防止它。为了未来的兼容性，当keepScripts为不确定的或<span class="literal">false</span>时，调用者不应该依赖于这个能力来运行任何脚本内容。</div><div class="line"><span class="comment">###### (1)用法：</span></div><div class="line">```bash</div><div class="line">&lt;div id=<span class="string">"log"</span>&gt;</div><div class="line">  &lt;h3&gt;Content:&lt;/h3&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;script&gt;</div><div class="line">var <span class="variable">$log</span> = $( <span class="string">"#log"</span> ),</div><div class="line">    str = <span class="string">"hello, &lt;b&gt;my name is&lt;/b&gt; jQuery."</span>,</div><div class="line">    html = $.parseHTML( str );</div><div class="line">// Append the parsed HTML</div><div class="line"><span class="variable">$log</span>.append( html );</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-3"><a href="#2-源码：-3" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">var rsingleTag = ( /^&lt;([a-z][^\/\0&gt;:\x20\t\r\n\f]*)[\x20\t\r\n\f]*\/?&gt;(?:&lt;\/\1&gt;|)$/i );</div><div class="line">jQuery.parseHTML = <span class="keyword">function</span>( data, context, keepScripts ) &#123;</div><div class="line">	<span class="keyword">if</span> ( typeof data !== <span class="string">"string"</span> ) &#123;  // data 不是 string 类型，则返回 [];</div><div class="line">		<span class="built_in">return</span> [];</div><div class="line">	&#125;</div><div class="line">	//判断 context 是否是 boolean值，是的话，就意味着只传入了两个参数，context 是没有传值的。</div><div class="line">	<span class="keyword">if</span> ( typeof context === <span class="string">"boolean"</span> ) &#123; </div><div class="line">		keepScripts = context;   // 是否保存 script 标签</div><div class="line">		context = <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	var base, parsed, scripts;</div><div class="line">	// 若 context 没有传值</div><div class="line">	<span class="keyword">if</span> ( !context ) &#123;</div><div class="line"></div><div class="line">		// Stop scripts or inline event handlers from being executed immediately</div><div class="line">		// by using document.implementation</div><div class="line">		//支持 createHTMLDocument</div><div class="line">		<span class="keyword">if</span> ( support.createHTMLDocument ) &#123;</div><div class="line">			//创建一个全新的 document（和当前的document不同），参数为空，这个参数是新document的 title标题字段</div><div class="line">			context = document.implementation.createHTMLDocument( <span class="string">""</span> );</div><div class="line"></div><div class="line">			// Set the base href <span class="keyword">for</span> the created document</div><div class="line">			// so any parsed elements with URLs</div><div class="line">			// are based on the document<span class="string">'s URL (gh-2965)</span></div><div class="line">			//创建一个 &lt;base&gt; 的标签，base 的 href 属性就是当前 document 的路径，接着把 base 这个标签添加到 head 内</div><div class="line">			base = context.createElement( "base" );</div><div class="line">			base.href = document.location.href;</div><div class="line">			context.head.appendChild( base );</div><div class="line">		&#125; else &#123;</div><div class="line">			//否则 context 就是当前的 document</div><div class="line">			context = document;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	//正则匹配传入的 data 字符串</div><div class="line">	parsed = rsingleTag.exec( data );</div><div class="line">	// scripts 在不保存 srcript 的条件下（keepScripts 为 false），为 [];</div><div class="line">	scripts = !keepScripts &amp;&amp; [];</div><div class="line"></div><div class="line">	// Single tag</div><div class="line">	if ( parsed ) &#123;</div><div class="line">		//如果是单个标签就调用相应的createElement方法，默认上下文是document!  </div><div class="line">		return [ context.createElement( parsed[ 1 ] ) ];</div><div class="line">	&#125;</div><div class="line"> 	//如果不是单个标签就调用buildFragment方法，把html字符串传入，同时上下文也传入，第三个参数就是scripts!  </div><div class="line">  //如果paseHTML的第三个参数是false，那么这里的scripts就是一个数组，传递到buildFragment中会把所有的script标签放在里面  </div><div class="line">  //所以就要收到移除! </div><div class="line">	parsed = buildFragment( [ data ], context, scripts );</div><div class="line"></div><div class="line">	if ( scripts &amp;&amp; scripts.length ) &#123;</div><div class="line">		jQuery( scripts ).remove();</div><div class="line">	&#125;</div><div class="line">  //buildFragment返回的是文档碎片，所以要变成数组，调用jQuery.merge方法!  </div><div class="line">	return jQuery.merge( [], parsed.childNodes );</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="5-核心-gt-实用工具-gt-jQuery-parseXML-data"><a href="#5-核心-gt-实用工具-gt-jQuery-parseXML-data" class="headerlink" title="5. 核心==&gt;实用工具 ==&gt;jQuery.parseXML( data )"></a>5. 核心==&gt;实用工具 ==&gt;jQuery.parseXML( data )</h4><p>data  类型: String   用来解析的格式良好的XML字符串。<br>描述: 解析一个字符串到一个XML文档。</p>
+<h6 id="1-用法：-2"><a href="#1-用法：-2" class="headerlink" title="(1)用法："></a>(1)用法：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;p id=<span class="string">"someElement"</span>&gt;&lt;/p&gt;</div><div class="line">&lt;p id=<span class="string">"anotherElement"</span>&gt;&lt;/p&gt;</div><div class="line">&lt;script&gt;</div><div class="line">var xml = <span class="string">"&lt;rss version='2.0'&gt;&lt;channel&gt;&lt;title&gt;RSS Title&lt;/title&gt;&lt;/channel&gt;&lt;/rss&gt;"</span>,</div><div class="line">    xmlDoc = $.parseXML( xml ),</div><div class="line">    <span class="variable">$xml</span> = $( xmlDoc ),</div><div class="line">    <span class="variable">$title</span> = <span class="variable">$xml</span>.find( <span class="string">"title"</span> ); </div><div class="line">    </div><div class="line">/* append <span class="string">"RSS Title"</span> to <span class="comment">#someElement */</span></div><div class="line">$( <span class="string">"#someElement"</span> ).append( <span class="variable">$title</span>.text() );</div><div class="line"></div><div class="line">/* change the title to <span class="string">"XML Title"</span> */</div><div class="line"><span class="variable">$title</span>.text( <span class="string">"XML Title"</span> );</div><div class="line"> </div><div class="line">/* append <span class="string">"XML Title"</span> to <span class="comment">#anotherElement */</span></div><div class="line">$( <span class="string">"#anotherElement"</span> ).append( <span class="variable">$title</span>.text() );</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<h6 id="2-源码：-4"><a href="#2-源码：-4" class="headerlink" title="(2)源码："></a>(2)源码：</h6><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">jQuery.parseXML = <span class="keyword">function</span>( data ) &#123;</div><div class="line">	var xml;</div><div class="line">	//若 data 不存在或是 data 的类型不是 string，那么返回 null</div><div class="line">	<span class="keyword">if</span> ( !data || typeof data !== <span class="string">"string"</span> ) &#123;</div><div class="line">		<span class="built_in">return</span> null;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Support: IE 9 - 11 only</div><div class="line">	// IE throws on parseFromString with invalid input.</div><div class="line">	try &#123;</div><div class="line">		//利用原生 js 解析 xml 文档的方法</div><div class="line">		//new DOMParser()   DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。</div><div class="line">		//要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法。</div><div class="line">		//parseFromString(text, contentType)    text 参数是要解析的 XML 标记。</div><div class="line">		//contentType 是文本的内容类型。可能是 <span class="string">"text/xml"</span> 、<span class="string">"application/xml"</span> </div><div class="line">		//或 <span class="string">"application/xhtml+xml"</span> 中的一个。注意，不支持 <span class="string">"text/html"</span>。</div><div class="line">		xml = ( new window.DOMParser() ).parseFromString( data, <span class="string">"text/xml"</span> );</div><div class="line">	&#125; catch ( e ) &#123;</div><div class="line">		//抛出错误</div><div class="line">		xml = undefined;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> ( !xml || xml.getElementsByTagName( <span class="string">"parsererror"</span> ).length ) &#123;</div><div class="line">		//抛出错误</div><div class="line">		jQuery.error( <span class="string">"Invalid XML: "</span> + data );</div><div class="line">	&#125;</div><div class="line">	//返回 xml</div><div class="line">	<span class="built_in">return</span> xml;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>到此，jquery 源码 api 中 核心==&gt;实用工具就告一段落了。api中的工具还有 $.ready 的源码没有解析，这个后期我会另写一篇文章与$(document).ready()一起来解析。<br>2017-11-23 </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/jquery4_2.html/" rel="next" title="jQuery 源码学习之路四（jQuery api 核心==>实用工具系列二）">
+                <i class="fa fa-chevron-left"></i> jQuery 源码学习之路四（jQuery api 核心==>实用工具系列二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery-each-jQuery-map-jQuery-proxy-jQuery-parseHTML-jQuery-parseXML"><span class="nav-number">1.</span> <span class="nav-text">jQuery.each, jQuery.map, jQuery.proxy, jQuery.parseHTML, jQuery.parseXML</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-核心-gt-实用工具-gt-jQuery-each"><span class="nav-number">1.1.</span> <span class="nav-text">1. 核心==>实用工具 ==>jQuery.each()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法："><span class="nav-number">1.1.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码："><span class="nav-number">1.1.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-核心-gt-实用工具-gt-jQuery-map"><span class="nav-number">1.2.</span> <span class="nav-text">2. 核心==>实用工具 ==>jQuery.map()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-1"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-核心-gt-实用工具-gt-jQuery-proxy"><span class="nav-number">1.3.</span> <span class="nav-text">3. 核心==>实用工具 ==>jQuery.proxy()</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jQuery-proxy-function-context"><span class="nav-number">1.3.1.</span> <span class="nav-text">jQuery.proxy( function, context )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#例一："><span class="nav-number">1.3.1.1.</span> <span class="nav-text">例一：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jQuery-proxy-context-name"><span class="nav-number">1.3.2.</span> <span class="nav-text">jQuery.proxy( context, name )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#例二："><span class="nav-number">1.3.2.1.</span> <span class="nav-text">例二：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jQuery-proxy-function-context-additionalArguments"><span class="nav-number">1.3.3.</span> <span class="nav-text">jQuery.proxy( function, context [, additionalArguments ] )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#例三："><span class="nav-number">1.3.3.1.</span> <span class="nav-text">例三：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jQuery-proxy-context-name-additionalArguments"><span class="nav-number">1.3.4.</span> <span class="nav-text">jQuery.proxy( context, name [, additionalArguments ] )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#例四："><span class="nav-number">1.3.4.1.</span> <span class="nav-text">例四：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-2"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">(2)源码：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-3"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-核心-gt-实用工具-gt-jQuery-parseXML-data"><span class="nav-number">1.4.</span> <span class="nav-text">5. 核心==>实用工具 ==>jQuery.parseXML( data )</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-用法：-2"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">(1)用法：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-源码：-4"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">(2)源码：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
