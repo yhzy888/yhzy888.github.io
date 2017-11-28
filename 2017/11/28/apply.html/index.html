@@ -1,0 +1,700 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="其实博客对于我来说，更多的是记录我学习的心得，没有特别想说，我的博客写完了是想给谁看，或是通过这个提高知名度。我的想法很简单，就是自己学到了的东西，做个记录，方便以后的查看和复习。
+今天就说说javaScript 中的 call 、 apply 和 bind 的区别，之前我自己也不是很懂。今天的目标就是把这个弄懂了。
+先看看菜鸟教程中的解释：在 JavaScript 中, 函数是对象。JavaSc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaScript 中的 call 、 apply 和 bind 的区别">
+<meta property="og:url" content="http://yoursite.com/2017/11/28/apply.html/index.html">
+<meta property="og:site_name" content="yuhong">
+<meta property="og:description" content="其实博客对于我来说，更多的是记录我学习的心得，没有特别想说，我的博客写完了是想给谁看，或是通过这个提高知名度。我的想法很简单，就是自己学到了的东西，做个记录，方便以后的查看和复习。
+今天就说说javaScript 中的 call 、 apply 和 bind 的区别，之前我自己也不是很懂。今天的目标就是把这个弄懂了。
+先看看菜鸟教程中的解释：在 JavaScript 中, 函数是对象。JavaSc">
+<meta property="og:image" content="http://yoursite.com/2017/11/28/apply.html/apply1.jpg">
+<meta property="og:updated_time" content="2017-11-28T14:40:44.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaScript 中的 call 、 apply 和 bind 的区别">
+<meta name="twitter:description" content="其实博客对于我来说，更多的是记录我学习的心得，没有特别想说，我的博客写完了是想给谁看，或是通过这个提高知名度。我的想法很简单，就是自己学到了的东西，做个记录，方便以后的查看和复习。
+今天就说说javaScript 中的 call 、 apply 和 bind 的区别，之前我自己也不是很懂。今天的目标就是把这个弄懂了。
+先看看菜鸟教程中的解释：在 JavaScript 中, 函数是对象。JavaSc">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/28/apply.html/apply1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/28/apply.html/"/>
+
+
+
+
+
+  <title> javaScript 中的 call 、 apply 和 bind 的区别 | yuhong </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yuhong</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/28/apply.html/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yuhong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yuhong">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                javaScript 中的 call 、 apply 和 bind 的区别
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:38:10+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>其实博客对于我来说，更多的是记录我学习的心得，没有特别想说，我的博客写完了是想给谁看，或是通过这个提高知名度。我的想法很简单，就是自己学到了的东西，做个记录，方便以后的查看和复习。</p>
+<p>今天就说说javaScript 中的 call 、 apply 和 bind 的区别，之前我自己也不是很懂。今天的目标就是把这个弄懂了。</p>
+<h5 id="先看看菜鸟教程中的解释："><a href="#先看看菜鸟教程中的解释：" class="headerlink" title="先看看菜鸟教程中的解释："></a>先看看菜鸟教程中的解释：</h5><p>在 JavaScript 中, 函数是对象。JavaScript 函数有它的属性和方法。call() 和 apply() 是预定义的函数方法。 两个方法可用于调用函数，两个方法的第一个参数必须是对象本身。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> myFunction(a, b) &#123;</div><div class="line">    <span class="built_in">return</span> a * b;</div><div class="line">&#125;</div><div class="line">var myObject;</div><div class="line">myObject = myFunction.call(myObject, 10, 2);  </div><div class="line">console.log(myObject); // 20</div><div class="line"></div><div class="line">var myArr = [40,3];</div><div class="line">var myObject1;</div><div class="line">myObject1 = myFunction.apply(myObject1, myArr);  </div><div class="line">console.log(myObject1); //120</div></pre></td></tr></table></figure></p>
+<p>两个方法都使用了对象本身作为第一个参数。 两者的区别在于第二个参数： apply传入的是一个参数数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始）。<br>在 JavaScript 严格模式(strict mode)下, 在调用函数时第一个参数会成为 this 的值， 即使该参数不是一个对象。<br>在 JavaScript 非严格模式(non-strict mode)下, 如果第一个参数的值是 null 或 undefined, 它将使用全局对象替代。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var a = <span class="string">"call"</span>;</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">t</span></span>()&#123;</div><div class="line">	console.log(this.a);</div><div class="line">&#125;</div><div class="line">t();  //控制台打印 call</div><div class="line">var obj = &#123;<span class="string">"a"</span>:1&#125;;</div><div class="line">t.apply(obj); //控制台打印 1   // 传入obj的对象，this指向obj。</div><div class="line"></div><div class="line">t.apply();  //控制台打印 call   // 第一个参数的值是 null 或 undefined, 它将使用全局对象替代,this指向window。</div></pre></td></tr></table></figure></p>
+<h5 id="实例测试"><a href="#实例测试" class="headerlink" title="实例测试"></a>实例测试</h5><p>真是不看不知道，一看吓一跳，妙用无穷呀！！！。。。。<br>上代码，来体验体验这碗汤有多好喝。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">Person</span></span>()&#123;</div><div class="line">	</div><div class="line">&#125;</div><div class="line">Person.prototype = &#123;</div><div class="line">	langulage : <span class="string">"汉语"</span>,</div><div class="line">	speak : <span class="function"><span class="title">function</span></span>()&#123;</div><div class="line">		console.log(<span class="string">"我会说"</span> + this.langulage);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">var p = new Person();</div><div class="line">p.speak();  // 我会说汉语</div></pre></td></tr></table></figure></p>
+<p>p 是个人，人具有会说话的能力，那么就打印出“我会说汉语”了。问题来了，这时候有一颗千年古树，她吸食日月之精华，日积月累成精啦，幻化成了一个大美女。重点来了，这时候她可以说话了。那要怎样才能行驶只有人才具有的这个功能呢。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//接着上面的代码，我们让这个大美女树精也能说话</div><div class="line">var tree = new Object();</div><div class="line">p.speak.call(tree);  // 我会说undefined  // 是让树精美女说话了，可是没告诉人家能说什么话呀。  这里可以说树精拥有了人说话的这个功能</div><div class="line">//代码换一下，再瞧</div><div class="line">var tree = &#123;langulage : <span class="string">"English"</span>&#125;;</div><div class="line">p.speak.call(tree);  // 我会说English   // 看吧，树精厉害了，还是个外国美女</div></pre></td></tr></table></figure></p>
+<p>其实这么调用的时候就是改变了 <strong> this </strong> 的指向,此时 <strong>this</strong> 的指向就是 tree 这个对象了。<br>这么做的优点就是你不需要再重写一个 tree 的 speak 的方法了。</p>
+<h5 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h5><p>上面对 call 和 apply 做了一些解释，其实两个作用是一样的，其区别也就在传参上的不同。而 bind 与这两个的区别在于：call 和 apply 是即时调用，而 bind 是函数调用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//还是上面树精美女的例子,看用<span class="built_in">bind</span>实现的效果</div><div class="line">p.speak.bind(tree)();  //我会说English</div><div class="line">//这样与 call 和 apply 做对比，看出来<span class="built_in">bind</span>是返回的函数，还需要();调用才行。</div></pre></td></tr></table></figure></p>
+<h4 id="再看一些常用的："><a href="#再看一些常用的：" class="headerlink" title="再看一些常用的："></a>再看一些常用的：</h4><h5 id="1-伪数组的调用Array的sort方法："><a href="#1-伪数组的调用Array的sort方法：" class="headerlink" title="1. 伪数组的调用Array的sort方法："></a>1. 伪数组的调用Array的sort方法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">sortA</span></span>()&#123;</div><div class="line">	console.log(arguments);</div><div class="line">	arguments.sort(); //arguments.sort is not a <span class="keyword">function</span></div><div class="line">&#125;</div><div class="line">sortA(2,56,34,4,0,67,8);</div><div class="line"></div><div class="line">//arguments 是个伪数组，并不具有Array的sort方法，换种方式看看：</div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">sortA</span></span>()&#123;</div><div class="line">	console.log(arguments);</div><div class="line">	var a = Array.prototype.sort.apply(arguments); </div><div class="line">	console.log(a); // [0, 2, 34, 4, 56, 67, 8, callee: ƒ, Symbol(Symbol.iterator): ƒ]</div><div class="line">&#125;</div><div class="line">sortA(2,56,34,4,0,67,8);</div></pre></td></tr></table></figure>
+<h5 id="2-数组间的追加"><a href="#2-数组间的追加" class="headerlink" title="2. 数组间的追加"></a>2. 数组间的追加</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var arr1 = [1,2,3,<span class="string">"aa"</span>,<span class="string">"bb"</span>];</div><div class="line">var arr2 = [&#123;<span class="string">"a"</span>:<span class="string">"aaa"</span>&#125;,<span class="string">"vv"</span>,4,5,6];</div><div class="line">Array.prototype.push.apply(arr1, arr2);</div><div class="line">console.log(arr1);    //[1, 2, 3, <span class="string">"aa"</span>, <span class="string">"bb"</span>, &#123;…&#125;, <span class="string">"vv"</span>, 4, 5, 6]</div><div class="line">//注意一下，这里是向 arr1 的数组中追加 arr2 数组的内容。 arr2 的内容不变</div></pre></td></tr></table></figure>
+<h5 id="3-使用tostring-检测对象类"><a href="#3-使用tostring-检测对象类" class="headerlink" title="3. 使用tostring()检测对象类"></a>3. 使用tostring()检测对象类</h5><p>Object.prototype.toString():<br><img src="/2017/11/28/apply.html/apply1.jpg" alt="&quot;apply&quot;"><br>上面这段英文的意思就是，Object.prototype.toString() 方法在没有重写的情况下，返回的是”[object type]”这种字符串，因此可以根据这个来判断对象类。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var toString = Object.prototype.toString;</div><div class="line"></div><div class="line">console.log(toString.call(new Object));  // [object Object]</div><div class="line">console.log(toString.call(new Date));    // [object Date]</div><div class="line">console.log(toString.call(new String));  // [object String]</div><div class="line">console.log(toString.call(Math));        // [object Math]</div><div class="line">console.log(toString.call(undefined));   // [object Undefined]</div><div class="line">console.log(toString.call(null));        // [object Null]</div><div class="line"></div><div class="line">var arr1 = [1,2,3,<span class="string">"aa"</span>,<span class="string">"bb"</span>];//判断arr1是否是一个数组</div><div class="line"></div><div class="line">console.log(Object.prototype.toString.apply(arr1) === <span class="string">"[object Array]"</span>);   //<span class="literal">true</span></div></pre></td></tr></table></figure>
+<p>看过一篇关于前端面试题的文章[!<a href="https://segmentfault.com/a/1190000000375138?page=1]，感觉这里面的知识点挺不错的，故此处做一下记录。" target="_blank" rel="external">https://segmentfault.com/a/1190000000375138?page=1]，感觉这里面的知识点挺不错的，故此处做一下记录。</a></p>
+<ol>
+<li><p>定义一个log的方法替代console.log()，并且支持传参个数是不定的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">log</span></span>()&#123;</div><div class="line">	console.log.apply(console,arguments);</div><div class="line">&#125;</div><div class="line"><span class="built_in">log</span>(<span class="string">'hello'</span>, <span class="string">'world'</span>, <span class="string">"ffff"</span>);  // hello world ffff</div></pre></td></tr></table></figure>
+</li>
+<li><p>在上面例子的基础上，在每个 log 信息前面加上“(app)”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">log</span></span>()&#123;</div><div class="line">	 var args = Array.prototype.slice.call(arguments);</div><div class="line">   args.unshift(<span class="string">'(app)'</span>);</div><div class="line">   console.log.apply(console, args);</div><div class="line">&#125;</div><div class="line"><span class="built_in">log</span>(<span class="string">'hello'</span>, <span class="string">'world'</span>, <span class="string">"ffff"</span>);  //(app) hello world ffff</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h6 id="个人觉得比较好的文章链接："><a href="#个人觉得比较好的文章链接：" class="headerlink" title="个人觉得比较好的文章链接："></a>个人觉得比较好的文章链接：</h6><ol>
+<li><a href="https://segmentfault.com/a/1190000007342882" target="_blank" rel="external">https://segmentfault.com/a/1190000007342882</a></li>
+<li><a href="https://www.cnblogs.com/libin-1/p/5823025.html" target="_blank" rel="external">https://www.cnblogs.com/libin-1/p/5823025.html</a></li>
+<li><a href="https://segmentfault.com/a/1190000003963461" target="_blank" rel="external">https://segmentfault.com/a/1190000003963461</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/15/jquery4_1.html/" rel="next" title="jQuery 源码学习之路四（jQuery api 核心==》实用工具系列一）">
+                <i class="fa fa-chevron-left"></i> jQuery 源码学习之路四（jQuery api 核心==》实用工具系列一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="yuhong" />
+          <p class="site-author-name" itemprop="name">yuhong</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#先看看菜鸟教程中的解释："><span class="nav-number">1.</span> <span class="nav-text">先看看菜鸟教程中的解释：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实例测试"><span class="nav-number">2.</span> <span class="nav-text">实例测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#bind"><span class="nav-number">3.</span> <span class="nav-text">bind</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再看一些常用的："><span class="nav-number"></span> <span class="nav-text">再看一些常用的：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-伪数组的调用Array的sort方法："><span class="nav-number">1.</span> <span class="nav-text">1. 伪数组的调用Array的sort方法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-数组间的追加"><span class="nav-number">2.</span> <span class="nav-text">2. 数组间的追加</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用tostring-检测对象类"><span class="nav-number">3.</span> <span class="nav-text">3. 使用tostring()检测对象类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#个人觉得比较好的文章链接："><span class="nav-number">3.1.</span> <span class="nav-text">个人觉得比较好的文章链接：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yuhong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
